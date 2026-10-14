@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111613">
+  <meta name="description" content="Dein mobiler 12-Wochen-Trainingsplan.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Trainingsplan">
+  <title>Trainingsplan</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <p class="eyebrow">DEIN TRAININGSPLAN</p>
+      <h1 id="plan-title">Trainingsplan</h1>
+      <p id="plan-subtitle" class="muted">Trainingsplan wird geladen …</p>
+    </header>
+
+    <section class="day-section" aria-labelledby="day-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DEINE EINHEIT</p>
+          <h2 id="day-heading">Trainingstag auswählen</h2>
+        </div>
+        <span id="today-label" class="today-label"></span>
+      </div>
+      <nav id="day-navigation" class="day-navigation" aria-label="Trainingstag" hidden></nav>
+      <p id="workout-title" class="workout-title"></p>
+      <p id="workout-warmup" class="warmup"></p>
+    </section>
+
+    <section class="exercise-section" aria-labelledby="exercise-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DEIN ABLAUF</p>
+          <h2 id="exercise-heading">Übungen</h2>
+        </div>
+        <span id="exercise-count" class="count-badge"></span>
+      </div>
+      <div id="exercise-list" class="exercise-list" aria-live="polite"></div>
+    </section>
+
+    <section class="notice-section">
+      <details class="info-card">
+        <summary>
+          <span class="summary-icon" aria-hidden="true">!</span>
+          <span><strong>Sicherheit zuerst</strong><small>Schmerzregel und wichtige Hinweise</small></span>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <div id="safety-rules" class="info-content"></div>
+      </details>
+
+      <details class="info-card">
+        <summary>
+          <span class="summary-icon progression-icon" aria-hidden="true">↗</span>
+          <span><strong>Plan &amp; Progression</strong><small>Phasen, Pausen und Regeln für den Fortschritt</small></span>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <div id="plan-details" class="info-content"></div>
+      </details>
+    </section>
+
+    <p id="load-error" class="load-error" role="alert" hidden></p>
+    <footer class="app-footer">In deinem Tempo. Sauber und schmerzarm trainieren.</footer>
+  </main>
+</body>
+</html>

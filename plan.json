@@ -1,0 +1,392 @@
+{
+  "title": "12-Wochen-Trainingsplan: Muskelaufbau mit Lauf-Support",
+  "created": "12. Oktober 2026",
+  "basicIdea": "Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt Cleans, Medball und Schlitten als Schnelligkeitsreiz ohne harte Stöße.",
+  "assumptions": [
+    "Lauftraining: 2–3 Läufe pro Woche, davon einer lang und einer mit Qualität.",
+    "Der Clean (70 kg) entspricht etwa dem Maximum, Prozentangaben beziehen sich darauf.",
+    "Training auf Gummiboden/Turf, nicht auf Hartboden. RPE 10 = Maximum, 8 = 2 Wiederholungen in Reserve, 7 = 3."
+  ],
+  "safetyRules": [
+    {
+      "title": "Schmerzregel",
+      "text": "Schmerz während der Übung höchstens 2/10 und am nächsten Morgen wie vorher. Sonst eine Stufe zurück (weniger Tiefe, Last oder Sprünge) und eine Woche halten.",
+      "subItems": []
+    },
+    {
+      "title": "Knie",
+      "text": "Vor jeder Beinübung mindestens 2 Aufbausätze. Keine schnellen Bewegungen unter Last ohne Aufwärmen. Das Tempo steht in der Tabelle und wird eingehalten.",
+      "subItems": []
+    },
+    {
+      "title": "Zeigefinger",
+      "text": "",
+      "subItems": [
+        "Klimmzüge am Parallelgriff oder an Ringen im vollen Umklammerungsgriff. Die Stange liegt in der Handfläche, Last auf Mittel- und Ringfinger sowie Handballen, der Zeigefinger liegt nur locker an. Kein Einhängen in die Fingerspitzen.",
+        "Straps bei Kreuzheben, Latzug und Rudern. Beim Clean Straps oder Hook-Grip nur, wenn der Zeigefinger höchstens 1/10 meldet.",
+        "Dickere Griffe (z. B. Fat Grips) entlasten die vorderen Fingerglieder zusätzlich."
+      ]
+    },
+    {
+      "title": "Barfußschuhe",
+      "text": "Sprünge nur auf Matte oder Turf. Wadenheben und Balance ohne Schuhe-Dämpfung sind Teil des Aufbaus.",
+      "subItems": []
+    }
+  ],
+  "periodization": {
+    "phases": [
+      {
+        "phase": "1 Fundament",
+        "weeks": "W1–3, W4 Entlastung",
+        "volume": "ca. 8–10",
+        "intensityAndTempo": "RPE 6–8, 3 s exzentrisch",
+        "kneeDepth": "bis ca. 70°",
+        "jumpAndSpeed": "W1–2: keine Sprünge (Balance, Schlitten, Medball, leichter Clean). W3–4: Mini-Pogos und Step-offs, ca. 30–40 Kontakte"
+      },
+      {
+        "phase": "2 Volumen & Elastizität",
+        "weeks": "W5–7, W8 Entlastung",
+        "volume": "ca. 12–14",
+        "intensityAndTempo": "RPE 7–9, 2–3 s exzentrisch",
+        "kneeDepth": "bis ca. 90° (ab W7 ca. 100°)",
+        "jumpAndSpeed": "beidbeinige Sprünge, Stick-Landungen, Beschleunigung 10 m, ca. 50–80 Kontakte"
+      },
+      {
+        "phase": "3 Intensität & Tempo",
+        "weeks": "W9–11, W12 Entlastung + Test",
+        "volume": "ca. 10–12, mehr Last",
+        "intensityAndTempo": "RPE 8–9, 5–8 Wdh, Konzentrik explosiv wo unkritisch",
+        "kneeDepth": "parallel, voller Shrimp wenn schmerzfrei",
+        "jumpAndSpeed": "einbeinig klein, Sprints 85–90 %, Richtungswechsel 60–75 %, ca. 80–120 Kontakte"
+      }
+    ],
+    "deloadNote": "Entlastungswochen (W4, W8, W12): Sätze auf etwa 60 % reduzieren, Last −10 %, Sprünge halbieren, keine Sprints. In W12 werden die Tests am Wochenanfang gemacht, danach läuft das reduzierte Programm."
+  },
+  "weeklySchedule": [
+    {
+      "day": "Mo",
+      "content": "Einheit 1 (Zug und Hüfte)"
+    },
+    {
+      "day": "Di",
+      "content": "Qualitätslauf (Intervalle/Tempo)"
+    },
+    {
+      "day": "Mi",
+      "content": "frei: Spaziergang und Mobility"
+    },
+    {
+      "day": "Do",
+      "content": "Einheit 2 (Beine, Elastizität)"
+    },
+    {
+      "day": "Fr",
+      "content": "lockerer Lauf (mindestens 24 h nach Einheit 2)"
+    },
+    {
+      "day": "Sa",
+      "content": "Einheit 3 (Druck, Beschleunigung)"
+    },
+    {
+      "day": "So",
+      "content": "langer ruhiger Lauf"
+    }
+  ],
+  "weeklyScheduleNotes": [
+    "Bei nur 2 Läufen entfällt der Freitag.",
+    "Zwischen Einheit 2 und einem harten Lauf sollten 48 h liegen.",
+    "Nach einem Langlauf über 90 Minuten wird der RDL am Montag eine RPE-Stufe niedriger gefahren."
+  ],
+  "workoutGeneralNotes": {
+    "breaks": "Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden.",
+    "tempoNotation": "Tempo-Schreibweise: Absenken – Pause unten – Anheben – Pause oben."
+  },
+  "workouts": [
+    {
+      "title": "Einheit 1 – Zug und Hüfte",
+      "day": "Mo",
+      "warmup": "Aufwärmen (9 Min): 2 Min Crosstrainer oder zügiges Gehen, dann 5 Min Mobility: 90/90-Hüftrotation 6/Seite, Open Book 8/Seite, Wall Slides 10, Brustwirbelsäulen-Extension an der Rolle 8. Danach 2 Min Aktivierung: Glute-Bridge-Halt 2×20 s, Einbeinstand mit geschlossenen Augen 30 s/Seite (links zuerst), Clean-Technik leer und 2 Aufbausätze.",
+      "exercises": [
+        {
+          "number": "1",
+          "name": "Hang Power Clean (ab Knie), Pause 90 s",
+          "phaseProgression": "4×3 @ ca. 55 % → 5×3 @ 60–65 % → 5×2 @ 70–75 %",
+          "tempo": "explosiv",
+          "rpe": "6–7",
+          "why": "Schnelligkeit und Hüftkraft mit kleinem Kniewinkel; Fang hoch in der Viertelkniebeuge"
+        },
+        {
+          "number": "2a",
+          "name": "Klimmzug (Parallelgriff/Ringe)",
+          "phaseProgression": "4×4–5 → 4×5–7 → 4×3–5 mit Zusatzlast",
+          "tempo": "3-0-1 → 2-0-1",
+          "rpe": "8",
+          "why": "Zug-Hypertrophie; Griff schont den Zeigefinger"
+        },
+        {
+          "number": "2b",
+          "name": "Face Pull (Seil)",
+          "phaseProgression": "3×12–15",
+          "tempo": "2-1-2",
+          "rpe": "7",
+          "why": "Schulter-Ausgleich zum Sitzen"
+        },
+        {
+          "number": "3",
+          "name": "Rumänisches Kreuzheben (Straps), Pause 2 Min",
+          "phaseProgression": "3×8 → 4×8 → 4×6",
+          "tempo": "3-1-1 → 2-1-1",
+          "rpe": "7 → 8",
+          "why": "Hüftstrecker für Sprint und Laufökonomie, kaum Kniebelastung"
+        },
+        {
+          "number": "4a",
+          "name": "Einbein-RDL (Kurzhantel)",
+          "phaseProgression": "3×8/Seite",
+          "tempo": "3-0-1",
+          "rpe": "7",
+          "why": "Sprunggelenk- und Hüftstabilität"
+        },
+        {
+          "number": "4b",
+          "name": "Sitzendes Wadenheben",
+          "phaseProgression": "3×12–15",
+          "tempo": "2-1-2",
+          "rpe": "8",
+          "why": "Soleus für Achillessehne und Laufökonomie"
+        },
+        {
+          "number": "5",
+          "name": "Latzug neutral (Straps)",
+          "phaseProgression": "3×10–12",
+          "tempo": "2-1-2",
+          "rpe": "8",
+          "why": "zusätzliches Lat-Volumen"
+        }
+      ]
+    },
+    {
+      "title": "Einheit 2 – Beine, Fuß und Elastizität",
+      "day": "Do",
+      "warmup": "Aufwärmen (10 Min): 2 Min Crosstrainer (kein Rad wegen der hohen Frequenz), Hüfte: 90/90 und Hip Airplane 5/Seite, Sprunggelenk: Knee-to-Wall 8/Seite langsam und Band-Eversion/Inversion 10/Seite, Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s/Seite. Dann 3 Aufbausätze Kniebeuge (leer, 40 %, 60 %).",
+      "exercises": [
+        {
+          "number": "1",
+          "name": "Sprung-/Elastizitätsblock (siehe Abschnitt 5, ca. 8 Min)",
+          "phaseProgression": "nach Stufe",
+          "tempo": "",
+          "rpe": "",
+          "why": "frisch und vor den schweren Sätzen"
+        },
+        {
+          "number": "2",
+          "name": "Spanish Squat (Isometrik mit Band)",
+          "phaseProgression": "2×40 s (P1–2), P3: 2×30 s zum Aufwärmen",
+          "tempo": "statisch",
+          "rpe": "5–6",
+          "why": "Sehnenvorbereitung fürs Knie"
+        },
+        {
+          "number": "3",
+          "name": "Kniebeuge zur Box (Back oder Front), Pause 2–2,5 Min",
+          "phaseProgression": "4×8 → 4×6–8 → 4×5–6",
+          "tempo": "3-1-1 → 3-0-1 → 2-1-X",
+          "rpe": "7 → 8",
+          "why": "Quadrizeps-Hypertrophie; Box-Höhe = Tiefenlimit (ca. 70° → 90° → parallel)"
+        },
+        {
+          "number": "4",
+          "name": "Shrimp-Squat, Pause 90 s nach beiden Seiten",
+          "phaseProgression": "3×6/Seite, 12 kg, auf Pad/Box (ca. 70–80°) → 3×6–8, Box schrittweise tiefer → 3×8–10, 12–16 kg, voller Umfang",
+          "tempo": "3-1-1",
+          "rpe": "7–8",
+          "why": "spezifisch und einbeinig; hier wird zuerst die Tiefe gesteigert, dann die Last"
+        },
+        {
+          "number": "5a",
+          "name": "Beinbeuger liegend",
+          "phaseProgression": "3×10–12 → 4×8–10",
+          "tempo": "3-1-1",
+          "rpe": "8",
+          "why": "Ischios ohne Patella-Druck"
+        },
+        {
+          "number": "5b",
+          "name": "Einbein-Wadenheben (gerade Knie), links zuerst",
+          "phaseProgression": "3×10 → 3×12 mit Last",
+          "tempo": "3-1-1",
+          "rpe": "8",
+          "why": "Achilles und Sprunggelenk; bei Seitendifferenz links einen Extrasatz"
+        },
+        {
+          "number": "6",
+          "name": "Optional bei Zeitnot streichen: Liegestütz Füße erhöht (Weste) + Ringrudern",
+          "phaseProgression": "3×12–15 → 3×10–12 + 5 kg; Rudern 3×10–12",
+          "tempo": "3-1-1",
+          "rpe": "8",
+          "why": "Push- und Zugfrequenz"
+        }
+      ]
+    },
+    {
+      "title": "Einheit 3 – Druck und Beschleunigung",
+      "day": "Sa",
+      "warmup": "Aufwärmen (9 Min): 2 Min Geschicklichkeit statt Cardio (Koordinationsleiter nur mit Schritten, Bear Crawl vor/zurück), Band-Dislocates 10, Wall Slides 10, Brustwirbelsäulen-Extension 8, Hüftbeuger-Dehnung im Ausfallschritt mit Beckenkippung 30 s/Seite, Scap-Liegestütze 10, Aufbausätze Bank.",
+      "exercises": [
+        {
+          "number": "1",
+          "name": "Beschleunigungsblock: Medball-Brustpass/Rotationswurf 3×5, dann Schlitten schieben (Alternative ohne Schlitten: Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert, gleiche Strecken und Intensität; oder Laufband-Gehen bergauf bei 10–12 % Steigung, 6×20–30 s zügig statt Strecke)",
+          "phaseProgression": "4×15 m leicht → 6×15 m → 6×20 m schwer-schnell; ab W9 flache Sprints (Abschnitt 5)",
+          "tempo": "explosiv",
+          "rpe": "6 → 8",
+          "why": "Schnelligkeit ohne Stoß, kaum Knietiefe"
+        },
+        {
+          "number": "2",
+          "name": "Schrägbank (Kurzhantel), Pause 2 Min",
+          "phaseProgression": "4×8–10 → 4×8 → 4×6–8",
+          "tempo": "3-0-1 → 2-1-1",
+          "rpe": "8",
+          "why": "Brust und Schulter"
+        },
+        {
+          "number": "3",
+          "name": "Brustgestütztes Rudern (Straps)",
+          "phaseProgression": "4×10–12 → 4×8–10",
+          "tempo": "2-1-2",
+          "rpe": "8",
+          "why": "Rücken, kein Griff-Limit"
+        },
+        {
+          "number": "4a",
+          "name": "Landmine- oder Schulterdrücken stehend",
+          "phaseProgression": "3×8–10",
+          "tempo": "2-0-1",
+          "rpe": "8",
+          "why": "Schulterhypertrophie, gelenkfreundlich"
+        },
+        {
+          "number": "4b",
+          "name": "Seitheben/Reverse Fly",
+          "phaseProgression": "3×12–15",
+          "tempo": "2-1-2",
+          "rpe": "8",
+          "why": "Delta hinten und seitlich"
+        },
+        {
+          "number": "5a",
+          "name": "Hip Thrust",
+          "phaseProgression": "3×10 → 3×8–10",
+          "tempo": "2-1-1",
+          "rpe": "8",
+          "why": "Gesäß für Sprint und Lauf, ohne Knielast"
+        },
+        {
+          "number": "5b",
+          "name": "Copenhagen Plank",
+          "phaseProgression": "3×20–30 s/Seite",
+          "tempo": "statisch",
+          "rpe": "7",
+          "why": "Adduktoren und Rumpf für Richtungswechsel"
+        },
+        {
+          "number": "6",
+          "name": "Optional: Seil-Pushdown + Hammer Curl",
+          "phaseProgression": "3×12",
+          "tempo": "2-0-2",
+          "rpe": "8",
+          "why": "Arme"
+        }
+      ]
+    }
+  ],
+  "jumpAndSpeedProgression": {
+    "levels": [
+      {
+        "level": "1 Basis",
+        "weeks": "W1–4",
+        "content": "Einbeinstand auf Balance-Pad, erst mit geschlossenen Augen, dann mit Ballwurf, 3×30–45 s/Seite (links zuerst), Step-off-Landungen von 15 cm mit 2 s Halten (ab W3), Mini-Pogos beidbeinig unter 5 cm (ab W3)",
+        "contactsPerSession": "W1–2: 0, W3–4: 30–40"
+      },
+      {
+        "level": "2 Beidbeinig",
+        "weeks": "W5–8",
+        "content": "Pogos 3×15, Box-Jump-up auf 30–40 cm mit Abstieg zu Fuß 3×4, Hocksprung mit Stick-Landung 3×3, Skater-Schritte ohne Flugphase, Seilspringen beidbeinig 3×30 s (ab W7), Sprint-Drills (A-March, A-Skip) 3×15 m, Beschleunigung 4×10 m @ 70 % (ab W7)",
+        "contactsPerSession": "50–80"
+      },
+      {
+        "level": "3 Einbeinig und reaktiv",
+        "weeks": "W9–12",
+        "content": "Einbein-Pogos klein 2×10/Seite, Einbein-Landung (Stick) von 20 cm 3×4/Seite, Skater-Sprünge kurz 3×6 (ab W11), flache Sprints 4–6×15–20 m @ 85–90 % mit 90–120 s Pause, 5-10-5-Richtungswechsel bei 60 % (W10) → 75 % (W11)",
+        "contactsPerSession": "80–120"
+      }
+    ],
+    "criteriaForProgression": [
+      "Einbein-Wadenheben links mindestens 90 % von rechts",
+      "Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s ohne Wackeln, beide Seiten gleich",
+      "keine Schwellung oder Steifigkeit am Morgen nach der letzten Einheit"
+    ],
+    "notes": [
+      "Der Einbeinstand auf festem Untergrund (3×60 s mit geschlossenen Augen, seitengleich) erfüllt das Stabilitätskriterium bereits, deshalb läuft die Propriozeption von Anfang an auf dem Balance-Pad.",
+      "Bei Schwierigkeiten bleibst du in der Stufe.",
+      "Die Wochenzahlen sind Richtwerte, nicht Pflicht."
+    ]
+  },
+  "phaseProgressionRules": [
+    "Phase 1: Doppelte Progression. Gelingen in zwei Einheiten hintereinander alle Sätze am oberen Wiederholungsende bei RPE 7 oder niedriger, steigt die Last um 2,5–5 % (Maschine: eine Stufe). Die Knie-Tiefe bleibt, nur die Last steigt.",
+    "Phase 2: W5 Ausgangsvolumen, W6 plus 1 Satz bei den Hauptübungen (Klimmzug, RDL, Kniebeuge, Schrägbank, Rudern), W7 gleiche Sätze mit plus 2,5–5 % Last. Die Tiefe wächst erst nach drei schmerzfreien Beineinheiten in Folge.",
+    "Phase 3: Die Last steigt um 2,5–5 % pro Woche bei sinkenden Wiederholungen. Der letzte Satz bei Klimmzug, Schrägbank und Rudern darf ein Satz bei RPE 9 sein. W12 ist Entlastung und Test."
+  ],
+  "badDayTrafficLightRules": [
+    {
+      "level": "Grün",
+      "condition": "Schlaf ab 6 h und der erste Aufbausatz fühlt sich normal an.",
+      "action": "Plan wie geschrieben."
+    },
+    {
+      "level": "Gelb",
+      "condition": "Schlaf unter 6 h, hoher Stress oder ein schwerer Aufbausatz.",
+      "action": "Pro Übung ein Satz weniger, RPE minus 1 (also ca. 5–10 % weniger Last), Sprünge und Sprints halbieren."
+    },
+    {
+      "level": "Rot",
+      "condition": "Schlaf unter 5 h, Krankheit oder Gelenkschmerz über 3/10.",
+      "action": "Nur Aufwärmen, Mobility und 15–20 Min leichte Technik, keine Sprünge."
+    }
+  ],
+  "missedTrainingAndSittingNotes": [
+    "Verpasste Einheiten werden nicht nachgeholt. Die Woche läuft weiter, und Gewichtssteigerungen gibt es nur nach vollständigen Einheiten.",
+    "Sitz-Ausgleich: Stündlich 1 Min Brustwirbelsäulen-Öffner und Wall Slides. Abends optional 5 Min 90/90, Hüftbeuger und Open Book."
+  ],
+  "metrics": [
+    {
+      "metric": "Klimmzug, 1 Satz sauber (Parallelgriff)",
+      "start": "6",
+      "week6": "7–8",
+      "week12": "9–10",
+      "ifStalled": "3 Wochen lang 2 Sätze mehr Zugvolumen (Latzug), Griff prüfen"
+    },
+    {
+      "metric": "Shrimp-Squat, 3×10 pro Seite",
+      "start": "12 kg, begrenzte Tiefe",
+      "week6": "12 kg bei vollem Umfang",
+      "week12": "16 kg",
+      "ifStalled": "zuerst Tiefe und Tempo, dann Last; Knie-Reaktion prüfen"
+    },
+    {
+      "metric": "Hang Power Clean 3RM",
+      "start": "in W1 messen",
+      "week6": "+5 %",
+      "week12": "+10 %",
+      "ifStalled": "Technik per Video prüfen, 1 Satz RDL/Hip Thrust zusätzlich"
+    },
+    {
+      "metric": "Umfänge (Oberarm, Brust, Oberschenkel, Taille) und Körpergewicht (3-Tages-Schnitt, morgens)",
+      "start": "Messung W1",
+      "week6": "Gewicht +0,3–0,7 kg",
+      "week12": "Gewicht +0,5–1,5 kg, Umfänge +0,5–1 cm, Taille höchstens +1 cm",
+      "ifStalled": "+150–250 kcal/Tag, Eiweiß mindestens 1,6 g/kg, 2 Sätze mehr für den schwächsten Muskel, Schlaf prüfen"
+    }
+  ],
+  "finalNote": "Die Zielwerte sind realistische Schätzungen für jemanden mit 10 Jahren Training, keine Garantien."
+}
