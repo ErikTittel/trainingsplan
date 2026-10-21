@@ -9,11 +9,17 @@ const DAY_NAMES = {
 const DAY_ORDER = ["Mo", "Do", "Sa"];
 const DAY_NUMBERS = { Mo: 1, Do: 4, Sa: 6 };
 const TEMPO_STEPS = ["Absenken", "Pause unten", "Anheben", "Pause oben"];
+const PHASES = [
+  { id: "phase1", label: "Phase 1", weeks: "W1–4" },
+  { id: "phase2", label: "Phase 2", weeks: "W5–8" },
+  { id: "phase3", label: "Phase 3", weeks: "W9–12" }
+];
 
 const elements = {
   title: document.querySelector("#plan-title"),
   subtitle: document.querySelector("#plan-subtitle"),
   navigation: document.querySelector("#day-navigation"),
+  phaseNavigation: document.querySelector("#phase-navigation"),
   today: document.querySelector("#today-label"),
   workoutTitle: document.querySelector("#workout-title"),
   warmup: document.querySelector("#workout-warmup"),
@@ -26,6 +32,7 @@ const elements = {
 
 let plan;
 let selectedDay;
+let selectedPhase = PHASES[0].id;
 
 function makeElement(tag, className, text) {
   const element = document.createElement(tag);
@@ -64,6 +71,27 @@ function workoutForDay(day) {
   return plan.workouts.find((workout) => workout.day === day);
 }
 
+function renderPhaseNavigation() {
+  elements.phaseNavigation.replaceChildren();
+  for (const phase of PHASES) {
+    const button = makeElement("button", "phase-button");
+    button.type = "button";
+    button.setAttribute("aria-pressed", String(phase.id === selectedPhase));
+    button.setAttribute("aria-label", `${phase.label}, ${phase.weeks}`);
+    button.append(
+      makeElement("strong", "", phase.label),
+      makeElement("small", "", phase.weeks)
+    );
+    button.addEventListener("click", () => {
+      selectedPhase = phase.id;
+      renderPhaseNavigation();
+      renderWorkout();
+    });
+    elements.phaseNavigation.append(button);
+  }
+  elements.phaseNavigation.hidden = false;
+}
+
 function addChip(container, label, value) {
   if (!value) return;
   const chip = makeElement("div", "detail-chip");
@@ -89,16 +117,16 @@ function addRhythm(container, tempo) {
 }
 
 function renderExercise(exercise) {
+  const progression = exercise.phaseProgression[selectedPhase];
+  const tempo = exercise.tempo[selectedPhase];
   const card = makeElement("details", "exercise-card");
   const summary = makeElement("summary");
   const number = makeElement("span", "exercise-number", exercise.number);
   number.setAttribute("aria-hidden", "true");
   const heading = makeElement("span", "exercise-heading");
   heading.append(makeElement("strong", "", exercise.name));
-  if (exercise.phaseProgression) {
-    heading.append(makeElement("small", "", exercise.phaseProgression));
-  }
-  const quickDetails = [exercise.tempo && `Tempo ${exercise.tempo}`, exercise.rpe && `RPE ${exercise.rpe}`]
+  heading.append(makeElement("small", "", progression));
+  const quickDetails = [tempo && `Tempo ${tempo}`, exercise.rpe && `RPE ${exercise.rpe}`]
     .filter(Boolean)
     .join(" · ");
   if (quickDetails) heading.append(makeElement("small", "exercise-quick-details", quickDetails));
@@ -108,14 +136,14 @@ function renderExercise(exercise) {
 
   const details = makeElement("div", "exercise-details");
   const grid = makeElement("div", "detail-grid");
-  addChip(grid, "Satz-/Wdh.-Progression", exercise.phaseProgression);
-  addChip(grid, "Tempo", exercise.tempo || "Nicht angegeben");
+  addChip(grid, "Satz-/Wdh.-Progression", progression);
+  addChip(grid, "Tempo", tempo || "Nicht angegeben");
   addChip(grid, "RPE", exercise.rpe || "Nicht angegeben");
   details.append(grid);
 
-  if (exercise.tempo && /^\d+(?:-\d+){2,3}$/.test(exercise.tempo)) {
+  if (tempo && /^\d+(?:-\d+){2,3}$/.test(tempo)) {
     details.append(makeElement("h3", "", "Bewegungsrhythmus"));
-    addRhythm(details, exercise.tempo);
+    addRhythm(details, tempo);
   }
   if (exercise.why) {
     details.append(makeElement("h3", "", "Trainingsziel"));
@@ -193,11 +221,24 @@ async function loadPlan() {
     for (const day of DAY_ORDER) {
       if (!workoutForDay(day)) throw new Error(`Die Trainingseinheit für ${day} fehlt in plan.json.`);
     }
+    for (const workout of plan.workouts) {
+      for (const exercise of workout.exercises) {
+        for (const phase of PHASES) {
+          if (typeof exercise.phaseProgression?.[phase.id] !== "string") {
+            throw new Error(`Die Progression für ${exercise.name} in ${phase.label} fehlt in plan.json.`);
+          }
+          if (typeof exercise.tempo?.[phase.id] !== "string") {
+            throw new Error(`Das Tempo für ${exercise.name} in ${phase.label} fehlt in plan.json.`);
+          }
+        }
+      }
+    }
 
     elements.title.textContent = plan.title;
     elements.subtitle.textContent = `12 Wochen · ${plan.created}`;
     selectedDay = getDefaultDay();
     renderNavigation();
+    renderPhaseNavigation();
     renderWorkout();
     renderSafetyRules();
     renderPlanDetails();

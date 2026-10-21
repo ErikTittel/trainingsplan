@@ -7,6 +7,7 @@
   --muted: #58665c;
   --line: #dbe4da;
   --accent: #187a4c;
+  --accent-contrast: #ffffff;
   --accent-soft: #e4f4e9;
   --warning: #8b5312;
   --warning-soft: #fff3dc;
@@ -23,6 +24,7 @@
     --muted: #b2c0b5;
     --line: #344239;
     --accent: #78d99b;
+    --accent-contrast: #102016;
     --accent-soft: #203b2a;
     --warning: #ffd38d;
     --warning-soft: #3b2d19;
@@ -128,6 +130,53 @@ h2 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 9px;
   margin-bottom: 16px;
+}
+
+.phase-label {
+  margin: 0 2px 7px;
+}
+
+.phase-navigation {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 13px;
+}
+
+.phase-button {
+  display: grid;
+  min-height: 54px;
+  align-content: center;
+  justify-items: center;
+  gap: 1px;
+  padding: 6px 4px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.phase-button strong {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.phase-button small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.phase-button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.phase-button[aria-pressed="true"] small {
+  color: inherit;
 }
 
 .day-button {

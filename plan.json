@@ -110,56 +110,112 @@
         {
           "number": "1",
           "name": "Hang Power Clean (ab Knie), Pause 90 s",
-          "phaseProgression": "4×3 @ ca. 55 % → 5×3 @ 60–65 % → 5×2 @ 70–75 %",
-          "tempo": "explosiv",
+          "phaseProgression": {
+            "phase1": "4×3 @ ca. 55 %",
+            "phase2": "5×3 @ 60–65 %",
+            "phase3": "5×2 @ 70–75 %"
+          },
+          "tempo": {
+            "phase1": "explosiv",
+            "phase2": "explosiv",
+            "phase3": "explosiv"
+          },
           "rpe": "6–7",
           "why": "Schnelligkeit und Hüftkraft mit kleinem Kniewinkel; Fang hoch in der Viertelkniebeuge"
         },
         {
           "number": "2a",
           "name": "Klimmzug (Parallelgriff/Ringe)",
-          "phaseProgression": "4×4–5 → 4×5–7 → 4×3–5 mit Zusatzlast",
-          "tempo": "3-0-1 → 2-0-1",
+          "phaseProgression": {
+            "phase1": "4×4–5",
+            "phase2": "4×5–7",
+            "phase3": "4×3–5 mit Zusatzlast"
+          },
+          "tempo": {
+            "phase1": "3-0-1",
+            "phase2": "2-0-1",
+            "phase3": "2-0-1"
+          },
           "rpe": "8",
           "why": "Zug-Hypertrophie; Griff schont den Zeigefinger"
         },
         {
           "number": "2b",
           "name": "Face Pull (Seil)",
-          "phaseProgression": "3×12–15",
-          "tempo": "2-1-2",
+          "phaseProgression": {
+            "phase1": "3×12–15",
+            "phase2": "3×12–15",
+            "phase3": "3×12–15"
+          },
+          "tempo": {
+            "phase1": "2-1-2",
+            "phase2": "2-1-2",
+            "phase3": "2-1-2"
+          },
           "rpe": "7",
           "why": "Schulter-Ausgleich zum Sitzen"
         },
         {
           "number": "3",
           "name": "Rumänisches Kreuzheben (Straps), Pause 2 Min",
-          "phaseProgression": "3×8 → 4×8 → 4×6",
-          "tempo": "3-1-1 → 2-1-1",
+          "phaseProgression": {
+            "phase1": "3×8",
+            "phase2": "4×8",
+            "phase3": "4×6"
+          },
+          "tempo": {
+            "phase1": "3-1-1",
+            "phase2": "2-1-1",
+            "phase3": "2-1-1"
+          },
           "rpe": "7 → 8",
           "why": "Hüftstrecker für Sprint und Laufökonomie, kaum Kniebelastung"
         },
         {
           "number": "4a",
           "name": "Einbein-RDL (Kurzhantel)",
-          "phaseProgression": "3×8/Seite",
-          "tempo": "3-0-1",
+          "phaseProgression": {
+            "phase1": "3×8/Seite",
+            "phase2": "3×8/Seite",
+            "phase3": "3×8/Seite"
+          },
+          "tempo": {
+            "phase1": "3-0-1",
+            "phase2": "3-0-1",
+            "phase3": "3-0-1"
+          },
           "rpe": "7",
           "why": "Sprunggelenk- und Hüftstabilität"
         },
         {
           "number": "4b",
           "name": "Sitzendes Wadenheben",
-          "phaseProgression": "3×12–15",
-          "tempo": "2-1-2",
+          "phaseProgression": {
+            "phase1": "3×12–15",
+            "phase2": "3×12–15",
+            "phase3": "3×12–15"
+          },
+          "tempo": {
+            "phase1": "2-1-2",
+            "phase2": "2-1-2",
+            "phase3": "2-1-2"
+          },
           "rpe": "8",
           "why": "Soleus für Achillessehne und Laufökonomie"
         },
         {
           "number": "5",
           "name": "Latzug neutral (Straps)",
-          "phaseProgression": "3×10–12",
-          "tempo": "2-1-2",
+          "phaseProgression": {
+            "phase1": "3×10–12",
+            "phase2": "3×10–12",
+            "phase3": "3×10–12"
+          },
+          "tempo": {
+            "phase1": "2-1-2",
+            "phase2": "2-1-2",
+            "phase3": "2-1-2"
+          },
           "rpe": "8",
           "why": "zusätzliches Lat-Volumen"
         }
@@ -173,56 +229,112 @@
         {
           "number": "1",
           "name": "Sprung-/Elastizitätsblock (siehe Abschnitt 5, ca. 8 Min)",
-          "phaseProgression": "nach Stufe",
-          "tempo": "",
+          "phaseProgression": {
+            "phase1": "nach Stufe",
+            "phase2": "nach Stufe",
+            "phase3": "nach Stufe"
+          },
+          "tempo": {
+            "phase1": "",
+            "phase2": "",
+            "phase3": ""
+          },
           "rpe": "",
           "why": "frisch und vor den schweren Sätzen"
         },
         {
           "number": "2",
           "name": "Spanish Squat (Isometrik mit Band)",
-          "phaseProgression": "2×40 s (P1–2), P3: 2×30 s zum Aufwärmen",
-          "tempo": "statisch",
+          "phaseProgression": {
+            "phase1": "2×40 s",
+            "phase2": "2×40 s",
+            "phase3": "2×30 s zum Aufwärmen"
+          },
+          "tempo": {
+            "phase1": "statisch",
+            "phase2": "statisch",
+            "phase3": "statisch"
+          },
           "rpe": "5–6",
           "why": "Sehnenvorbereitung fürs Knie"
         },
         {
           "number": "3",
           "name": "Kniebeuge zur Box (Back oder Front), Pause 2–2,5 Min",
-          "phaseProgression": "4×8 → 4×6–8 → 4×5–6",
-          "tempo": "3-1-1 → 3-0-1 → 2-1-X",
+          "phaseProgression": {
+            "phase1": "4×8",
+            "phase2": "4×6–8",
+            "phase3": "4×5–6"
+          },
+          "tempo": {
+            "phase1": "3-1-1",
+            "phase2": "3-0-1",
+            "phase3": "2-1-X"
+          },
           "rpe": "7 → 8",
           "why": "Quadrizeps-Hypertrophie; Box-Höhe = Tiefenlimit (ca. 70° → 90° → parallel)"
         },
         {
           "number": "4",
           "name": "Shrimp-Squat, Pause 90 s nach beiden Seiten",
-          "phaseProgression": "3×6/Seite, 12 kg, auf Pad/Box (ca. 70–80°) → 3×6–8, Box schrittweise tiefer → 3×8–10, 12–16 kg, voller Umfang",
-          "tempo": "3-1-1",
+          "phaseProgression": {
+            "phase1": "3×6/Seite, 12 kg, auf Pad/Box (ca. 70–80°)",
+            "phase2": "3×6–8, Box schrittweise tiefer",
+            "phase3": "3×8–10, 12–16 kg, voller Umfang"
+          },
+          "tempo": {
+            "phase1": "3-1-1",
+            "phase2": "3-1-1",
+            "phase3": "3-1-1"
+          },
           "rpe": "7–8",
           "why": "spezifisch und einbeinig; hier wird zuerst die Tiefe gesteigert, dann die Last"
         },
         {
           "number": "5a",
           "name": "Beinbeuger liegend",
-          "phaseProgression": "3×10–12 → 4×8–10",
-          "tempo": "3-1-1",
+          "phaseProgression": {
+            "phase1": "3×10–12",
+            "phase2": "4×8–10",
+            "phase3": "4×8–10"
+          },
+          "tempo": {
+            "phase1": "3-1-1",
+            "phase2": "3-1-1",
+            "phase3": "3-1-1"
+          },
           "rpe": "8",
           "why": "Ischios ohne Patella-Druck"
         },
         {
           "number": "5b",
           "name": "Einbein-Wadenheben (gerade Knie), links zuerst",
-          "phaseProgression": "3×10 → 3×12 mit Last",
-          "tempo": "3-1-1",
+          "phaseProgression": {
+            "phase1": "3×10",
+            "phase2": "3×12 mit Last",
+            "phase3": "3×12 mit Last"
+          },
+          "tempo": {
+            "phase1": "3-1-1",
+            "phase2": "3-1-1",
+            "phase3": "3-1-1"
+          },
           "rpe": "8",
           "why": "Achilles und Sprunggelenk; bei Seitendifferenz links einen Extrasatz"
         },
         {
           "number": "6",
           "name": "Optional bei Zeitnot streichen: Liegestütz Füße erhöht (Weste) + Ringrudern",
-          "phaseProgression": "3×12–15 → 3×10–12 + 5 kg; Rudern 3×10–12",
-          "tempo": "3-1-1",
+          "phaseProgression": {
+            "phase1": "Liegestütz 3×12–15; Rudern 3×10–12",
+            "phase2": "Liegestütz 3×10–12 + 5 kg; Rudern 3×10–12",
+            "phase3": "Liegestütz 3×10–12 + 5 kg; Rudern 3×10–12"
+          },
+          "tempo": {
+            "phase1": "3-1-1",
+            "phase2": "3-1-1",
+            "phase3": "3-1-1"
+          },
           "rpe": "8",
           "why": "Push- und Zugfrequenz"
         }
@@ -236,64 +348,128 @@
         {
           "number": "1",
           "name": "Beschleunigungsblock: Medball-Brustpass/Rotationswurf 3×5, dann Schlitten schieben (Alternative ohne Schlitten: Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert, gleiche Strecken und Intensität; oder Laufband-Gehen bergauf bei 10–12 % Steigung, 6×20–30 s zügig statt Strecke)",
-          "phaseProgression": "4×15 m leicht → 6×15 m → 6×20 m schwer-schnell; ab W9 flache Sprints (Abschnitt 5)",
-          "tempo": "explosiv",
+          "phaseProgression": {
+            "phase1": "4×15 m leicht",
+            "phase2": "6×15 m",
+            "phase3": "6×20 m schwer-schnell; ab W9 flache Sprints (Abschnitt 5)"
+          },
+          "tempo": {
+            "phase1": "explosiv",
+            "phase2": "explosiv",
+            "phase3": "explosiv"
+          },
           "rpe": "6 → 8",
           "why": "Schnelligkeit ohne Stoß, kaum Knietiefe"
         },
         {
           "number": "2",
           "name": "Schrägbank (Kurzhantel), Pause 2 Min",
-          "phaseProgression": "4×8–10 → 4×8 → 4×6–8",
-          "tempo": "3-0-1 → 2-1-1",
+          "phaseProgression": {
+            "phase1": "4×8–10",
+            "phase2": "4×8",
+            "phase3": "4×6–8"
+          },
+          "tempo": {
+            "phase1": "3-0-1",
+            "phase2": "2-1-1",
+            "phase3": "2-1-1"
+          },
           "rpe": "8",
           "why": "Brust und Schulter"
         },
         {
           "number": "3",
           "name": "Brustgestütztes Rudern (Straps)",
-          "phaseProgression": "4×10–12 → 4×8–10",
-          "tempo": "2-1-2",
+          "phaseProgression": {
+            "phase1": "4×10–12",
+            "phase2": "4×8–10",
+            "phase3": "4×8–10"
+          },
+          "tempo": {
+            "phase1": "2-1-2",
+            "phase2": "2-1-2",
+            "phase3": "2-1-2"
+          },
           "rpe": "8",
           "why": "Rücken, kein Griff-Limit"
         },
         {
           "number": "4a",
           "name": "Landmine- oder Schulterdrücken stehend",
-          "phaseProgression": "3×8–10",
-          "tempo": "2-0-1",
+          "phaseProgression": {
+            "phase1": "3×8–10",
+            "phase2": "3×8–10",
+            "phase3": "3×8–10"
+          },
+          "tempo": {
+            "phase1": "2-0-1",
+            "phase2": "2-0-1",
+            "phase3": "2-0-1"
+          },
           "rpe": "8",
           "why": "Schulterhypertrophie, gelenkfreundlich"
         },
         {
           "number": "4b",
           "name": "Seitheben/Reverse Fly",
-          "phaseProgression": "3×12–15",
-          "tempo": "2-1-2",
+          "phaseProgression": {
+            "phase1": "3×12–15",
+            "phase2": "3×12–15",
+            "phase3": "3×12–15"
+          },
+          "tempo": {
+            "phase1": "2-1-2",
+            "phase2": "2-1-2",
+            "phase3": "2-1-2"
+          },
           "rpe": "8",
           "why": "Delta hinten und seitlich"
         },
         {
           "number": "5a",
           "name": "Hip Thrust",
-          "phaseProgression": "3×10 → 3×8–10",
-          "tempo": "2-1-1",
+          "phaseProgression": {
+            "phase1": "3×10",
+            "phase2": "3×8–10",
+            "phase3": "3×8–10"
+          },
+          "tempo": {
+            "phase1": "2-1-1",
+            "phase2": "2-1-1",
+            "phase3": "2-1-1"
+          },
           "rpe": "8",
           "why": "Gesäß für Sprint und Lauf, ohne Knielast"
         },
         {
           "number": "5b",
           "name": "Copenhagen Plank",
-          "phaseProgression": "3×20–30 s/Seite",
-          "tempo": "statisch",
+          "phaseProgression": {
+            "phase1": "3×20–30 s/Seite",
+            "phase2": "3×20–30 s/Seite",
+            "phase3": "3×20–30 s/Seite"
+          },
+          "tempo": {
+            "phase1": "statisch",
+            "phase2": "statisch",
+            "phase3": "statisch"
+          },
           "rpe": "7",
           "why": "Adduktoren und Rumpf für Richtungswechsel"
         },
         {
           "number": "6",
           "name": "Optional: Seil-Pushdown + Hammer Curl",
-          "phaseProgression": "3×12",
-          "tempo": "2-0-2",
+          "phaseProgression": {
+            "phase1": "3×12",
+            "phase2": "3×12",
+            "phase3": "3×12"
+          },
+          "tempo": {
+            "phase1": "2-0-2",
+            "phase2": "2-0-2",
+            "phase3": "2-0-2"
+          },
           "rpe": "8",
           "why": "Arme"
         }

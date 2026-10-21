@@ -4,7 +4,7 @@ Erstellt am 12. Oktober 2026
 
 **Grundidee:** Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt Cleans, Medball und Schlitten als Schnelligkeitsreiz ohne harte Stöße.
 
-**Annahmen (bitte korrigieren):**
+**Annahmen:**
 
 1. Lauftraining: 2–3 Läufe pro Woche, davon einer lang und einer mit Qualität.
 2. Der Clean (70 kg) entspricht etwa dem Maximum, Prozentangaben beziehen sich darauf.
