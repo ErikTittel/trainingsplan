@@ -77,6 +77,8 @@ h2,
 h3,
 p {
   overflow-wrap: anywhere;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 h1 {
@@ -200,7 +202,11 @@ h2 {
 .day-button strong {
   display: block;
   margin-top: 1px;
-  font-size: 0.95rem;
+  font-size: clamp(0.8rem, 3.4vw, 0.95rem);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .day-button[aria-current="true"] {

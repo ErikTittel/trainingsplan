@@ -230,9 +230,9 @@
           "number": "1",
           "name": "Sprung-/Elastizitätsblock (ca. 8 Min)",
           "phaseProgression": {
-            "phase1": "Stufe 1 Basis · W1–2: 0, W3–4: 30–40 Kontakte",
-            "phase2": "Stufe 2 Beidbeinig · 50–80 Kontakte",
-            "phase3": "Stufe 3 Einbeinig und reaktiv · 80–120 Kontakte"
+            "phase1": "Basis · W1–2: 0, W3–4: 30–40 Kontakte",
+            "phase2": "Beidbeinig · 50–80 Kontakte",
+            "phase3": "Einbeinig und reaktiv · 80–120 Kontakte"
           },
           "instructions": {
             "phase1": [
