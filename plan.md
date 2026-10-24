@@ -68,7 +68,7 @@ Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden. Tempo-Sc
 
 | # | Übung | Phase 1 → 2 → 3 | Tempo | RPE | Warum |
 | --- | --- | --- | --- | --- | --- |
-| 1 | **Sprung-/Elastizitätsblock** (siehe Abschnitt 5, ca. 8 Min) | nach Stufe |  |  | frisch und vor den schweren Sätzen |
+| 1 | **Sprung-/Elastizitätsblock** (siehe Abschnitt 5, ca. 8 Min) | Stufe 1 Basis → Stufe 2 Beidbeinig → Stufe 3 Einbeinig und reaktiv |  |  | frisch und vor den schweren Sätzen |
 | 2 | Spanish Squat (Isometrik mit Band) | 2×40 s (P1–2), P3: 2×30 s zum Aufwärmen | statisch | 5–6 | Sehnenvorbereitung fürs Knie |
 | 3 | Kniebeuge zur Box (Back oder Front), Pause 2–2,5 Min | 4×8 → 4×6–8 → 4×5–6 | 3-1-1 → 3-0-1 → 2-1-X | 7 → 8 | Quadrizeps-Hypertrophie; Box-Höhe = Tiefenlimit (ca. 70° → 90° → parallel) |
 | 4 | Shrimp-Squat, Pause 90 s nach beiden Seiten | 3×6/Seite, 12 kg, auf Pad/Box (ca. 70–80°) → 3×6–8, Box schrittweise tiefer → 3×8–10, 12–16 kg, voller Umfang | 3-1-1 | 7–8 | spezifisch und einbeinig; hier wird zuerst die Tiefe gesteigert, dann die Last |
@@ -92,6 +92,8 @@ Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden. Tempo-Sc
 | 6 | *Optional:* Seil-Pushdown + Hammer Curl | 3×12 | 2-0-2 | 8 | Arme |
 
 ## 5. Sprung- und Schnelligkeitsaufbau
+
+Die Stufen laufen parallel zu den Phasen: Phase 1 = Stufe 1, Phase 2 = Stufe 2, Phase 3 = Stufe 3. Der Block steht in Einheit 2 direkt nach dem Aufwärmen.
 
 | Stufe | Wochen | Inhalt (Einheit 2, nach dem Aufwärmen) | Kontakte/Einheit |
 | --- | --- | --- | --- |

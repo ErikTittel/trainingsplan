@@ -141,6 +141,17 @@ function renderExercise(exercise) {
   addChip(grid, "RPE", exercise.rpe || "Nicht angegeben");
   details.append(grid);
 
+  const instructions = exercise.instructions?.[selectedPhase];
+  if (instructions?.length) {
+    details.append(makeElement("h3", "", "Ablauf"));
+    const list = makeElement("ul", "instruction-list");
+    for (const item of instructions) list.append(makeElement("li", "", item));
+    details.append(list);
+  }
+  if (exercise.instructionsNote) {
+    details.append(makeElement("p", "instruction-note", exercise.instructionsNote));
+  }
+
   if (tempo && /^\d+(?:-\d+){2,3}$/.test(tempo)) {
     details.append(makeElement("h3", "", "Bewegungsrhythmus"));
     addRhythm(details, tempo);

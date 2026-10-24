@@ -228,12 +228,36 @@
       "exercises": [
         {
           "number": "1",
-          "name": "Sprung-/Elastizitätsblock (siehe Abschnitt 5, ca. 8 Min)",
+          "name": "Sprung-/Elastizitätsblock (ca. 8 Min)",
           "phaseProgression": {
-            "phase1": "nach Stufe",
-            "phase2": "nach Stufe",
-            "phase3": "nach Stufe"
+            "phase1": "Stufe 1 Basis · W1–2: 0, W3–4: 30–40 Kontakte",
+            "phase2": "Stufe 2 Beidbeinig · 50–80 Kontakte",
+            "phase3": "Stufe 3 Einbeinig und reaktiv · 80–120 Kontakte"
           },
+          "instructions": {
+            "phase1": [
+              "Einbeinstand auf Balance-Pad, erst mit geschlossenen Augen, dann mit Ballwurf: 3×30–45 s/Seite (links zuerst)",
+              "Step-off-Landungen von 15 cm mit 2 s Halten (ab W3)",
+              "Mini-Pogos beidbeinig unter 5 cm (ab W3)"
+            ],
+            "phase2": [
+              "Pogos 3×15",
+              "Box-Jump-up auf 30–40 cm mit Abstieg zu Fuß 3×4",
+              "Hocksprung mit Stick-Landung 3×3",
+              "Skater-Schritte ohne Flugphase",
+              "Seilspringen beidbeinig 3×30 s (ab W7)",
+              "Sprint-Drills (A-March, A-Skip) 3×15 m",
+              "Beschleunigung 4×10 m @ 70 % (ab W7)"
+            ],
+            "phase3": [
+              "Einbein-Pogos klein 2×10/Seite",
+              "Einbein-Landung (Stick) von 20 cm 3×4/Seite",
+              "Skater-Sprünge kurz 3×6 (ab W11)",
+              "Flache Sprints 4–6×15–20 m @ 85–90 % mit 90–120 s Pause",
+              "5-10-5-Richtungswechsel bei 60 % (W10) → 75 % (W11)"
+            ]
+          },
+          "instructionsNote": "Aufstieg in die nächste Stufe nur, wenn Einbein-Wadenheben links mindestens 90 % von rechts erreicht, der Einbeinstand auf dem Balance-Pad mit geschlossenen Augen 30 s ohne Wackeln seitengleich gelingt und am Morgen nach der letzten Einheit keine Schwellung oder Steifigkeit da ist. Bei Schwierigkeiten in der Stufe bleiben; die Wochenzahlen sind Richtwerte.",
           "tempo": {
             "phase1": "",
             "phase2": "",

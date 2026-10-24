@@ -386,6 +386,20 @@ details[open] > summary .chevron {
   font-size: 0.9rem;
 }
 
+.instruction-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 19px;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.exercise-details .instruction-note {
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
 .rhythm {
   display: flex;
   align-items: stretch;
