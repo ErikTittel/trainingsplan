@@ -1,7 +1,7 @@
 {
   "title": "12-Wochen-Trainingsplan: Muskelaufbau mit Lauf-Support",
   "created": "12. Oktober 2026",
-  "basicIdea": "Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt Cleans, Medball und Schlitten als Schnelligkeitsreiz ohne harte Stöße.",
+  "basicIdea": "Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt Cleans, Medball als Schnelligkeitsreiz ohne harte Stöße.",
   "assumptions": [
     "Lauftraining: 2–3 Läufe pro Woche, davon einer lang und einer mit Qualität.",
     "Der Clean (70 kg) entspricht etwa dem Maximum, Prozentangaben beziehen sich darauf.",
@@ -41,7 +41,7 @@
         "volume": "ca. 8–10",
         "intensityAndTempo": "RPE 6–8, 3 s exzentrisch",
         "kneeDepth": "bis ca. 70°",
-        "jumpAndSpeed": "W1–2: keine Sprünge (Balance, Schlitten, Medball, leichter Clean). W3–4: Mini-Pogos und Step-offs, ca. 30–40 Kontakte"
+        "jumpAndSpeed": "W1–2: keine Sprünge (Balance, Medball, leichter Clean). W3–4: Mini-Pogos und Step-offs, ca. 30–40 Kontakte"
       },
       {
         "phase": "2 Volumen & Elastizität",
@@ -316,7 +316,7 @@
         },
         {
           "number": "5a",
-          "name": "Beinbeuger liegend",
+          "name": "Beinbeuger",
           "phaseProgression": {
             "phase1": "3×10–12",
             "phase2": "4×8–10",
@@ -371,7 +371,7 @@
       "exercises": [
         {
           "number": "1",
-          "name": "Beschleunigungsblock: Medball-Brustpass/Rotationswurf 3×5, dann Schlitten schieben (Alternative ohne Schlitten: Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert, gleiche Strecken und Intensität; oder Laufband-Gehen bergauf bei 10–12 % Steigung, 6×20–30 s zügig statt Strecke)",
+          "name": "Beschleunigungsblock: Medball-Brustpass/Rotationswurf 3×5, Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert, gleiche Strecken und Intensität; oder Laufband-Gehen bergauf bei 10–12 % Steigung, 6×20–30 s zügig statt Strecke",
           "phaseProgression": {
             "phase1": "4×15 m leicht",
             "phase2": "6×15 m",
