@@ -10,10 +10,14 @@ const DAY_ORDER = ["Mo", "Do", "Sa"];
 const DAY_NUMBERS = { Mo: 1, Do: 4, Sa: 6 };
 const TEMPO_STEPS = ["Absenken", "Pause unten", "Anheben", "Pause oben"];
 const PHASES = [
-  { id: "phase1", label: "Phase 1", weeks: "W1–4" },
-  { id: "phase2", label: "Phase 2", weeks: "W5–8" },
-  { id: "phase3", label: "Phase 3", weeks: "W9–12" }
+  { id: "phase1", label: "Phase 1", weeks: "W1–4", firstWeek: 1 },
+  { id: "phase2", label: "Phase 2", weeks: "W5–8", firstWeek: 5 },
+  { id: "phase3", label: "Phase 3", weeks: "W9–12", firstWeek: 9 }
 ];
+const TOTAL_WEEKS = 12;
+const DELOAD_WEEKS = [4, 8, 12];
+// Tempo wie "3-1-1" oder "2-1-X" (X = explosiv), 3 oder 4 Stellen
+const TEMPO_PATTERN = /^[\dX]+(?:-[\dX]+){2,3}$/i;
 
 const elements = {
   title: document.querySelector("#plan-title"),
@@ -39,6 +43,31 @@ function makeElement(tag, className, text) {
   if (className) element.className = className;
   if (text !== undefined) element.textContent = text;
   return element;
+}
+
+// Berechnet die aktuelle Planwoche aus plan.startDate (Format JJJJ-MM-TT).
+// Ergebnis: Zahl (kann < 1 oder > 12 sein) oder null, wenn kein Startdatum gesetzt ist.
+function getCurrentWeek(startDate, today = new Date()) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(startDate || "");
+  if (!match) return null;
+  const start = Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  const now = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  const days = Math.round((now - start) / 86400000);
+  return Math.floor(days / 7) + 1;
+}
+
+function phaseForWeek(week) {
+  const clamped = Math.min(Math.max(week, 1), TOTAL_WEEKS);
+  return [...PHASES].reverse().find((phase) => clamped >= phase.firstWeek);
+}
+
+function describeWeek(week) {
+  if (week === null) return `12 Wochen · ${plan.created}`;
+  if (week < 1) return `Start am ${plan.created}`;
+  if (week > TOTAL_WEEKS) return "Plan abgeschlossen · 12 von 12 Wochen";
+  const phase = phaseForWeek(week);
+  const deload = DELOAD_WEEKS.includes(week) ? " · Entlastungswoche" : "";
+  return `Woche ${week} von ${TOTAL_WEEKS} · ${phase.label}${deload}`;
 }
 
 function getDefaultDay(today = new Date()) {
@@ -100,15 +129,16 @@ function addChip(container, label, value) {
 }
 
 function addRhythm(container, tempo) {
-  if (!tempo || !/^\d+(?:-\d+){2,3}$/.test(tempo)) return;
-  const values = tempo.split("-");
+  if (!tempo || !TEMPO_PATTERN.test(tempo)) return;
+  const values = tempo.toUpperCase().split("-");
   const rhythm = makeElement("div", "rhythm");
   rhythm.setAttribute("aria-label", `Tempo: ${values.join(", ")}`);
   values.forEach((value, index) => {
     const step = makeElement("div", "rhythm-step");
+    const stepName = TEMPO_STEPS[index] || "Tempo";
     step.append(
       makeElement("strong", "", value),
-      makeElement("small", "", TEMPO_STEPS[index] || "Tempo")
+      makeElement("small", "", value === "X" ? `${stepName} explosiv` : stepName)
     );
     rhythm.append(step);
     if (index < values.length - 1) rhythm.append(makeElement("span", "rhythm-arrow", "›"));
@@ -152,7 +182,7 @@ function renderExercise(exercise) {
     details.append(makeElement("p", "instruction-note", exercise.instructionsNote));
   }
 
-  if (tempo && /^\d+(?:-\d+){2,3}$/.test(tempo)) {
+  if (tempo && TEMPO_PATTERN.test(tempo)) {
     details.append(makeElement("h3", "", "Bewegungsrhythmus"));
     addRhythm(details, tempo);
   }
@@ -246,7 +276,9 @@ async function loadPlan() {
     }
 
     elements.title.textContent = plan.title;
-    elements.subtitle.textContent = `12 Wochen · ${plan.created}`;
+    const currentWeek = getCurrentWeek(plan.startDate);
+    elements.subtitle.textContent = describeWeek(currentWeek);
+    if (currentWeek !== null) selectedPhase = phaseForWeek(currentWeek).id;
     selectedDay = getDefaultDay();
     renderNavigation();
     renderPhaseNavigation();

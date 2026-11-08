@@ -2,7 +2,7 @@
 
 Erstellt am 12. Oktober 2026
 
-**Grundidee:** Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt Cleans, Medball und Schlitten als Schnelligkeitsreiz ohne harte Stöße.
+**Grundidee:** Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt Cleans, Medball und Widerstandsband-Starts als Schnelligkeitsreiz ohne harte Stöße.
 
 **Annahmen:**
 
@@ -24,7 +24,7 @@ Erstellt am 12. Oktober 2026
 
 | Phase | Wochen | Volumen (harte Sätze/Muskel/Woche) | Intensität und Tempo | Knie-Tiefe | Sprung und Schnelligkeit |
 | --- | --- | --- | --- | --- | --- |
-| **1 Fundament** | W1–3, **W4 Entlastung** | ca. 8–10 | RPE 6–8, 3 s exzentrisch | bis ca. 70° | W1–2: keine Sprünge (Balance, Schlitten, Medball, leichter Clean). W3–4: Mini-Pogos und Step-offs, ca. 30–40 Kontakte |
+| **1 Fundament** | W1–3, **W4 Entlastung** | ca. 8–10 | RPE 6–8, 3 s exzentrisch | bis ca. 70° | W1–2: keine Sprünge (Balance, Medball, Band-Starts, leichter Clean). W3–4: Mini-Pogos und Step-offs, ca. 30–40 Kontakte |
 | **2 Volumen & Elastizität** | W5–7, **W8 Entlastung** | ca. 12–14 | RPE 7–9, 2–3 s exzentrisch | bis ca. 90° (ab W7 ca. 100°) | beidbeinige Sprünge, Stick-Landungen, Beschleunigung 10 m, ca. 50–80 Kontakte |
 | **3 Intensität & Tempo** | W9–11, **W12 Entlastung + Test** | ca. 10–12, mehr Last | RPE 8–9, 5–8 Wdh, Konzentrik explosiv wo unkritisch | parallel, voller Shrimp wenn schmerzfrei | einbeinig klein, Sprints 85–90 %, Richtungswechsel 60–75 %, ca. 80–120 Kontakte |
 
@@ -82,7 +82,7 @@ Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden. Tempo-Sc
 
 | # | Übung | Phase 1 → 2 → 3 | Tempo | RPE | Warum |
 | --- | --- | --- | --- | --- | --- |
-| 1 | **Beschleunigungsblock:** Medball-Brustpass/Rotationswurf 3×5, dann Schlitten schieben (Alternative ohne Schlitten: Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert, gleiche Strecken und Intensität; oder Laufband-Gehen bergauf bei 10–12 % Steigung, 6×20–30 s zügig statt Strecke) | 4×15 m leicht → 6×15 m → 6×20 m schwer-schnell; ab W9 flache Sprints (Abschnitt 5) | explosiv | 6 → 8 | Schnelligkeit ohne Stoß, kaum Knietiefe |
+| 1 | **Beschleunigungsblock:** Medball-Brustpass/Rotationswurf 3×5, dann Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert (Alternative: Laufband-Gehen bergauf bei 10–12 % Steigung, 6×20–30 s zügig statt Strecke) | 4×15 m leicht → 6×15 m → 6×20 m schwer-schnell; ab W9 flache Sprints (Abschnitt 5) | explosiv | 6 → 8 | Schnelligkeit ohne Stoß, kaum Knietiefe |
 | 2 | Schrägbank (Kurzhantel), Pause 2 Min | 4×8–10 → 4×8 → 4×6–8 | 3-0-1 → 2-1-1 | 8 | Brust und Schulter |
 | 3 | Brustgestütztes Rudern (Straps) | 4×10–12 → 4×8–10 | 2-1-2 | 8 | Rücken, kein Griff-Limit |
 | 4a | Landmine- oder Schulterdrücken stehend | 3×8–10 | 2-0-1 | 8 | Schulterhypertrophie, gelenkfreundlich |
