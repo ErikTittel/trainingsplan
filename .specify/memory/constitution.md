@@ -1,17 +1,20 @@
 <!--
 Sync Impact Report
-- Version change: (unversioned template) → 1.0.0
-- Modified principles: alle Platzhalter erstmals belegt
-  - [PRINCIPLE_1_NAME] → I. Reines Web ohne Build (NICHT VERHANDELBAR)
-  - [PRINCIPLE_2_NAME] → II. Mobile-first und studiotauglich
-  - [PRINCIPLE_3_NAME] → III. Fokus auf die aktuelle Einheit
-  - [PRINCIPLE_4_NAME] → IV. Plandaten getrennt von Darstellung
-  - [PRINCIPLE_5_NAME] → V. Offline-fähig und relativ deploybar
-- Added sections: VI. Sicherheitshinweise sichtbar, Technische Rahmenbedingungen,
-  Entwicklungsablauf, Governance
+- Version change: 1.0.0 → 2.0.0 (MAJOR: Prinzip III neu definiert)
+- Modified principles:
+  - III. Fokus auf die aktuelle Einheit → III. Fokus auf die aktuelle Einheit, alles auf einen Blick
+    (Regel „Details erst im geöffneten Zustand“ ersetzt durch „alle Angaben sofort sichtbar,
+    nicht aufklappbar, ohne Doppelung, Abkürzungen nur mit Legende“)
+- Added sections: keine (Entwicklungsablauf: Prüfpunkt „Auf-/Zuklappen der Karten“ ersetzt
+  durch „vollständige Kartenanzeige, Phasenwechsel, Legende“)
 - Removed sections: keine
+- Auslöser: specs/001-karten-alles-sichtbar (Plan, Complexity Tracking)
 - Templates: keine Änderung (Templates lesen die Verfassung zur Laufzeit)
-- Follow-up TODOs: keine
+- Follow-up TODOs:
+  - CLAUDE.md, Abschnitt „UI-Grundsätze“ und Prüfliste „Lokal starten“: noch auf
+    aufklappbare Karten (`<details>`) ausgerichtet → anpassen
+  - SPEC.md, Abschnitte 3 „Interaktion“ und 5 „Detailniveau“: beschreiben noch
+    expandierbare Karten → anpassen
 -->
 
 # Trainingsplan-PWA Constitution
@@ -40,16 +43,25 @@ wartbar und auf jedem statischen Hosting lauffähig bleiben.
 **Begründung:** Die App wird während des Trainings genutzt – mit verschwitzten Händen,
 wechselndem Licht und wenig Aufmerksamkeit für Bedienung.
 
-### III. Fokus auf die aktuelle Einheit
+### III. Fokus auf die aktuelle Einheit, alles auf einen Blick
 
 - Die Hauptansicht zeigt die heutige bzw. nächste Trainingseinheit der aktuellen Woche.
 - Nur echte Krafttrainingstage werden angezeigt; Lauf- und Recovery-Tage nicht.
-- Geschlossene Übungskarten zeigen nur Name, Sätze, Wiederholungen, Tempo und RPE;
-  Details, Ausführungshinweise und Schemata erscheinen erst im geöffneten Zustand.
+- Übungskarten zeigen alle in `plan.json` hinterlegten Angaben der gewählten Phase sofort
+  und ohne Interaktion an; sie sind NICHT auf- oder zuklappbar und haben kein Aufklapp-Symbol.
+- Jede Karte folgt einem festen Aufbau: Name, darunter eine Kennzahlenzeile (Vorgabe, Tempo,
+  RPE, Pause), darunter Zusatztexte (Zweck, Ablaufschritte, Hinweise).
+- Jede Angabe erscheint pro Karte genau einmal; fehlende Angaben werden weggelassen statt
+  als Platzhalter angezeigt.
+- Abkürzungen sind erlaubt, wenn sie das Erfassen beschleunigen; jede verwendete Abkürzung
+  MUSS in einer kurzen Legende auf derselben Seite erklärt sein.
 - Neue Funktionen DÜRFEN die Hauptansicht nicht überladen oder unnötiges Scrollen erzeugen.
+  Ergänzende Infobereiche außerhalb der Übungskarten (z. B. Plan-Details) DÜRFEN aufklappbar
+  sein, soweit Prinzip VI eingehalten wird.
 
-**Begründung:** Im Studio zählt, die nächste Übung in Sekunden zu finden; alles andere
-ist zweitrangig.
+**Begründung:** Im Studio zählt, die nächste Übung in Sekunden zu erfassen – ohne Tippen
+zwischen zwei Sätzen. Kompaktheit entsteht durch festes Layout und Abkürzungen, nicht durch
+Verstecken.
 
 ### IV. Plandaten getrennt von Darstellung
 
@@ -96,7 +108,8 @@ Training nicht auffindbar sind, schützen nicht.
 ## Entwicklungsablauf
 
 - Jede Änderung wird vor dem Commit lokal über einen statischen Server geprüft:
-  Hell- und Dark Mode, schmale Mobilbreite, Auf-/Zuklappen der Karten, Wochenerkennung.
+  Hell- und Dark Mode, schmale Mobilbreite (ab 320 px ohne horizontales Scrollen),
+  vollständige Karteninhalte samt Legende, Phasenwechsel, Wochenerkennung.
 - Bei Änderungen am Service Worker wird das Offline-Verhalten geprüft.
 - Änderungen werden kurz auf Deutsch erklärt, verständlich für Grundkenntnisse.
 - Commit-Nachrichten auf Deutsch, knapp und beschreibend.
@@ -115,4 +128,4 @@ Training nicht auffindbar sind, schützen nicht.
 - Jeder Implementierungsplan enthält einen Verfassungs-Check; Abweichungen MÜSSEN dort
   begründet werden, sonst ist der Plan abzulehnen.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-14 | **Last Amended**: 2026-11-14
+**Version**: 2.0.0 | **Ratified**: 2026-11-14 | **Last Amended**: 2026-11-14
