@@ -28,8 +28,10 @@ Eine mobile, schnell lesbare Trainingsplan-App für iPhone im Fitnessstudio. Fok
   - RPE
 
 ### 3. Interaktion
-- Übungen werden als dauerhaft sichtbare Karten dargestellt; sie sind nicht aufklappbar und
-  reagieren nicht auf Antippen.
+- Übungen werden als dauerhaft sichtbare Karten dargestellt; die Planangaben sind nicht
+  aufklappbar und reagieren nicht auf Antippen. Aufklappbar ist nur der Protokollbereich
+  (Abschnitt 7).
+- Jede Karte steht für genau eine Übung (keine kombinierten Karten „A + B“).
 - Jede Karte hat denselben Aufbau:
   - Name der Übung
   - Kennzahlenzeile: Sätze/Wiederholungen, Tempo, RPE, Pause
@@ -55,12 +57,40 @@ Eine mobile, schnell lesbare Trainingsplan-App für iPhone im Fitnessstudio. Fok
 - Montag, Donnerstag und Samstag als Haupttrainings-Tage bleiben sichtbar.
 - Lauf- und Recovery-Tage werden bewusst nicht dargestellt.
 
+### 7. Trainingsprotokoll
+Details: [specs/002-trainingsprotokoll/](specs/002-trainingsprotokoll/spec.md)
+
+- Ziel: Während des Trainings festhalten, mit welchem Gewicht bzw. welcher Zeit eine Übung
+  gemacht wurde und wie sie sich angefühlt hat – und beim nächsten Mal genau das an der Übung
+  sehen, um Last und Umfang anzupassen.
+- Erfasst wird pro Übung und Training nur:
+  - Gewicht (kg) bzw. Zusatzlast bei Körpergewichtsübungen, bzw. Zeit (s) bei Halteübungen;
+    Spanish Squat hat Zeit und Gewicht; Sprung- und Beschleunigungsblock haben keinen Wert
+  - Power (wahrgenommene Anstrengung): 😟 schwach · 🙂 ok · 😃 stark, Standard ok
+  - ein Kommentar
+- Nicht erfasst: Sätze, Wiederholungen, RPE (sie entsprechen dem Plan), keine Trennung links/
+  rechts (Gewicht und Zeit gelten für beide Seiten), kein „erledigt“.
+- Anzeige: Gibt es zu einer Übung einen Eintrag, stehen Gewicht/Zeit und Power des jüngsten
+  Eintrags direkt hinter dem Namen, der Kommentar direkt hinter dem Zweck – ohne Antippen. Das
+  Nummernfeld zeigt „✓“, wenn die Übung heute erfasst ist, sonst „+“.
+- Eingabe: Nummernfeld antippen öffnet den Protokollbereich unter der Übung (höchstens einer
+  offen, beim Laden alle geschlossen). Felder sind mit dem letzten Wert vorbelegt; jede Änderung
+  wird sofort gespeichert; ein Smiley antippen übernimmt die Werte. Keine „Heute“-Zeile – die
+  Felder zeigen den heutigen Stand. Ist heute schon erfasst, steht oben „Letztes Mal …“.
+- Kurzhantel: Gewicht einer Hantel; Langhantel: Gesamtgewicht.
+- Speicherung: nur auf dem Gerät, sofort bei jeder Eingabe, auch offline. Kein Server, kein
+  Konto, keine Kosten; das Deployment bleibt unverändert.
+- Sicherung: Protokoll als Datei exportieren und wieder importieren (Gerätewechsel, Schutz vor
+  Datenverlust).
+- Bewusst nicht enthalten: Diagramme und Verläufe über viele Wochen, automatische
+  Lastvorschläge, Synchronisation zwischen Geräten, Pausen-Timer.
+
 ## Strukturvorschlag der Oberfläche
 1. Header mit Phase / Woche / heutiger Einheit
 2. Einheit/Kartenbereich
-3. Dauerhaft sichtbare Übungskarten mit Legende
+3. Dauerhaft sichtbare Übungskarten mit Legende, je Karte mit aufklappbarem Protokollbereich
 4. Hinweisbereich für Sicherheit und Progression
-5. Optional: kleiner Abschlussbereich mit Kennzahlen oder Status
+5. Sicherungsbereich für das Protokoll (aufklappbare Infokarte)
 
 ## UX-Ziele
 - Keine überladenen Listen
@@ -71,4 +101,6 @@ Eine mobile, schnell lesbare Trainingsplan-App für iPhone im Fitnessstudio. Fok
 ## Offene Punkte für spätere Umsetzung
 - genaue Ausgestaltung der schematischen Übungsdarstellungen (künftige Idee)
 - genaue Positionierung der Hinweise und Sicherheitsregeln
-- Abschluss- oder Statusbereich je nach späterem Bedarf
+- Auswertung des Protokolls über mehrere Wochen (Verläufe, Kennzahlen) – eigene Ansicht, nicht
+  in der Übungskarte
+- Synchronisation des Protokolls zwischen Geräten (würde eine Verfassungsänderung erfordern)

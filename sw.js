@@ -1,11 +1,12 @@
 "use strict";
 
-const CACHE_NAME = "trainingsplan-v8";
+const CACHE_NAME = "trainingsplan-v11";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
+  "./log.js",
   "./plan.json",
   "./manifest.webmanifest",
   "./icons/apple-touch-icon.png",

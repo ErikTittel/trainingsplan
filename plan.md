@@ -74,7 +74,8 @@ Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden. Tempo-Sc
 | 4 | Shrimp-Squat, Pause 90 s nach beiden Seiten | 3×6/Seite, 12 kg, auf Pad/Box (ca. 70–80°) → 3×6–8, Box schrittweise tiefer → 3×8–10, 12–16 kg, voller Umfang | 3-1-1 | 7–8 | spezifisch und einbeinig; hier wird zuerst die Tiefe gesteigert, dann die Last |
 | 5a | Beinbeuger liegend | 3×10–12 → 4×8–10 | 3-1-1 | 8 | Ischios ohne Patella-Druck |
 | 5b | Einbein-Wadenheben (gerade Knie), links zuerst | 3×10 → 3×12 mit Last | 3-1-1 | 8 | Achilles und Sprunggelenk; bei Seitendifferenz links einen Extrasatz |
-| 6 | *Optional bei Zeitnot streichen:* Liegestütz Füße erhöht (Weste) + Ringrudern | 3×12–15 → 3×10–12 + 5 kg; Rudern 3×10–12 | 3-1-1 | 8 | Push- und Zugfrequenz |
+| 6a | *Optional bei Zeitnot streichen:* Liegestütz Füße erhöht (Weste) | 3×12–15 → 3×10–12 + 5 kg | 3-1-1 | 8 | Push-Frequenz |
+| 6b | *Optional bei Zeitnot streichen:* Ringrudern | 3×10–12 | 3-1-1 | 8 | Zugfrequenz |
 
 ### Einheit 3 – Druck und Beschleunigung (Sa)
 
@@ -89,7 +90,8 @@ Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden. Tempo-Sc
 | 4b | Seitheben/Reverse Fly | 3×12–15 | 2-1-2 | 8 | Delta hinten und seitlich |
 | 5a | Hip Thrust | 3×10 → 3×8–10 | 2-1-1 | 8 | Gesäß für Sprint und Lauf, ohne Knielast |
 | 5b | Copenhagen Plank | 3×20–30 s/Seite | statisch | 7 | Adduktoren und Rumpf für Richtungswechsel |
-| 6 | *Optional:* Seil-Pushdown + Hammer Curl | 3×12 | 2-0-2 | 8 | Arme |
+| 6a | *Optional:* Seil-Pushdown | 3×12 | 2-0-2 | 8 | Arme |
+| 6b | *Optional:* Hammer Curl | 3×12 | 2-0-2 | 8 | Arme |
 
 ## 5. Sprung- und Schnelligkeitsaufbau
 

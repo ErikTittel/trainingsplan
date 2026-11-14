@@ -104,13 +104,20 @@
   },
   "workouts": [
     {
+      "id": "e1",
       "title": "Einheit 1 – Zug und Hüfte",
       "day": "Mo",
       "warmup": "Aufwärmen (9 Min): 2 Min Crosstrainer oder zügiges Gehen, dann 5 Min Mobility: 90/90-Hüftrotation 6/Seite, Open Book 8/Seite, Wall Slides 10, Brustwirbelsäulen-Extension an der Rolle 8. Danach 2 Min Aktivierung: Glute-Bridge-Halt 2×20 s, Einbeinstand mit geschlossenen Augen 30 s/Seite (links zuerst), Clean-Technik leer und 2 Aufbausätze.",
       "exercises": [
         {
+          "id": "hang-power-clean",
           "number": "1",
           "name": "Hang Power Clean (ab Knie), Pause 90 s",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "4×3 @ ca. 55 %",
             "phase2": "5×3 @ 60–65 %",
@@ -125,8 +132,15 @@
           "why": "Schnelligkeit und Hüftkraft mit kleinem Kniewinkel; Fang hoch in der Viertelkniebeuge"
         },
         {
+          "id": "klimmzug",
           "number": "2a",
           "name": "Klimmzug (Parallelgriff/Ringe)",
+          "log": {
+            "fields": [
+              "addedWeight"
+            ],
+            "step": 0.5
+          },
           "phaseProgression": {
             "phase1": "4×4–5",
             "phase2": "4×5–7",
@@ -141,8 +155,14 @@
           "why": "Zug-Hypertrophie; Griff schont den Zeigefinger"
         },
         {
+          "id": "face-pull",
           "number": "2b",
           "name": "Face Pull (Seil)",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "3×12–15",
             "phase2": "3×12–15",
@@ -157,8 +177,14 @@
           "why": "Schulter-Ausgleich zum Sitzen"
         },
         {
+          "id": "rdl",
           "number": "3",
           "name": "Rumänisches Kreuzheben (Straps), Pause 2 Min",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "3×8",
             "phase2": "4×8",
@@ -173,8 +199,15 @@
           "why": "Hüftstrecker für Sprint und Laufökonomie, kaum Kniebelastung"
         },
         {
+          "id": "einbein-rdl",
           "number": "4a",
           "name": "Einbein-RDL (Kurzhantel)",
+          "log": {
+            "fields": [
+              "weight"
+            ],
+            "step": 1
+          },
           "phaseProgression": {
             "phase1": "3×8/Seite",
             "phase2": "3×8/Seite",
@@ -189,8 +222,14 @@
           "why": "Sprunggelenk- und Hüftstabilität"
         },
         {
+          "id": "wadenheben-sitzend",
           "number": "4b",
           "name": "Sitzendes Wadenheben",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "3×12–15",
             "phase2": "3×12–15",
@@ -205,8 +244,14 @@
           "why": "Soleus für Achillessehne und Laufökonomie"
         },
         {
+          "id": "latzug",
           "number": "5",
           "name": "Latzug neutral (Straps)",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "3×10–12",
             "phase2": "3×10–12",
@@ -223,13 +268,18 @@
       ]
     },
     {
+      "id": "e2",
       "title": "Einheit 2 – Beine, Fuß und Elastizität",
       "day": "Do",
       "warmup": "Aufwärmen (10 Min): 2 Min Crosstrainer (kein Rad wegen der hohen Frequenz), Hüfte: 90/90 und Hip Airplane 5/Seite, Sprunggelenk: Knee-to-Wall 8/Seite langsam und Band-Eversion/Inversion 10/Seite, Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s/Seite. Dann 3 Aufbausätze Kniebeuge (leer, 40 %, 60 %).",
       "exercises": [
         {
+          "id": "sprungblock",
           "number": "1",
           "name": "Sprung-/Elastizitätsblock (ca. 8 Min)",
+          "log": {
+            "fields": []
+          },
           "phaseProgression": {
             "phase1": "Basis · W1–2: 0, W3–4: 30–40 Kontakte",
             "phase2": "Beidbeinig · 50–80 Kontakte",
@@ -268,8 +318,15 @@
           "why": "frisch und vor den schweren Sätzen"
         },
         {
+          "id": "spanish-squat",
           "number": "2",
           "name": "Spanish Squat (Isometrik mit Band)",
+          "log": {
+            "fields": [
+              "seconds",
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "2×40 s",
             "phase2": "2×40 s",
@@ -284,8 +341,14 @@
           "why": "Sehnenvorbereitung fürs Knie"
         },
         {
+          "id": "kniebeuge-box",
           "number": "3",
           "name": "Kniebeuge zur Box (Back oder Front), Pause 2–2,5 Min",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "4×8",
             "phase2": "4×6–8",
@@ -300,8 +363,15 @@
           "why": "Quadrizeps-Hypertrophie; Box-Höhe = Tiefenlimit (ca. 70° → 90° → parallel)"
         },
         {
+          "id": "shrimp-squat",
           "number": "4",
           "name": "Shrimp-Squat, Pause 90 s nach beiden Seiten",
+          "log": {
+            "fields": [
+              "weight"
+            ],
+            "step": 1
+          },
           "phaseProgression": {
             "phase1": "3×6/Seite, 12 kg, auf Pad/Box (ca. 70–80°)",
             "phase2": "3×6–8, Box schrittweise tiefer",
@@ -316,8 +386,14 @@
           "why": "spezifisch und einbeinig; hier wird zuerst die Tiefe gesteigert, dann die Last"
         },
         {
+          "id": "beinbeuger",
           "number": "5a",
           "name": "Beinbeuger",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "3×10–12",
             "phase2": "4×8–10",
@@ -332,8 +408,15 @@
           "why": "Ischios ohne Patella-Druck"
         },
         {
+          "id": "wadenheben-einbein",
           "number": "5b",
           "name": "Einbein-Wadenheben (gerade Knie), links zuerst",
+          "log": {
+            "fields": [
+              "addedWeight"
+            ],
+            "step": 1
+          },
           "phaseProgression": {
             "phase1": "3×10",
             "phase2": "3×12 mit Last",
@@ -348,12 +431,19 @@
           "why": "Achilles und Sprunggelenk; bei Seitendifferenz links einen Extrasatz"
         },
         {
-          "number": "6",
-          "name": "Optional bei Zeitnot streichen: Liegestütz Füße erhöht (Weste) + Ringrudern",
+          "id": "liegestuetz",
+          "number": "6a",
+          "name": "Optional bei Zeitnot streichen: Liegestütz Füße erhöht (Weste)",
+          "log": {
+            "fields": [
+              "addedWeight"
+            ],
+            "step": 1
+          },
           "phaseProgression": {
-            "phase1": "Liegestütz 3×12–15; Rudern 3×10–12",
-            "phase2": "Liegestütz 3×10–12 + 5 kg; Rudern 3×10–12",
-            "phase3": "Liegestütz 3×10–12 + 5 kg; Rudern 3×10–12"
+            "phase1": "3×12–15",
+            "phase2": "3×10–12 + 5 kg",
+            "phase3": "3×10–12 + 5 kg"
           },
           "tempo": {
             "phase1": "3-1-1",
@@ -361,18 +451,46 @@
             "phase3": "3-1-1"
           },
           "rpe": "8",
-          "why": "Push- und Zugfrequenz"
+          "why": "Push-Frequenz"
+        },
+        {
+          "id": "ringrudern",
+          "number": "6b",
+          "name": "Optional bei Zeitnot streichen: Ringrudern",
+          "log": {
+            "fields": [
+              "addedWeight"
+            ],
+            "step": 1
+          },
+          "phaseProgression": {
+            "phase1": "3×10–12",
+            "phase2": "3×10–12",
+            "phase3": "3×10–12"
+          },
+          "tempo": {
+            "phase1": "3-1-1",
+            "phase2": "3-1-1",
+            "phase3": "3-1-1"
+          },
+          "rpe": "8",
+          "why": "Zugfrequenz"
         }
       ]
     },
     {
+      "id": "e3",
       "title": "Einheit 3 – Druck und Beschleunigung",
       "day": "Sa",
       "warmup": "Aufwärmen (9 Min): 2 Min Geschicklichkeit statt Cardio (Koordinationsleiter nur mit Schritten, Bear Crawl vor/zurück), Band-Dislocates 10, Wall Slides 10, Brustwirbelsäulen-Extension 8, Hüftbeuger-Dehnung im Ausfallschritt mit Beckenkippung 30 s/Seite, Scap-Liegestütze 10, Aufbausätze Bank.",
       "exercises": [
         {
+          "id": "beschleunigungsblock",
           "number": "1",
           "name": "Beschleunigungsblock (Medball + Band-Starts)",
+          "log": {
+            "fields": []
+          },
           "phaseProgression": {
             "phase1": "4×15 m leicht",
             "phase2": "6×15 m",
@@ -403,8 +521,15 @@
           "why": "Schnelligkeit ohne Stoß, kaum Knietiefe"
         },
         {
+          "id": "schraegbank",
           "number": "2",
           "name": "Schrägbank (Kurzhantel), Pause 2 Min",
+          "log": {
+            "fields": [
+              "weight"
+            ],
+            "step": 1
+          },
           "phaseProgression": {
             "phase1": "4×8–10",
             "phase2": "4×8",
@@ -419,8 +544,14 @@
           "why": "Brust und Schulter"
         },
         {
+          "id": "rudern-brustgestuetzt",
           "number": "3",
           "name": "Brustgestütztes Rudern (Straps)",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "4×10–12",
             "phase2": "4×8–10",
@@ -435,8 +566,14 @@
           "why": "Rücken, kein Griff-Limit"
         },
         {
+          "id": "druecken-stehend",
           "number": "4a",
           "name": "Landmine- oder Schulterdrücken stehend",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "3×8–10",
             "phase2": "3×8–10",
@@ -451,8 +588,15 @@
           "why": "Schulterhypertrophie, gelenkfreundlich"
         },
         {
+          "id": "seitheben-reverse-fly",
           "number": "4b",
           "name": "Seitheben/Reverse Fly",
+          "log": {
+            "fields": [
+              "weight"
+            ],
+            "step": 1
+          },
           "phaseProgression": {
             "phase1": "3×12–15",
             "phase2": "3×12–15",
@@ -467,8 +611,14 @@
           "why": "Delta hinten und seitlich"
         },
         {
+          "id": "hip-thrust",
           "number": "5a",
           "name": "Hip Thrust",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
           "phaseProgression": {
             "phase1": "3×10",
             "phase2": "3×8–10",
@@ -483,8 +633,14 @@
           "why": "Gesäß für Sprint und Lauf, ohne Knielast"
         },
         {
+          "id": "copenhagen-plank",
           "number": "5b",
           "name": "Copenhagen Plank",
+          "log": {
+            "fields": [
+              "seconds"
+            ]
+          },
           "phaseProgression": {
             "phase1": "3×20–30 s/Seite",
             "phase2": "3×20–30 s/Seite",
@@ -499,8 +655,37 @@
           "why": "Adduktoren und Rumpf für Richtungswechsel"
         },
         {
-          "number": "6",
-          "name": "Optional: Seil-Pushdown + Hammer Curl",
+          "id": "seil-pushdown",
+          "number": "6a",
+          "name": "Optional: Seil-Pushdown",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          },
+          "phaseProgression": {
+            "phase1": "3×12",
+            "phase2": "3×12",
+            "phase3": "3×12"
+          },
+          "tempo": {
+            "phase1": "2-0-2",
+            "phase2": "2-0-2",
+            "phase3": "2-0-2"
+          },
+          "rpe": "8",
+          "why": "Arme"
+        },
+        {
+          "id": "hammer-curl",
+          "number": "6b",
+          "name": "Optional: Hammer Curl",
+          "log": {
+            "fields": [
+              "weight"
+            ],
+            "step": 1
+          },
           "phaseProgression": {
             "phase1": "3×12",
             "phase2": "3×12",
