@@ -121,77 +121,74 @@ function renderPhaseNavigation() {
   elements.phaseNavigation.hidden = false;
 }
 
-function addChip(container, label, value) {
-  if (!value) return;
-  const chip = makeElement("div", "detail-chip");
-  chip.append(makeElement("span", "", label), makeElement("strong", "", value));
-  container.append(chip);
+// Trennt eine Pausenangabe wie ", Pause 90 s" vom Übungsnamen ab.
+// "Kniebeuge, Pause 2–2,5 Min" → { title: "Kniebeuge", rest: "2–2,5 min" }
+function splitRest(name) {
+  const match = /,\s*Pause\s+(.+)$/i.exec(name);
+  if (!match) return { title: name, rest: "" };
+  return {
+    title: name.slice(0, match.index).trim(),
+    rest: match[1].trim().replace(/Min/g, "min")
+  };
 }
 
-function addRhythm(container, tempo) {
-  if (!tempo || !TEMPO_PATTERN.test(tempo)) return;
+// Kürzt wiederkehrende Begriffe nur für die Anzeige (plan.json bleibt unverändert).
+function abbreviate(text) {
+  return text.replace(/\/Seite/g, "/S.");
+}
+
+// Macht aus "3-1-1" die Kurzform "↓3 · 1 · ↑1" und eine Langform für Screenreader.
+// Wörter wie "explosiv" bleiben unverändert.
+function formatTempo(tempo) {
+  if (!tempo) return { short: "", long: "" };
+  if (!TEMPO_PATTERN.test(tempo)) return { short: tempo, long: tempo };
   const values = tempo.toUpperCase().split("-");
-  const rhythm = makeElement("div", "rhythm");
-  rhythm.setAttribute("aria-label", `Tempo: ${values.join(", ")}`);
-  values.forEach((value, index) => {
-    const step = makeElement("div", "rhythm-step");
-    const stepName = TEMPO_STEPS[index] || "Tempo";
-    step.append(
-      makeElement("strong", "", value),
-      makeElement("small", "", value === "X" ? `${stepName} explosiv` : stepName)
-    );
-    rhythm.append(step);
-    if (index < values.length - 1) rhythm.append(makeElement("span", "rhythm-arrow", "›"));
+  let short = `↓${values[0]} · ${values[1]} · ↑${values[2]}`;
+  if (values.length > 3) short += ` · ${values[3]}`;
+  const steps = values.map((value, index) => {
+    const stepName = TEMPO_STEPS[index];
+    return value === "X" ? `${stepName} explosiv` : `${stepName} ${value} s`;
   });
-  container.append(rhythm);
+  return { short, long: `Tempo: ${steps.join(", ")}` };
 }
 
+// Fester Aufbau: Name → Kennzahlenzeile (Vorgabe, Tempo, RPE, Pause) → Zweck, Ablauf, Hinweis.
+// Leere Angaben werden weggelassen.
 function renderExercise(exercise) {
-  const progression = exercise.phaseProgression[selectedPhase];
-  const tempo = exercise.tempo[selectedPhase];
-  const card = makeElement("details", "exercise-card");
-  const summary = makeElement("summary");
+  const { title, rest } = splitRest(exercise.name);
+  const tempo = formatTempo(exercise.tempo[selectedPhase]);
+  const card = makeElement("article", "exercise-card");
   const number = makeElement("span", "exercise-number", exercise.number);
   number.setAttribute("aria-hidden", "true");
-  const heading = makeElement("span", "exercise-heading");
-  heading.append(makeElement("strong", "", exercise.name));
-  heading.append(makeElement("small", "", progression));
-  const quickDetails = [tempo && `Tempo ${tempo}`, exercise.rpe && `RPE ${exercise.rpe}`]
-    .filter(Boolean)
-    .join(" · ");
-  if (quickDetails) heading.append(makeElement("small", "exercise-quick-details", quickDetails));
-  const chevron = makeElement("span", "chevron");
-  chevron.setAttribute("aria-hidden", "true");
-  summary.append(number, heading, chevron);
+  const body = makeElement("div", "exercise-body");
+  body.append(makeElement("strong", "exercise-title", title));
 
-  const details = makeElement("div", "exercise-details");
-  const grid = makeElement("div", "detail-grid");
-  addChip(grid, "Satz-/Wdh.-Progression", progression);
-  addChip(grid, "Tempo", tempo || "Nicht angegeben");
-  addChip(grid, "RPE", exercise.rpe || "Nicht angegeben");
-  details.append(grid);
+  const metrics = makeElement("div", "metric-row");
+  metrics.append(
+    makeElement("span", "metric metric-main", abbreviate(exercise.phaseProgression[selectedPhase]))
+  );
+  if (tempo.short) {
+    const tempoMetric = makeElement("span", "metric", tempo.short);
+    tempoMetric.setAttribute("aria-label", tempo.long);
+    metrics.append(tempoMetric);
+  }
+  if (exercise.rpe) metrics.append(makeElement("span", "metric", `RPE ${exercise.rpe}`));
+  if (rest) metrics.append(makeElement("span", "metric", `P ${rest}`));
+  body.append(metrics);
+
+  if (exercise.why) body.append(makeElement("p", "exercise-purpose", exercise.why));
 
   const instructions = exercise.instructions?.[selectedPhase];
   if (instructions?.length) {
-    details.append(makeElement("h3", "", "Ablauf"));
     const list = makeElement("ul", "instruction-list");
     for (const item of instructions) list.append(makeElement("li", "", item));
-    details.append(list);
+    body.append(list);
   }
   if (exercise.instructionsNote) {
-    details.append(makeElement("p", "instruction-note", exercise.instructionsNote));
+    body.append(makeElement("p", "instruction-note", exercise.instructionsNote));
   }
 
-  if (tempo && TEMPO_PATTERN.test(tempo)) {
-    details.append(makeElement("h3", "", "Bewegungsrhythmus"));
-    addRhythm(details, tempo);
-  }
-  if (exercise.why) {
-    details.append(makeElement("h3", "", "Trainingsziel"));
-    details.append(makeElement("p", "", exercise.why));
-  }
-
-  card.append(summary, details);
+  card.append(number, body);
   return card;
 }
 

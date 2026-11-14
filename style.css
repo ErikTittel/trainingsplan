@@ -267,11 +267,60 @@ h2 {
   box-shadow: var(--shadow);
 }
 
-.exercise-card[open] {
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+.exercise-card {
+  display: flex;
+  gap: 12px;
+  padding: 13px 15px;
 }
 
-.exercise-card > summary,
+.exercise-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.exercise-title {
+  display: block;
+  font-size: 0.97rem;
+  line-height: 1.28;
+  overflow-wrap: anywhere;
+}
+
+.metric-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-top: 5px;
+}
+
+.metric {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.metric-main {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 850;
+  white-space: normal;
+}
+
+.exercise-purpose {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.exercise-legend {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
 .info-card > summary {
   display: flex;
   align-items: center;
@@ -301,31 +350,18 @@ summary::-webkit-details-marker {
   font-weight: 850;
 }
 
-.exercise-heading {
-  min-width: 0;
-  flex: 1;
-}
-
-.exercise-heading strong,
 .info-card summary strong {
   display: block;
   font-size: 0.97rem;
   line-height: 1.28;
 }
 
-.exercise-heading small,
 .info-card summary small {
   display: block;
   margin-top: 5px;
   color: var(--muted);
   font-size: 0.79rem;
   line-height: 1.35;
-}
-
-.exercise-heading .exercise-quick-details {
-  margin-top: 3px;
-  color: var(--accent);
-  font-weight: 750;
 }
 
 .chevron {
@@ -343,48 +379,11 @@ details[open] > summary .chevron {
   transform: rotate(225deg) translate(-1px, -1px);
 }
 
-.exercise-details {
-  padding: 0 15px 16px;
-  border-top: 1px solid var(--line);
-}
-
-.detail-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 9px;
-  margin: 14px 0;
-}
-
-.detail-chip {
-  min-height: 59px;
-  padding: 9px 11px;
-  border-radius: 12px;
-  background: var(--surface-raised);
-}
-
-.detail-chip span {
-  display: block;
-  color: var(--muted);
-  font-size: 0.69rem;
-  font-weight: 750;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-.detail-chip strong {
-  display: block;
-  margin-top: 2px;
-  font-size: 0.9rem;
-  line-height: 1.32;
-}
-
-.exercise-details h3,
 .info-content h3 {
   margin: 15px 0 5px;
   font-size: 0.96rem;
 }
 
-.exercise-details p,
 .info-content p,
 .info-content li {
   margin: 0;
@@ -394,52 +393,18 @@ details[open] > summary .chevron {
 
 .instruction-list {
   display: grid;
-  gap: 6px;
-  margin: 0;
+  gap: 3px;
+  margin: 8px 0 0;
   padding-left: 19px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   line-height: 1.35;
 }
 
-.exercise-details .instruction-note {
-  margin-top: 10px;
-  font-size: 0.85rem;
-}
-
-.rhythm {
-  display: flex;
-  align-items: stretch;
-  gap: 5px;
-  margin: 9px 0 14px;
-}
-
-.rhythm-step {
-  display: flex;
-  min-width: 0;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8px 5px;
-  border-radius: 10px;
-  background: var(--surface-raised);
-  text-align: center;
-}
-
-.rhythm-step strong {
-  color: var(--accent);
-  font-size: 0.91rem;
-}
-
-.rhythm-step small {
-  margin-top: 2px;
+.exercise-card .instruction-note {
+  margin: 8px 0 0;
   color: var(--muted);
-  font-size: 0.65rem;
-  line-height: 1.2;
-}
-
-.rhythm-arrow {
-  align-self: center;
-  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
 }
 
 .notice-section {
@@ -522,10 +487,6 @@ details[open] > summary .chevron {
 
   .day-button {
     min-height: 64px;
-  }
-
-  .exercise-card > summary {
-    min-height: 82px;
   }
 }
 

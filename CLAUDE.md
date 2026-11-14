@@ -16,14 +16,15 @@ Sprache: Oberfläche, Inhalte, Commit-Nachrichten und Erklärungen an den Nutzer
 python -m http.server 8000
 ```
 
-Prüfen vor dem Commit (manuell, es gibt keine automatisierten Tests): Hell- und Dark Mode, schmale Mobilbreite, Auf-/Zuklappen der Karten, Wochenerkennung; bei Änderungen an `sw.js` zusätzlich Offline-Verhalten. Der Service Worker liefert cache-first aus – beim Testen ggf. DevTools „Update on reload“ nutzen oder Cache leeren.
+Prüfen vor dem Commit (manuell, es gibt keine automatisierten Tests): Hell- und Dark Mode, schmale Mobilbreite, vollständige Karteninhalte samt Legende, Phasenwechsel, ab 320 px ohne horizontales Scrollen, Wochenerkennung; bei Änderungen an `sw.js` zusätzlich Offline-Verhalten. Der Service Worker liefert cache-first aus – beim Testen ggf. DevTools „Update on reload“ nutzen oder Cache leeren.
 
 ## Architektur
 
 - **`plan.json`** – einzige Quelle der Trainingsinhalte (Workouts, Übungen, Sicherheitsregeln, Periodisierung). `plan.md` und das PDF sind die menschenlesbare Vorlage; inhaltliche Änderungen in `plan.json` **und** `plan.md` konsistent nachziehen.
 - **`app.js`** – lädt `plan.json`, validiert es und rendert alles per DOM (`makeElement`, kein `innerHTML`). Zustand: `selectedDay` (Mo/Do/Sa) und `selectedPhase` (`phase1`–`phase3`); jeder Klick rendert den betroffenen Bereich neu.
   - Die Plan-Struktur ist in Konstanten fest verdrahtet: `DAY_ORDER`/`DAY_NUMBERS` (nur Mo, Do, Sa – Lauf-/Recovery-Tage werden bewusst nicht gezeigt), `PHASES`, `TOTAL_WEEKS`, `DELOAD_WEEKS`. Ändert sich die Planstruktur, müssen diese mit `plan.json` übereinstimmen.
-  - Pro Übung sind `phaseProgression` und `tempo` Objekte mit Schlüsseln `phase1`–`phase3` (Pflicht, sonst Ladefehler); `instructions` optional ebenfalls pro Phase. Tempo im Format `3-1-1` oder `2-1-X` (`TEMPO_PATTERN`) erzeugt die Rhythmus-Anzeige; andere Werte (z. B. „explosiv“) nur als Text.
+  - Pro Übung sind `phaseProgression` und `tempo` Objekte mit Schlüsseln `phase1`–`phase3` (Pflicht, sonst Ladefehler); `instructions` optional ebenfalls pro Phase. Tempo im Format `3-1-1` oder `2-1-X` (`TEMPO_PATTERN`) wird von `formatTempo` einzeilig als `↓3 · 1 · ↑1` angezeigt (Langform im `aria-label`); andere Werte (z. B. „explosiv“) nur als Text.
+  - Pausen stehen in `plan.json` im Übungsnamen („…, Pause 90 s“); `splitRest` löst sie beim Rendern heraus und zeigt sie als eigene Kennzahl (`P 90 s`). `abbreviate` kürzt „/Seite“ zu „/S.“ – beides nur in der Anzeige.
   - Aktuelle Woche/Phase wird aus `plan.startDate` (JJJJ-MM-TT) berechnet; der Standard-Tag ist der heutige oder nächste Trainingstag.
   - Änderungen am Datenformat von `plan.json` im selben Commit in `app.js` (inkl. Validierung in `loadPlan`) berücksichtigen.
 - **`index.html`** – statisches Gerüst mit festen IDs, die `app.js` in `elements` referenziert.
@@ -34,7 +35,7 @@ Prüfen vor dem Commit (manuell, es gibt keine automatisierten Tests): Hell- und
 ## UI-Grundsätze
 
 - Hauptansicht = aktuelle Einheit; nichts hinzufügen, das sie überlädt oder Scrollen erzwingt.
-- Geschlossene Übungskarte: nur Name, Progression (Sätze/Wdh.), Tempo, RPE. Details, Ablauf, Rhythmus, Trainingsziel nur im geöffneten `<details>`.
+- Übungskarten zeigen alle Angaben der gewählten Phase sofort und sind nicht aufklappbar. Fester Aufbau: Name → Kennzahlenzeile (Vorgabe, Tempo, RPE, Pause) → Zweck/Ablauf/Hinweis. Jede Angabe genau einmal, leere Angaben entfallen; Kürzel nur mit Legende unter „Übungen“.
 - Sicherheitsregeln dürfen nie entfernt oder versteckt werden (kompakt im Bereich „Sicherheit zuerst“).
 
 ## Spec Kit

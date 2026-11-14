@@ -28,16 +28,16 @@ Eine mobile, schnell lesbare Trainingsplan-App für iPhone im Fitnessstudio. Fok
   - RPE
 
 ### 3. Interaktion
-- Einheiten werden als expandierbare Karten dargestellt.
-- Geschlossen:
+- Übungen werden als dauerhaft sichtbare Karten dargestellt; sie sind nicht aufklappbar und
+  reagieren nicht auf Antippen.
+- Jede Karte hat denselben Aufbau:
   - Name der Übung
-  - Sätze, Wiederholungen und Tempo
-  - kurze, kompakte Übersicht
-- Geöffnet:
-  - ausführlichere Übungsdetails
-  - Hinweise zur Ausführung
-  - schematische Darstellung der Übung
-  - ggf. kurze Begründung / Zweck der Übung
+  - Kennzahlenzeile: Sätze/Wiederholungen, Tempo, RPE, Pause
+  - Zweck der Übung
+  - bei Blöcken: Ablaufschritte und Hinweis
+- Jede Angabe erscheint genau einmal; fehlende Angaben werden weggelassen.
+- Abkürzungen (↓/↑ im Tempo, X, P, /S., RPE) werden in einer Legende unter „Übungen“ erklärt.
+- Künftige Idee (noch nicht umgesetzt): schematische Darstellung der Übung.
 
 ### 4. Farbschema
 - sportlich/klar
@@ -48,7 +48,7 @@ Eine mobile, schnell lesbare Trainingsplan-App für iPhone im Fitnessstudio. Fok
 ### 5. Detailniveau
 - Die mobile Ansicht priorisiert schnell nutzbare Informationen im Training.
 - Wichtige Sicherheitsregeln werden an klarer Stelle sichtbar, aber nicht überladen dargestellt.
-- Technische Detailangaben werden nur im geöffneten Zustand der jeweiligen Übung gezeigt.
+- Alle Angaben einer Übung sind ohne Antippen sichtbar, kompakt durch Abkürzungen.
 
 ### 6. Trainingstage
 - Nur tatsächliche Trainingseinheiten werden angezeigt.
@@ -58,7 +58,7 @@ Eine mobile, schnell lesbare Trainingsplan-App für iPhone im Fitnessstudio. Fok
 ## Strukturvorschlag der Oberfläche
 1. Header mit Phase / Woche / heutiger Einheit
 2. Einheit/Kartenbereich
-3. Expandierbare Übungskarten
+3. Dauerhaft sichtbare Übungskarten mit Legende
 4. Hinweisbereich für Sicherheit und Progression
 5. Optional: kleiner Abschlussbereich mit Kennzahlen oder Status
 
@@ -69,7 +69,6 @@ Eine mobile, schnell lesbare Trainingsplan-App für iPhone im Fitnessstudio. Fok
 - Gute Handhabung mit einem Finger / großer Touch-Zone
 
 ## Offene Punkte für spätere Umsetzung
-- genaue Ausgestaltung der schematischen Übungsdarstellungen
-- gewünschtes Verhalten für die Karten beim Klick / Tap
+- genaue Ausgestaltung der schematischen Übungsdarstellungen (künftige Idee)
 - genaue Positionierung der Hinweise und Sicherheitsregeln
 - Abschluss- oder Statusbereich je nach späterem Bedarf
