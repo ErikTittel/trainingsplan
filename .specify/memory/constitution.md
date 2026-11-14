@@ -53,8 +53,7 @@ ist zweitrangig.
 
 ### IV. Plandaten getrennt von Darstellung
 
-- Trainingsinhalte (Phasen, Wochen, Einheiten, Übungen, Sicherheitsregeln) liegen
-  ausschließlich in `plan.json`; `app.js` enthält KEINE fest codierten Trainingsinhalte.
+- Trainingsinhalte (Phasen, Wochen, Einheiten, Übungen, Sicherheitsregeln) liegen ausschließlich in `plan.json`; `app.js` enthält KEINE fest codierten Trainingsinhalte.
 - `plan.md` und das PDF sind die menschenlesbare Quelle; inhaltliche Änderungen MÜSSEN
   in `plan.json` und `plan.md` konsistent nachgezogen werden.
 - Änderungen am Datenformat von `plan.json` MÜSSEN in `app.js` im selben Commit
@@ -108,7 +107,7 @@ Training nicht auffindbar sind, schützen nicht.
 ## Governance
 
 - Diese Verfassung hat Vorrang vor anderen Projektregeln; `SPEC.md` und
-  `.github/copilot-instructions.md` MÜSSEN ihr entsprechen.
+  `CLAUDE.md` MÜSSEN ihr entsprechen.
 - Änderungen erfolgen über `/speckit-constitution`, werden mit Begründung dokumentiert
   und als eigener Commit festgehalten.
 - Versionierung nach SemVer: MAJOR für entfernte oder neu definierte Prinzipien, MINOR für
