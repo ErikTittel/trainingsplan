@@ -1,10 +1,12 @@
 # Feature Specification: Übungskarten ohne Aufklappen
 
+> **Archiv:** Umgesetzt und abgeschlossen. Gültiger Stand: [SPEC.md](../../SPEC.md) und [docs/](../../docs/) – siehe [specs/README.md](../README.md).
+
 **Feature Branch**: `001-karten-alles-sichtbar`
 
 **Created**: 2026-11-14
 
-**Status**: Draft
+**Status**: Umgesetzt (archiviert)
 
 **Input**: User description: "Aktuell enthalten die aufklappbaren Karten der einzelnen Übungen Inhalte, die zu großen Teilen redundant zu den zugeklappten Karten sind. In Zukunft sollen alle Informationen sofort auf der Karte sichtbar sein. Ein Aufklappen soll damit nicht mehr nötig sein. Stell sicher, dass alle vorhandenen Informationen auf den Karten dargestellt werden. Ziel ist, dass die Angaben schnell erfasst werden können. Nutze dafür, wenn sinnvoll, Abkürzungen."
 

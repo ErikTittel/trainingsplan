@@ -1,10 +1,12 @@
 # Feature Specification: Trainingsprotokoll
 
+> **Archiv:** Umgesetzt und abgeschlossen. Gültiger Stand: [SPEC.md](../../SPEC.md) und [docs/](../../docs/) – siehe [specs/README.md](../README.md).
+
 **Feature Branch**: `002-trainingsprotokoll`
 
 **Created**: 2026-11-14
 
-**Status**: Umgesetzt (vereinfachte Fassung vom 2026-11-14)
+**Status**: Umgesetzt (vereinfachte Fassung vom 2026-11-14, archiviert)
 
 **Input**: User description: "Der Trainingsplan soll um die Funktion erweitert werden, die Sätze, Wiederholungen und Gewichte der aktuellen Übung einzugeben. Ziel ist, dass ich während des Trainings einen Überblick über meine aktuelle Trainingsperformance bekomme und gleichzeitig sehen kann, wie gut die Performance aus dem letzten Training war. Damit möchte ich meinen aktuellen Trainingsumfang an die Performance aus dem letzten Training anpassen können. Die unterschiedlichen Arten der Übungen sind zu berücksichtigen."
 

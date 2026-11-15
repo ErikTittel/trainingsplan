@@ -1,3 +1,10 @@
+/* Aufbau: 1 Farben · 2 Grundlagen · 3 Seitenaufbau · 4 Tag- und Phasenwahl · 5 Übungskarten ·
+   6 Protokollbereich · 7 Infokarten und Sicherung · 8 Meldungen · 9 Anpassungen je Gerät.
+   Farben nur über die Variablen in :root – so gelten sie automatisch auch im Dark Mode.
+   Touch-Flächen mindestens 44 × 44 px. */
+
+/* ---------- 1 Farben ---------- */
+
 :root {
   color-scheme: light dark;
   --bg: #f2f5f1;
@@ -32,8 +39,15 @@
   }
 }
 
+/* ---------- 2 Grundlagen ---------- */
+
 * {
   box-sizing: border-box;
+}
+
+/* Ausgeblendete Elemente bleiben ausgeblendet, auch wenn eine Klasse display setzt. */
+[hidden] {
+  display: none !important;
 }
 
 body {
@@ -52,24 +66,6 @@ button,
 summary {
   font: inherit;
   -webkit-tap-highlight-color: transparent;
-}
-
-.app-shell {
-  width: min(100% - 28px, 680px);
-  margin: 0 auto;
-  padding: max(26px, env(safe-area-inset-top)) 0 max(32px, env(safe-area-inset-bottom));
-}
-
-.app-header {
-  padding: 14px 4px 28px;
-}
-
-.eyebrow {
-  margin: 0 0 5px;
-  color: var(--accent);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
 }
 
 h1,
@@ -96,9 +92,37 @@ h2 {
   letter-spacing: -0.02em;
 }
 
-.muted,
-.today-label {
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.muted {
   color: var(--muted);
+}
+
+/* Sichtbarer Fokus für Tastaturbedienung */
+.log-toggle:focus-visible,
+.log-panel button:focus-visible,
+.log-panel input:focus-visible,
+.backup-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- 3 Seitenaufbau ---------- */
+
+.app-shell {
+  width: min(100% - 28px, 680px);
+  margin: 0 auto;
+  padding: max(26px, env(safe-area-inset-top)) 0 max(32px, env(safe-area-inset-bottom));
+}
+
+.app-header {
+  padding: 14px 4px 28px;
 }
 
 .app-header .muted {
@@ -107,8 +131,13 @@ h2 {
 }
 
 .day-section,
-.exercise-section,
+.exercise-section {
+  margin-top: 22px;
+}
+
 .notice-section {
+  display: grid;
+  gap: 11px;
   margin-top: 22px;
 }
 
@@ -122,16 +151,98 @@ h2 {
 
 .today-label {
   padding-bottom: 2px;
+  color: var(--muted);
   font-size: 0.82rem;
   font-weight: 650;
   text-align: right;
 }
+
+.count-badge {
+  display: inline-grid;
+  min-width: 34px;
+  min-height: 30px;
+  place-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.app-footer {
+  margin: 26px 4px 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+/* ---------- 4 Tag- und Phasenwahl, Kopf der Einheit ---------- */
 
 .day-navigation {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 9px;
   margin-bottom: 16px;
+}
+
+.day-button {
+  min-height: 56px;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  touch-action: manipulation;
+}
+
+.day-button span {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.day-button strong {
+  display: block;
+  margin-top: 1px;
+  font-size: clamp(0.8rem, 3.4vw, 0.95rem);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.day-button[aria-current="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.workout-title {
+  margin: 0 2px 9px;
+  font-size: 1.14rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.warmup {
+  margin: 0;
+  padding: 14px 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.warmup::before {
+  content: "AUFWÄRMEN  ";
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
 }
 
 .phase-label {
@@ -181,77 +292,14 @@ h2 {
   color: inherit;
 }
 
-.day-button {
-  min-height: 56px;
-  padding: 8px 6px;
-  border: 1px solid var(--line);
-  border-radius: 15px;
-  background: var(--surface);
-  color: var(--text);
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  touch-action: manipulation;
-}
-
-.day-button span {
-  display: block;
-  font-size: 0.76rem;
-  font-weight: 700;
-}
-
-.day-button strong {
-  display: block;
-  margin-top: 1px;
-  font-size: clamp(0.8rem, 3.4vw, 0.95rem);
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-
-.day-button[aria-current="true"] {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
-}
-
-.workout-title {
-  margin: 0 2px 9px;
-  font-size: 1.14rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.warmup {
-  margin: 0;
-  padding: 14px 15px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--surface);
+.exercise-legend {
+  margin: 0 0 10px;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
 }
 
-.warmup::before {
-  content: "AUFWÄRMEN  ";
-  color: var(--accent);
-  font-size: 0.7rem;
-  font-weight: 850;
-  letter-spacing: 0.08em;
-}
-
-.count-badge {
-  display: inline-grid;
-  min-width: 34px;
-  min-height: 30px;
-  place-items: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 0.82rem;
-  font-weight: 800;
-}
+/* ---------- 5 Übungskarten ---------- */
 
 .exercise-list {
   display: grid;
@@ -267,10 +315,27 @@ h2 {
   box-shadow: var(--shadow);
 }
 
+/* Die ganze Kachel öffnet den Protokollbereich; er bricht als volle Zeile unter die Angaben um. */
 .exercise-card {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   padding: 13px 15px;
+  cursor: pointer;
+}
+
+.exercise-number,
+.summary-icon {
+  display: grid;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 850;
 }
 
 .exercise-body {
@@ -314,83 +379,6 @@ h2 {
   line-height: 1.35;
 }
 
-.exercise-legend {
-  margin: 0 0 10px;
-  color: var(--muted);
-  font-size: 0.75rem;
-  line-height: 1.35;
-}
-
-.info-card > summary {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 76px;
-  padding: 13px 15px;
-  list-style: none;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-summary::-webkit-details-marker {
-  display: none;
-}
-
-.exercise-number,
-.summary-icon {
-  display: grid;
-  flex: 0 0 38px;
-  width: 38px;
-  height: 38px;
-  place-items: center;
-  border-radius: 12px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 0.85rem;
-  font-weight: 850;
-}
-
-.info-card summary strong {
-  display: block;
-  font-size: 0.97rem;
-  line-height: 1.28;
-}
-
-.info-card summary small {
-  display: block;
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 0.79rem;
-  line-height: 1.35;
-}
-
-.chevron {
-  flex: 0 0 10px;
-  width: 10px;
-  height: 10px;
-  margin-right: 2px;
-  border-right: 2px solid var(--muted);
-  border-bottom: 2px solid var(--muted);
-  transform: rotate(45deg) translateY(-2px);
-  transition: transform 160ms ease;
-}
-
-details[open] > summary .chevron {
-  transform: rotate(225deg) translate(-1px, -1px);
-}
-
-.info-content h3 {
-  margin: 15px 0 5px;
-  font-size: 0.96rem;
-}
-
-.info-content p,
-.info-content li {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
 .instruction-list {
   display: grid;
   gap: 3px;
@@ -407,20 +395,23 @@ details[open] > summary .chevron {
   line-height: 1.35;
 }
 
-/* ---------- Trainingsprotokoll ---------- */
+/* Jüngster Protokolleintrag hinter dem Übungsnamen, Kommentar hinter dem Zweck */
+.exercise-log {
+  margin-left: 4px;
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.exercise-note {
+  margin-left: 2px;
+  color: var(--text);
+  font-style: italic;
+}
 
 /* Das Nummernfeld ist der Schalter für den Protokollbereich. Sichtbar bleibt es 38 × 38 px,
    die Touch-Fläche wird über ::after auf 44 × 44 px erweitert. */
-.exercise-card {
-  flex-wrap: wrap;
-  cursor: pointer;
-}
-
-/* Im offenen Protokollbereich gilt der Zeiger der Bedienelemente, nicht der Kachel. */
-.exercise-card .log-panel {
-  cursor: auto;
-}
-
 .log-toggle {
   position: relative;
   padding: 0;
@@ -461,28 +452,7 @@ details[open] > summary .chevron {
   color: var(--accent);
 }
 
-/* Jüngster Eintrag hinter dem Übungsnamen, Kommentar hinter dem Zweck */
-.exercise-log {
-  margin-left: 4px;
-  color: var(--accent);
-  font-size: 0.88rem;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.exercise-note {
-  margin-left: 2px;
-  color: var(--text);
-  font-style: italic;
-}
-
-.exercise-log[hidden],
-.exercise-note[hidden],
-.exercise-purpose[hidden],
-.log-last[hidden],
-.log-remove[hidden] {
-  display: none;
-}
+/* ---------- 6 Protokollbereich ---------- */
 
 .log-panel {
   display: grid;
@@ -491,6 +461,11 @@ details[open] > summary .chevron {
   min-width: 0;
   padding-top: 11px;
   border-top: 1px solid var(--line);
+}
+
+/* Im offenen Protokollbereich gilt der Zeiger der Bedienelemente, nicht der Kachel. */
+.exercise-card .log-panel {
+  cursor: auto;
 }
 
 .log-last {
@@ -561,6 +536,12 @@ details[open] > summary .chevron {
   background: var(--accent-soft);
 }
 
+.stepper-button:disabled {
+  color: var(--muted);
+  cursor: default;
+  opacity: 0.45;
+}
+
 /* 16 px Schrift, damit iOS beim Antippen nicht in das Feld zoomt. */
 .stepper-input {
   flex: 1 1 0;
@@ -592,12 +573,6 @@ details[open] > summary .chevron {
   border-left: 1px solid var(--line);
   font-size: 1.3rem;
   line-height: 1;
-}
-
-.stepper-button:disabled {
-  color: var(--muted);
-  cursor: default;
-  opacity: 0.45;
 }
 
 .log-note-input {
@@ -634,6 +609,121 @@ details[open] > summary .chevron {
   cursor: pointer;
 }
 
+/* ---------- 7 Infokarten und Sicherung ---------- */
+
+.info-card > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 74px;
+  padding: 13px 15px;
+  list-style: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.info-card summary > span:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+
+.info-card summary strong {
+  display: block;
+  font-size: 0.97rem;
+  line-height: 1.28;
+}
+
+.info-card summary small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 0.79rem;
+  line-height: 1.35;
+}
+
+/* Sicherheit in Warnfarbe, Progression und Sicherung in Akzentfarbe */
+.info-card .summary-icon {
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-size: 1.1rem;
+}
+
+.info-card .progression-icon,
+.info-card .backup-icon {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.chevron {
+  flex: 0 0 10px;
+  width: 10px;
+  height: 10px;
+  margin-right: 2px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 160ms ease;
+}
+
+details[open] > summary .chevron {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+
+.info-content {
+  padding: 0 15px 15px;
+  border-top: 1px solid var(--line);
+}
+
+.info-content > :first-child {
+  margin-top: 13px;
+}
+
+.info-content h3 {
+  margin: 15px 0 5px;
+  font-size: 0.96rem;
+}
+
+.info-content p,
+.info-content li {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.info-content ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 19px;
+}
+
+.rule {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.rule:last-child {
+  border-bottom: 0;
+}
+
+.rule h3 {
+  margin-top: 0;
+}
+
+.rule p + ul {
+  margin-top: 8px;
+}
+
+.backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
 .backup-button {
   min-height: 44px;
   padding: 0 16px;
@@ -661,14 +751,9 @@ details[open] > summary .chevron {
   color: var(--text);
 }
 
-.log-toggle:focus-visible,
-.log-panel button:focus-visible,
-.log-panel input:focus-visible,
-.backup-button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
+/* ---------- 8 Meldungen ---------- */
 
+/* Protokoll-Meldung bleibt beim Scrollen oben sichtbar. */
 .log-message {
   position: sticky;
   z-index: 2;
@@ -682,79 +767,6 @@ details[open] > summary .chevron {
   font-size: 0.88rem;
 }
 
-.log-message[hidden] {
-  display: none;
-}
-
-.backup-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 12px 0;
-}
-
-.info-card .summary-icon.backup-icon {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.notice-section {
-  display: grid;
-  gap: 11px;
-}
-
-.info-card > summary {
-  min-height: 74px;
-}
-
-.info-card summary > span:nth-child(2) {
-  min-width: 0;
-  flex: 1;
-}
-
-.info-card .summary-icon {
-  background: var(--warning-soft);
-  color: var(--warning);
-  font-size: 1.1rem;
-}
-
-.info-card .progression-icon {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.info-content {
-  padding: 0 15px 15px;
-  border-top: 1px solid var(--line);
-}
-
-.info-content > :first-child {
-  margin-top: 13px;
-}
-
-.info-content ul {
-  display: grid;
-  gap: 8px;
-  padding-left: 19px;
-}
-
-.rule {
-  padding: 11px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.rule:last-child {
-  border-bottom: 0;
-}
-
-.rule h3 {
-  margin-top: 0;
-}
-
-.rule p + ul {
-  margin-top: 8px;
-}
-
 .load-error {
   margin: 22px 0 0;
   padding: 14px;
@@ -764,12 +776,7 @@ details[open] > summary .chevron {
   color: var(--text);
 }
 
-.app-footer {
-  margin: 26px 4px 0;
-  color: var(--muted);
-  font-size: 0.78rem;
-  text-align: center;
-}
+/* ---------- 9 Anpassungen je Gerät ---------- */
 
 @media (min-width: 600px) {
   .app-shell {

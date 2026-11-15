@@ -12,8 +12,7 @@
   <link rel="icon" href="icons/icon-192.png" type="image/png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
-  <script src="log.js" defer></script>
-  <script src="app.js" defer></script>
+  <script type="module" src="js/app.js"></script>
 </head>
 <body>
   <main class="app-shell">
@@ -47,7 +46,7 @@
       <p class="eyebrow phase-label">PHASE FÜR PROGRESSION &amp; TEMPO WÄHLEN</p>
       <nav id="phase-navigation" class="phase-navigation" aria-label="Trainingsphase" hidden></nav>
       <p class="exercise-legend">Tempo ↓ ab · Pause · ↑ auf (X = explosiv) · P = Satzpause · /S. = pro Seite · RPE = Anstrengung 1–10</p>
-      <p class="exercise-legend">Kachel antippen = Protokoll · ✓ = heute erfasst · hinter dem Namen: letztes Gewicht/Zeit und Power 🥵 schwach · 🙂 ok · 💪 stark · Entl. = Entlastungswoche</p>
+      <p class="exercise-legend">Kachel antippen = Protokoll · ✓ = heute erfasst · hinter dem Namen: letztes Gewicht/Zeit und Power <span id="power-legend"></span> · Entl. = Entlastungswoche</p>
       <p id="log-message" class="log-message" role="status" hidden></p>
       <div id="exercise-list" class="exercise-list" aria-live="polite"></div>
     </section>

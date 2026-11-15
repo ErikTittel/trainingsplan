@@ -1,5 +1,7 @@
 # 12-Wochen-Trainingsplan: Muskelaufbau mit Lauf-Support
 
+> Lesefassung des Plans. Die App liest [plan.json](plan.json); inhaltliche Änderungen in beiden Dateien nachziehen ([docs/datenformate.md](docs/datenformate.md), Teil A).
+
 Erstellt am 12. Oktober 2026
 
 **Grundidee:** Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt Cleans, Medball und Widerstandsband-Starts als Schnelligkeitsreiz ohne harte Stöße.
