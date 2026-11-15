@@ -1,12 +1,12 @@
 <!--
 Sync Impact Report
-- Version: 2.2.0 → 2.3.0 (MINOR: Prinzip IV erweitert, Dokumentstruktur und Code-Aufbau ergänzt)
-- Geändert: I (ES-Module ausdrücklich erlaubt), IV (auch die Planstruktur – Phasen, Wochen,
-  Entlastungswochen, Trainingstage – liegt in plan.json; Bezüge auf app.js durch „Code“ ersetzt),
-  Technische Rahmenbedingungen (Code-Aufbau), Entwicklungsablauf (Prüfpunkte nur noch in
-  docs/pruefung.md), Governance (docs/ und README.md müssen der Verfassung entsprechen)
-- Entfernt: keine Prinzipien
-- Folgedokumente: SPEC.md ✅, CLAUDE.md ✅, README.md ✅, docs/*.md ✅, Vorlagen in .specify/templates ✅ (keine Änderung nötig)
+- Version: 2.3.0 → 2.4.0 (MINOR: Prinzip III um vier Ausnahmen erweitert)
+- Geändert: III – einklappbare lange Hinweistexte; Legende darf in aufklappbarer Infokarte stehen;
+  Wiederherstellen der offenen Übung am selben Tag; „Letztes Mal“ im geöffneten Protokollbereich
+  immer erlaubt
+- Entfernt: nichts
+- Folgedokumente: SPEC.md ✅, docs/*.md ✅ (mit Feature 003 nachgezogen);
+  Vorlagen in .specify/templates ✅ (keine Änderung nötig)
 -->
 # Trainingsplan-PWA Constitution
 
@@ -40,25 +40,33 @@ wechselndem Licht und wenig Aufmerksamkeit für Bedienung.
 - Die Hauptansicht zeigt die heutige bzw. nächste Trainingseinheit der aktuellen Woche.
 - Nur echte Krafttrainingstage werden angezeigt; Lauf- und Recovery-Tage nicht.
 - Übungskarten zeigen alle in `plan.json` hinterlegten Angaben der gewählten Phase sofort
-  und ohne Interaktion an; die Planangaben sind NICHT auf- oder zuklappbar.
+  und ohne Interaktion an; die Planangaben sind NICHT auf- oder zuklappbar. Einzige Ausnahme:
+  lange Hinweistexte (Hinweis unter den Ablaufschritten) DÜRFEN einklappbar sein, wenn ihr
+  Anfang bzw. eine Kurzbeschriftung sichtbar bleibt; Name, Kennzahlenzeile, Zweck und
+  Ablaufschritte bleiben immer sichtbar.
 - Jede Karte folgt einem festen Aufbau: Name, darunter eine Kennzahlenzeile (Vorgabe, Tempo,
   RPE, Pause), darunter Zusatztexte (Zweck, Ablaufschritte, Hinweise).
 - Jede Angabe erscheint pro Karte genau einmal; fehlende Angaben werden weggelassen statt
   als Platzhalter angezeigt.
 - Abkürzungen sind erlaubt, wenn sie das Erfassen beschleunigen; jede verwendete Abkürzung
-  MUSS in einer kurzen Legende auf derselben Seite erklärt sein.
+  MUSS in einer kurzen Legende auf derselben Seite erklärt sein. Die Legende DARF in einer
+  aufklappbaren Infokarte stehen.
 - Neue Funktionen DÜRFEN die Hauptansicht nicht überladen oder unnötiges Scrollen erzeugen.
   Ergänzende Infobereiche außerhalb der Übungskarten (z. B. Plan-Details) DÜRFEN aufklappbar
   sein, soweit Prinzip VI eingehalten wird.
 - Das Trainingsprotokoll (Prinzip VII) wird in einem aufklappbaren Protokollbereich unter den
   Planangaben jeder Übung erfasst. Das ist die einzige Ausnahme vom Aufklapp-Verbot der Karte;
   die Planangaben selbst bleiben jederzeit sichtbar und nicht aufklappbar.
-- Der Protokollbereich ist beim Öffnen der Seite geschlossen. Im geschlossenen Zustand zeigt
+- Der Protokollbereich ist beim ersten Öffnen der Seite an einem Tag geschlossen. Wird die App
+  am selben Tag erneut geöffnet (z. B. nachdem das System sie beendet hat), DARF die zuletzt
+  offene Übung samt Scrollposition wiederhergestellt werden. Im geschlossenen Zustand zeigt
   die Karte vom Protokoll nur den jüngsten Eintrag der Übung, kompakt und ohne eigene Zeile:
   Gewicht bzw. Zeit und Power direkt hinter dem Namen, den Kommentar direkt hinter dem Zweck,
   dazu ein Kennzeichen am Nummernfeld. Ohne Eintrag ist die Karte so hoch wie ohne Protokoll.
 - Die Werte des letzten Trainings MÜSSEN ohne Antippen sichtbar sein (hinter Name und Zweck);
-  ist heute schon erfasst, stehen sie im geöffneten Protokollbereich.
+  ist heute schon erfasst, stehen sie im geöffneten Protokollbereich. Im geöffneten
+  Protokollbereich DARF „Letztes Mal“ immer stehen, sobald ein früheres Training existiert –
+  das ist eine bewusste Ausnahme von „jede Angabe genau einmal“, weil dort der Vergleich fällt.
 - Erfasst wird pro Übung und Training nur, was vom Plan abweichen kann: Gewicht bzw. Zeit,
   Power (wahrgenommene Anstrengung: schwach, ok, stark; Standard ok) und ein Kommentar. Sätze,
   Wiederholungen und RPE gelten als planmäßig und werden NICHT erfasst; einseitige Übungen
@@ -183,4 +191,4 @@ Export/Import und Migration Pflicht und kein Komfort.
 - Jeder Implementierungsplan enthält einen Verfassungs-Check; Abweichungen MÜSSEN dort
   begründet werden, sonst ist der Plan abzulehnen.
 
-**Version**: 2.3.0 | **Ratified**: 2026-11-14 | **Last Amended**: 2026-11-15
+**Version**: 2.4.0 | **Ratified**: 2026-11-14 | **Last Amended**: 2026-11-15
