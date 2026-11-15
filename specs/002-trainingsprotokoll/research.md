@@ -216,7 +216,7 @@ dürfen.
   nächsten Feld den Fokus.
 - **Datenformat**: Schema 2 mit Migration 1 → 2 (höchstes Gewicht, längste Zeit, Kommentar,
   Power ok), damit bereits erfasste Daten erhalten bleiben (Prinzip VII).
-- **Smileys**: 😟 🙂 😃 als Emoji (keine Bilddateien, auf iOS farbig), jeweils mit Text
+- **Smileys**: 🥵 🙂 💪 als Emoji (keine Bilddateien, auf iOS farbig), jeweils mit Text
   „schwach/ok/stark“ darunter, damit die Bedeutung nicht nur am Symbol hängt.
 
 **Alternatives considered**: Speichern-Knopf (widerspricht Prinzip VII und kostet ein

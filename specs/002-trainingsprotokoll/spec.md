@@ -9,7 +9,7 @@
 **Input**: User description: "Der Trainingsplan soll um die Funktion erweitert werden, die Sätze, Wiederholungen und Gewichte der aktuellen Übung einzugeben. Ziel ist, dass ich während des Trainings einen Überblick über meine aktuelle Trainingsperformance bekomme und gleichzeitig sehen kann, wie gut die Performance aus dem letzten Training war. Damit möchte ich meinen aktuellen Trainingsumfang an die Performance aus dem letzten Training anpassen können. Die unterschiedlichen Arten der Übungen sind zu berücksichtigen."
 
 **Änderung (2026-11-14, Vorgabe des Nutzers)**: „Vereinfache die Datenerfassung und Eingabe. Erfasst
-werden: Gewicht bzw. Zeit, wahrgenommene Anstrengung (‚Power‘: drei Smileys schwach, ok, stark;
+werden: Gewicht bzw. Zeit, wahrgenommene Anstrengung (‚Power‘: drei Stufen schwach, ok, stark, per − / +;
 ok ist der Standard) und ein Kommentar. Keine Wiederholungen, Sätze und RPE – diese entsprechen
 dem Plan. Keine Anzeige der ‚Heute‘-Daten im Eingabebereich. Keine Unterscheidung zwischen rechts
 und links. Übungen ohne Gewicht müssen nicht als erledigt gekennzeichnet werden. Ist für eine
@@ -23,7 +23,7 @@ Die erste Fassung (Sätze mit Wiederholungen, RPE, Seiten, ▲/▼-Vergleich) is
 
 Der Trainierende öffnet die Einheit und sieht an jeder Übung, die er schon einmal protokolliert
 hat, ohne Antippen den jüngsten Eintrag: Gewicht bzw. Zeit und Power direkt hinter dem Namen
-(z. B. „Rumänisches Kreuzheben 80 kg 😟“), seinen Kommentar direkt hinter dem Zweck. Daran
+(z. B. „Rumänisches Kreuzheben 80 kg 🥵“), seinen Kommentar direkt hinter dem Zweck. Daran
 entscheidet er, ob er heute mehr, gleich viel oder weniger auflegt.
 
 **Why this priority**: Das ist der Kern des Ziels – der Vergleich im Moment der Entscheidung.
@@ -35,7 +35,7 @@ Die Werte stehen hinter Name und Zweck, ohne dass etwas angetippt werden muss.
 
 1. **Given** zu „Rumänisches Kreuzheben“ gibt es einen früheren Eintrag 80 kg, Power schwach,
    Kommentar „Straps, Rücken gut“, **When** die Einheit angezeigt wird, **Then** steht hinter dem
-   Namen „80 kg 😟“ und hinter dem Zweck „„Straps, Rücken gut““.
+   Namen „80 kg 🥵“ und hinter dem Zweck „„Straps, Rücken gut““.
 2. **Given** zu einer Übung gibt es keinen Eintrag, **When** die Karte angezeigt wird, **Then**
    ist sie genauso aufgebaut und genauso hoch wie ohne Protokollfunktion.
 3. **Given** alle Karten, **When** die Seite geladen wird, **Then** sind alle Protokollbereiche
@@ -47,7 +47,7 @@ Die Werte stehen hinter Name und Zweck, ohne dass etwas angetippt werden muss.
 
 Nach der Übung tippt der Trainierende auf das Nummernfeld der Karte. Der Protokollbereich öffnet
 sich mit dem Gewicht bzw. der Zeit vom letzten Mal. Er korrigiert bei Bedarf den Wert (−/+ oder
-Tastatur) und tippt auf einen der drei Smileys. Jede Änderung ist sofort gespeichert. War alles
+Tastatur) und stellt die Power mit − / + auf schwach, ok oder stark. Jede Änderung ist sofort gespeichert. War alles
 wie beim letzten Mal, genügt ein Antippen von „ok“.
 
 | Art der Übung | Beispiele | Felder |
@@ -58,12 +58,12 @@ wie beim letzten Mal, genügt ein Antippen von „ok“.
 | Zeit und Gewicht | Spanish Squat | Zeit (s), Gewicht (kg) |
 | Block ohne Gewicht | Sprung-, Beschleunigungsblock | keine (nur Power und Kommentar) |
 
-Bei allen Übungen kommen Power (😟 schwach · 🙂 ok · 😃 stark, Standard ok) und Kommentar dazu.
+Bei allen Übungen kommen Power (🥵 schwach · 🙂 ok · 💪 stark, Standard ok) und Kommentar dazu.
 Einseitige Übungen werden nicht nach Seiten getrennt: Gewicht und Zeit gelten für beide Seiten.
 
 **Why this priority**: Ohne Erfassung gibt es nichts zu vergleichen.
 
-**Independent Test**: Für je eine Übung jeder Art den Bereich öffnen, Wert ändern bzw. Smiley
+**Independent Test**: Für je eine Übung jeder Art den Bereich öffnen, Wert ändern bzw. Power
 antippen, neu laden – der Wert steht hinter dem Namen, das Nummernfeld zeigt „✓“.
 
 **Acceptance Scenarios**:
@@ -93,13 +93,13 @@ der neue Stand ersetzt den alten. Einen versehentlichen Eintrag löscht er mit �
 
 **Acceptance Scenarios**:
 
-1. **Given** ein heutiger Eintrag, **When** der Nutzer einen anderen Smiley antippt, **Then** ist
+1. **Given** ein heutiger Eintrag, **When** der Nutzer die Power auf eine andere Stufe stellt, **Then** ist
    die neue Power gespeichert und hinter dem Namen sichtbar.
 2. **Given** ein heutiger Eintrag, **When** der Nutzer „Eintrag löschen“ bestätigt, **Then** ist
    der Eintrag entfernt, das Nummernfeld zeigt wieder „+“ und hinter dem Namen steht wieder der
    Eintrag des letzten Trainings (falls vorhanden).
 3. **Given** heute ist erfasst und es gibt ein früheres Training, **When** der Bereich geöffnet
-   ist, **Then** steht oben „Letztes Mal (W5 · 07.11.): 80 kg 😟 · „Kommentar““, weil die Karte
+   ist, **Then** steht oben „Letztes Mal (W5 · 07.11.): 80 kg 🥵 · „Kommentar““, weil die Karte
    jetzt die heutigen Werte zeigt.
 
 ---
@@ -152,7 +152,7 @@ mit Zusammenführen pro Training; ältere Sicherungen (mit Sätzen) werden beim 
 - **FR-005**: Die Felder MÜSSEN mit dem heutigen Eintrag, sonst mit dem jüngsten früheren Eintrag
   vorbelegt sein; Power ist ohne heutigen Eintrag „ok“.
 - **FR-006**: Jede Änderung (Wert, Power, Kommentar) MUSS sofort den ganzen sichtbaren Stand
-  speichern; ein Antippen eines Smileys übernimmt unveränderte Werte. Öffnen allein speichert
+  speichern; jede Änderung der Power übernimmt die Werte. Öffnen allein speichert
   nichts.
 - **FR-007**: Gewichte in kg mit Komma oder Punkt, 0–999; Zeit in ganzen Sekunden 1–3600. Leere
   Felder sind erlaubt; ungültige Werte werden markiert und nicht gespeichert.
@@ -169,7 +169,7 @@ mit Zusammenführen pro Training; ältere Sicherungen (mit Sätzen) werden beim 
   dessen Werte, Kommentar und Woche/Datum (mit „Entl.“ in Entlastungswochen) zeigen.
 - **FR-013**: Der Eingabebereich zeigt KEINE gesonderte „Heute“-Zeile.
 - **FR-014**: Ohne Eintrag DARF eine Karte nicht höher sein als ohne Protokollfunktion.
-- **FR-015**: Neue Symbole (`+`, `✓`, Smileys, Entl.) MÜSSEN in der Legende erklärt sein.
+- **FR-015**: Neue Symbole (`+`, `✓`, Power-Symbole, Entl.) MÜSSEN in der Legende erklärt sein.
 
 **Speichern und Sichern** (unverändert)
 
@@ -189,7 +189,7 @@ mit Zusammenführen pro Training; ältere Sicherungen (mit Sätzen) werden beim 
 
 ## Success Criteria *(mandatory)*
 
-- **SC-001**: Ein unverändertes Gewicht ist mit zwei Antippern erfasst (Nummernfeld, Smiley);
+- **SC-001**: Ein unverändertes Gewicht ist mit zwei Antippern erfasst (Nummernfeld, Power);
   ein geänderter Wert mit höchstens vier.
 - **SC-002**: Der jüngste Eintrag jeder Übung ist mit null Antippern sichtbar.
 - **SC-003**: Alle 24 Übungen sind mit passenden Feldern erfassbar.

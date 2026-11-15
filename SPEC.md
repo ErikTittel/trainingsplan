@@ -66,16 +66,16 @@ Details: [specs/002-trainingsprotokoll/](specs/002-trainingsprotokoll/spec.md)
 - Erfasst wird pro Übung und Training nur:
   - Gewicht (kg) bzw. Zusatzlast bei Körpergewichtsübungen, bzw. Zeit (s) bei Halteübungen;
     Spanish Squat hat Zeit und Gewicht; Sprung- und Beschleunigungsblock haben keinen Wert
-  - Power (wahrgenommene Anstrengung): 😟 schwach · 🙂 ok · 😃 stark, Standard ok
+  - Power (wahrgenommene Anstrengung): 🥵 schwach · 🙂 ok · 💪 stark, Standard ok
   - ein Kommentar
 - Nicht erfasst: Sätze, Wiederholungen, RPE (sie entsprechen dem Plan), keine Trennung links/
   rechts (Gewicht und Zeit gelten für beide Seiten), kein „erledigt“.
 - Anzeige: Gibt es zu einer Übung einen Eintrag, stehen Gewicht/Zeit und Power des jüngsten
   Eintrags direkt hinter dem Namen, der Kommentar direkt hinter dem Zweck – ohne Antippen. Das
   Nummernfeld zeigt „✓“, wenn die Übung heute erfasst ist, sonst „+“.
-- Eingabe: Nummernfeld antippen öffnet den Protokollbereich unter der Übung (höchstens einer
+- Eingabe: Die Übungskarte antippen öffnet den Protokollbereich unter der Übung (höchstens einer
   offen, beim Laden alle geschlossen). Felder sind mit dem letzten Wert vorbelegt; jede Änderung
-  wird sofort gespeichert; ein Smiley antippen übernimmt die Werte. Keine „Heute“-Zeile – die
+  wird sofort gespeichert; Power per − / + ändern übernimmt die Werte. Keine „Heute“-Zeile – die
   Felder zeigen den heutigen Stand. Ist heute schon erfasst, steht oben „Letztes Mal …“.
 - Kurzhantel: Gewicht einer Hantel; Langhantel: Gesamtgewicht.
 - Speicherung: nur auf dem Gerät, sofort bei jeder Eingabe, auch offline. Kein Server, kein

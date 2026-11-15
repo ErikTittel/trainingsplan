@@ -21,14 +21,14 @@ im Dokument das `date` und die `id` des Trainings auf einen früheren Tag änder
 |---|---|---|---|
 | 1 | Local Storage leeren, Seite laden | Plan wie bisher; keine Angaben hinter Namen, Nummernfelder zeigen „+“, keine Fehlermeldung | FR-008, FR-014, SC-004 |
 | 2 | „Rumänisches Kreuzheben“: Nummernfeld antippen, Gewicht 80 eingeben, Feld verlassen | Bereich bleibt offen; hinter dem Namen „80 kg 🙂“; Nummernfeld „✓“; Status „Heute erfasst“ | FR-001, FR-006, FR-010, FR-011 |
-| 3 | „+“ beim Gewicht, dann „stark“ antippen, Kommentar eintragen | 82,5 kg 😃 hinter dem Namen, Kommentar hinter dem Zweck | FR-002, FR-010 |
+| 3 | „+“ beim Gewicht, dann bei Power „+“ bis „stark“, Kommentar eintragen | 82,5 kg 💪 hinter dem Namen, Kommentar hinter dem Zweck | FR-002, FR-010 |
 | 4 | Seite neu laden; DevTools → Network → Offline, Wert ändern, neu laden | Alles gespeichert, Bereiche geschlossen | FR-016 |
 | 5 | Training auf einen früheren Tag umdatieren (siehe oben), neu laden | Hinter Name/Zweck stehen die Werte vom letzten Mal, Nummernfeld „+“; im Bereich ist das Gewicht vorbelegt, Power „ok“, Kommentar leer | FR-005, FR-010, SC-002 |
-| 6 | Danach nur „ok“ antippen | Gewicht vom letzten Mal ist für heute gespeichert; im Bereich steht „Letztes Mal (W… · Datum): …“ | FR-006, FR-012, SC-001 |
-| 7 | Klimmzug, Liegestütz: Bereich öffnen | Feld „Zusatzlast (kg)“; nur „ok“ antippen speichert ohne Gewicht | FR-003 |
-| 8 | Spanish Squat: 40 s und 10 kg | Zwei Felder; hinter dem Namen „40 s · 10 kg 🙂“ | FR-003 |
+| 6 | Danach nur die Power per „−“ oder „+“ auf „ok“ stellen | Gewicht vom letzten Mal ist für heute gespeichert; im Bereich steht „Letztes Mal (W… · Datum): …“ | FR-006, FR-012, SC-001 |
+| 7 | Klimmzug, Liegestütz: Bereich öffnen | Feld „Zusatzlast (kg)“; nur die Power ändern speichert ohne Gewicht | FR-003 |
+| 8 | Spanish Squat: 40 s und 10 kg | Zwei Zahlenfelder links, Power rechts; hinter dem Namen „40 s · 10 kg 🙂“ | FR-003 |
 | 9 | Copenhagen Plank, Einbein-RDL, Einbein-Wadenheben | Keine L/R-Unterscheidung; Copenhagen nur Zeit | FR-002 |
-| 10 | Sprungblock: Bereich öffnen, „stark“ | Kein Zahlenfeld, kein „erledigt“; hinter dem Namen „😃“ | FR-008 |
+| 10 | Sprungblock: Bereich öffnen, Power auf „stark“ | Kein Zahlenfeld, kein „erledigt“; hinter dem Namen „💪“ | FR-008 |
 | 11 | Bereich ansehen | Keine Felder für Sätze, Wiederholungen, RPE; keine „Heute“-Zeile | FR-002, FR-013 |
 | 12 | „abc“ bzw. Zeit „12,5“ eingeben | Feld markiert, Meldung, gespeichert bleibt der letzte gültige Wert | FR-007 |
 | 13 | „Eintrag löschen“ bestätigen | Eintrag weg, Nummernfeld „+“, hinter dem Namen wieder das letzte Training | FR-009 |

@@ -186,7 +186,11 @@ function renderExercise(exercise, workout) {
   number.append(exercise.number, makeElement("span", "log-state"));
   number.setAttribute("aria-expanded", String(isOpen));
   number.setAttribute("aria-controls", `log-${exercise.id}`);
-  number.addEventListener("click", () => {
+  // Die ganze Kachel öffnet bzw. schließt den Protokollbereich. Antippen im offenen Bereich
+  // (Felder, Power, Kommentar) und markierter Text lösen nichts aus.
+  card.addEventListener("click", (event) => {
+    if (event.target.closest(".log-panel")) return;
+    if (window.getSelection && window.getSelection().toString()) return;
     openExerciseId = isOpen ? null : exercise.id;
     renderWorkout();
     const toggle = document.querySelector(`[aria-controls="log-${exercise.id}"]`);
@@ -238,9 +242,9 @@ function renderExercise(exercise, workout) {
 // ---------------------------------------------------------------------------
 
 const POWER_OPTIONS = [
-  { id: "weak", symbol: "😟", label: "schwach" },
+  { id: "weak", symbol: "🥵", label: "schwach" },
   { id: "ok", symbol: "🙂", label: "ok" },
-  { id: "strong", symbol: "😃", label: "stark" }
+  { id: "strong", symbol: "💪", label: "stark" }
 ];
 
 // Zahl in deutscher Schreibweise: 82.5 → "82,5"
@@ -293,7 +297,17 @@ function powerOption(id) {
   return POWER_OPTIONS.find((option) => option.id === id) ?? POWER_OPTIONS[1];
 }
 
-// Kurzform eines Eintrags hinter dem Übungsnamen, z. B. "80 kg 🙂", "+5 kg 😃", "40 s · 10 kg 🙂".
+// Zeigt die Power im Stepper an: Beschriftung „Power: ok“, Symbol in der Mitte, −/+ am Rand gesperrt,
+// wenn es nach dieser Seite nicht weitergeht.
+function showPower(stepper, power) {
+  const index = POWER_OPTIONS.findIndex((option) => option.id === power);
+  stepper.querySelector(".stepper-label").textContent = `Power: ${powerOption(power).label}`;
+  stepper.querySelector(".power-value").textContent = powerOption(power).symbol;
+  stepper.querySelector(".power-minus").disabled = index <= 0;
+  stepper.querySelector(".power-plus").disabled = index >= POWER_OPTIONS.length - 1;
+}
+
+// Kurzform eines Eintrags hinter dem Übungsnamen, z. B. "80 kg 🙂", "+5 kg 💪", "40 s · 10 kg 🙂".
 function formatEntry(entry, spec) {
   const parts = [];
   if (entry.seconds !== undefined) parts.push(`${entry.seconds} s`);
@@ -358,13 +372,10 @@ function updateCardSummary(card, exercise, workout, title = splitRest(exercise.n
 
   const panel = card.querySelector(".log-panel");
   if (!panel) return;
-  const power = today?.power ?? DEFAULT_POWER;
-  for (const button of panel.querySelectorAll(".power-button")) {
-    button.setAttribute("aria-pressed", String(button.dataset.power === power));
-  }
+  showPower(panel.querySelector(".power-stepper"), today?.power ?? DEFAULT_POWER);
   panel.querySelector(".log-status-text").textContent = today
     ? "✓ Heute erfasst"
-    : "Noch nicht erfasst – Wert anpassen oder Power antippen.";
+    : "Noch nicht erfasst – Wert oder Power anpassen.";
   panel.querySelector(".log-remove").hidden = !today;
   const previous = lastEntry(log, exercise.id, session?.id);
   const lastLine = panel.querySelector(".log-last");
@@ -422,7 +433,8 @@ function makeStepper(options) {
   return { element: wrapper, input };
 }
 
-// Der aufklappbare Protokollbereich einer Übung: Gewicht/Zeit → Power → Kommentar.
+// Der aufklappbare Protokollbereich einer Übung: Gewicht/Zeit (links) und Power (rechts) in einer
+// Zeile, darunter Kommentar.
 // Die Felder sind mit dem heutigen bzw. dem letzten Eintrag vorbelegt. Jede Änderung speichert
 // sofort den ganzen sichtbaren Stand; ein Antippen von Power übernimmt die Werte unverändert.
 function renderLogPanel(exercise, workout) {
@@ -466,14 +478,14 @@ function renderLogPanel(exercise, workout) {
     if (card) updateCardSummary(card, exercise, workout);
   };
 
-  const fields = makeElement("div", "log-input");
+  const numbers = makeElement("div", "log-numbers");
   if (spec.fields.includes("seconds")) {
     const stepper = makeStepper({
       label: "Zeit (s)", name: "Zeit in Sekunden", value: source.seconds,
       step: 5, min: 5, max: 3600, start: 30, onCommit: save
     });
     inputs.seconds = stepper.input;
-    fields.append(stepper.element);
+    numbers.append(stepper.element);
   }
   for (const field of ["weight", "addedWeight"]) {
     if (!spec.fields.includes(field)) continue;
@@ -485,30 +497,46 @@ function renderLogPanel(exercise, workout) {
       value: source.weight, step, min: step, max: 999, start: step, inputmode: "decimal", onCommit: save
     });
     inputs.weight = stepper.input;
-    fields.append(stepper.element);
+    numbers.append(stepper.element);
   }
-  if (fields.children.length) panel.append(fields);
 
-  const powerGroup = makeElement("div", "power-group");
-  powerGroup.setAttribute("role", "group");
-  powerGroup.setAttribute("aria-label", "Power (wahrgenommene Anstrengung)");
-  powerGroup.append(makeElement("span", "power-label", "Power"));
-  for (const option of POWER_OPTIONS) {
-    const button = makeElement("button", "power-button");
-    button.type = "button";
-    button.dataset.power = option.id;
-    button.setAttribute("aria-label", `Power ${option.label}`);
-    button.append(
-      makeElement("span", "power-symbol", option.symbol),
-      makeElement("span", "power-text", option.label)
-    );
-    button.addEventListener("click", () => {
-      power = option.id;
-      save();
-    });
-    powerGroup.append(button);
+  // Power als −/+-Stepper: schwach ↔ ok ↔ stark, rechts neben Gewicht/Zeit.
+  const powerStepper = makeElement("div", "stepper power-stepper");
+  powerStepper.setAttribute("role", "group");
+  powerStepper.setAttribute("aria-label", "Power (wahrgenommene Anstrengung)");
+  const powerControls = makeElement("div", "stepper-controls");
+  const powerMinus = makeElement("button", "stepper-button power-minus", "−");
+  const powerPlus = makeElement("button", "stepper-button power-plus", "+");
+  powerMinus.type = "button";
+  powerPlus.type = "button";
+  powerMinus.setAttribute("aria-label", "Power verringern");
+  powerPlus.setAttribute("aria-label", "Power erhöhen");
+  const shiftPower = (direction) => {
+    const index = POWER_OPTIONS.findIndex((option) => option.id === power);
+    const next = POWER_OPTIONS[index + direction];
+    if (!next) return;
+    power = next.id;
+    showPower(powerStepper, power);
+    save();
+  };
+  powerMinus.addEventListener("click", () => shiftPower(-1));
+  powerPlus.addEventListener("click", () => shiftPower(1));
+  powerControls.append(
+    powerMinus,
+    makeElement("span", "power-value"),
+    powerPlus
+  );
+  powerStepper.append(makeElement("span", "stepper-label"), powerControls);
+  showPower(powerStepper, power);
+
+  const row = makeElement("div", "log-row");
+  if (numbers.children.length) {
+    row.append(numbers);
+  } else {
+    row.classList.add("log-row-power-only");
   }
-  panel.append(powerGroup);
+  row.append(powerStepper);
+  panel.append(row);
 
   note.type = "text";
   note.maxLength = 200;

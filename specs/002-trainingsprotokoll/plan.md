@@ -7,7 +7,7 @@
 ## Summary
 
 Unter jeder Übung lässt sich ein Protokollbereich aufklappen (Nummernfeld antippen). Erfasst
-werden pro Übung und Training nur Gewicht bzw. Zeit, Power (😟 schwach · 🙂 ok · 😃 stark) und ein
+werden pro Übung und Training nur Gewicht bzw. Zeit, Power (🥵 schwach · 🙂 ok · 💪 stark) und ein
 Kommentar; Sätze, Wiederholungen und RPE gelten als planmäßig. Der jüngste Eintrag steht ohne
 Antippen direkt hinter dem Namen (Werte, Power) und hinter dem Zweck (Kommentar). Jede Karte
 steht für genau eine Übung. (Vereinfachte Fassung vom 2026-11-14, siehe Abschnitt „Änderung“.)
