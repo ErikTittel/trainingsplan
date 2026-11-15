@@ -1,3 +1,13 @@
+<!--
+Sync Impact Report
+- Version: 2.2.0 → 2.3.0 (MINOR: Prinzip IV erweitert, Dokumentstruktur und Code-Aufbau ergänzt)
+- Geändert: I (ES-Module ausdrücklich erlaubt), IV (auch die Planstruktur – Phasen, Wochen,
+  Entlastungswochen, Trainingstage – liegt in plan.json; Bezüge auf app.js durch „Code“ ersetzt),
+  Technische Rahmenbedingungen (Code-Aufbau), Entwicklungsablauf (Prüfpunkte nur noch in
+  docs/pruefung.md), Governance (docs/ und README.md müssen der Verfassung entsprechen)
+- Entfernt: keine Prinzipien
+- Folgedokumente: SPEC.md ✅, CLAUDE.md ✅, README.md ✅, docs/*.md ✅, Vorlagen in .specify/templates ✅ (keine Änderung nötig)
+-->
 # Trainingsplan-PWA Constitution
 
 ## Core Principles
@@ -7,7 +17,8 @@
 - Die App besteht ausschließlich aus HTML, CSS und JavaScript, die der Browser direkt lädt.
 - Es gibt KEINE Frameworks, KEINE Build-Tools, KEINE Transpiler, KEINE Paketmanager-
   Abhängigkeiten und KEINE externen CDN-Skripte.
-- Jede Datei im Repository MUSS so, wie sie ist, ausgeliefert werden können.
+- Jede Datei im Repository MUSS so, wie sie ist, ausgeliefert werden können. JavaScript-Module
+  (`<script type="module">`, `import`/`export`) sind erlaubt, da der Browser sie direkt lädt.
 
 **Begründung:** Der Entwickler hat Grundkenntnisse; die App muss ohne Toolchain verständlich,
 wartbar und auf jedem statischen Hosting lauffähig bleiben.
@@ -66,18 +77,20 @@ zugeklappt; dieser steht dort, wo die Entscheidung fällt („wie viel heute?“
 
 ### IV. Plandaten getrennt von Darstellung und Protokoll
 
-- Trainingsinhalte (Phasen, Wochen, Einheiten, Übungen, Sicherheitsregeln) liegen ausschließlich in `plan.json`; `app.js` enthält KEINE fest codierten Trainingsinhalte.
+- Trainingsinhalte (Phasen, Wochen, Einheiten, Übungen, Sicherheitsregeln) und die Planstruktur
+  (Phasengrenzen, Entlastungswochen, Trainingstage) liegen ausschließlich in `plan.json`; der Code
+  enthält KEINE fest codierten Trainingsinhalte und keine Planstruktur.
 - `plan.md` und das PDF sind die menschenlesbare Quelle; inhaltliche Änderungen MÜSSEN
   in `plan.json` und `plan.md` konsistent nachgezogen werden.
-- Änderungen am Datenformat von `plan.json` MÜSSEN in `app.js` im selben Commit
-  berücksichtigt werden.
+- Änderungen am Datenformat von `plan.json` MÜSSEN im selben Commit im Code (Prüfung beim
+  Laden) und in `docs/datenformate.md` berücksichtigt werden.
 - `plan.json` beschreibt das Soll, das Protokoll das Ist. `plan.json` enthält KEINE erfassten
   Trainingswerte und wird von der App nie verändert.
-- Jede Übung in `plan.json` MUSS eine stabile, eindeutige ID tragen, über die das Protokoll sie
+- Jede Übung, Einheit und Phase in `plan.json` MUSS eine stabile, eindeutige ID tragen, über die das Protokoll sie
   wiederfindet. Eine einmal vergebene ID DARF NICHT umbenannt oder für eine andere Übung
   wiederverwendet werden – auch dann nicht, wenn Name, Nummer oder Reihenfolge sich ändern.
-- Welche Werte zu einer Übung erfasst werden (z. B. Gewicht und Wiederholungen, nur Dauer),
-  legt `plan.json` pro Übung fest, nicht `app.js`.
+- Welche Werte zu einer Übung erfasst werden (z. B. Gewicht, Zusatzlast, Zeit), legt
+  `plan.json` pro Übung fest, nicht der Code.
 
 **Begründung:** Ein neuer oder angepasster Plan soll ohne Codeänderung einspielbar sein, und
 bereits erfasste Trainings dürfen durch eine Planänderung nicht ihren Bezug verlieren.
@@ -140,27 +153,29 @@ Export/Import und Migration Pflicht und kein Komfort.
 - Keine Tracker, keine Analytics, keine automatische Übertragung persönlicher Daten; das
   Repository und das Hosting enthalten nur den Plan, nie erfasste Trainingswerte.
 - Sprache der Oberfläche und der Inhalte: Deutsch.
+- Code-Aufbau: Fachlogik ohne DOM, Speicherzugriff an genau einer Stelle gekapselt, Oberfläche in
+  eigenen Modulen; Einzelheiten und Abhängigkeitsregeln in `docs/architektur.md`.
 
 ## Entwicklungsablauf
 
-- Jede Änderung wird vor dem Commit lokal über einen statischen Server geprüft:
-  Hell- und Dark Mode, schmale Mobilbreite (ab 320 px ohne horizontales Scrollen),
-  vollständige Karteninhalte samt Legende, Phasenwechsel, Wochenerkennung.
-- Bei Änderungen am Protokoll zusätzlich: Seitenlänge ohne Einträge unverändert; Eintrag
-  erfassen, ändern und löschen; Werte bleiben nach
-  Neuladen und nach App-Update erhalten; Anzeige des letzten Trainings; Erfassen im Offline-
-  Betrieb; Export und Import; Start mit leerem Speicher.
-- Bei Änderungen am Service Worker wird das Offline-Verhalten geprüft.
+- Jede Änderung wird vor dem Commit lokal über einen statischen Server nach
+  `docs/pruefung.md` geprüft: immer Hell- und Dark Mode, Mobilbreite ab 320 px ohne horizontales
+  Scrollen, vollständige Karteninhalte samt Legende, Phasenwechsel und Wochenerkennung; bei
+  Änderungen am Protokoll zusätzlich dessen Szenarien (u. a. Seitenlänge ohne Einträge
+  unverändert, Erhalt nach Neuladen und App-Update, offline, Sichern/Wiederherstellen, leerer
+  Speicher); bei Änderungen am Service Worker das Offline-Verhalten.
 - Änderungen werden kurz auf Deutsch erklärt, verständlich für Grundkenntnisse.
 - Commit-Nachrichten auf Deutsch, knapp und beschreibend.
 - Für neue Features gilt der Spec-Kit-Ablauf (`/speckit-specify` → `/speckit-plan` →
   `/speckit-tasks` → `/speckit-implement`); jeder Plan prüft die Einhaltung dieser
-  Verfassung.
+  Verfassung. Nach der Umsetzung wird der Stand in `SPEC.md` und `docs/` übernommen; die
+  Feature-Spezifikation in `specs/` bleibt als Archiv.
 
 ## Governance
 
-- Diese Verfassung hat Vorrang vor anderen Projektregeln; `SPEC.md` und
-  `CLAUDE.md` MÜSSEN ihr entsprechen.
+- Diese Verfassung hat Vorrang vor anderen Projektregeln; `SPEC.md`, `README.md`,
+  `CLAUDE.md` und `docs/` MÜSSEN ihr entsprechen. Jede Information hat ein maßgebliches Dokument
+  (Übersicht in `README.md`); andere Dokumente verweisen darauf, statt sie zu wiederholen.
 - Änderungen erfolgen über `/speckit-constitution`, werden mit Begründung dokumentiert
   und als eigener Commit festgehalten.
 - Versionierung nach SemVer: MAJOR für entfernte oder neu definierte Prinzipien, MINOR für
@@ -168,4 +183,4 @@ Export/Import und Migration Pflicht und kein Komfort.
 - Jeder Implementierungsplan enthält einen Verfassungs-Check; Abweichungen MÜSSEN dort
   begründet werden, sonst ist der Plan abzulehnen.
 
-**Version**: 2.2.0 | **Ratified**: 2026-11-14 | **Last Amended**: 2026-11-14
+**Version**: 2.3.0 | **Ratified**: 2026-11-14 | **Last Amended**: 2026-11-15
