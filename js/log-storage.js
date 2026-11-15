@@ -1,4 +1,4 @@
-// Trainingsprotokoll im Speicher des Browsers (localStorage).
+// Trainingsprotokoll und Anzeigezustand im Speicher des Browsers (localStorage).
 // Einzige Stelle der App, die auf localStorage zugreift. Wechselt der Speicherort (z. B.
 // IndexedDB), ändert sich nur diese Datei.
 
@@ -9,6 +9,9 @@ import { emptyLog, isLogDocument, migrate, LOG_SCHEMA } from "./log.js";
 const LOG_KEY = "trainingsplan.log.v1";
 const LOG_BACKUP_KEY = "trainingsplan.log.backup"; // Stand vor der letzten Migration
 const LOG_BROKEN_KEY = "trainingsplan.log.defekt"; // unlesbarer Stand
+// Anzeigezustand (gewählte Einheit/Phase, offene Übung, Scrollposition) – getrennt vom
+// Protokoll, nicht Teil der Sicherung. Fehler beim Lesen oder Schreiben werden still ignoriert.
+const VIEW_KEY = "trainingsplan.view";
 
 let persistRequested = false;
 
@@ -64,6 +67,30 @@ export function saveLog(log) {
   } catch (error) {
     return false;
   }
+  requestPersistence();
+  return true;
+}
+
+// Liest den gespeicherten Anzeigezustand – ein Objekt oder null (fehlt, unlesbar, kein Speicher).
+// Ob er noch gilt (gleicher Tag, gültige IDs), prüft app.js.
+export function loadViewState() {
+  try {
+    const view = JSON.parse(localStorage.getItem(VIEW_KEY));
+    return view !== null && typeof view === "object" && !Array.isArray(view) ? view : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+export function saveViewState(view) {
+  try {
+    localStorage.setItem(VIEW_KEY, JSON.stringify(view));
+  } catch (error) {
+    // Komfortfunktion – ohne Speicher geht es ohne Wiederherstellung weiter.
+  }
+}
+
+function requestPersistence() {
   if (!persistRequested) {
     persistRequested = true;
     // Bittet den Browser, die Daten bei knappem Speicher nicht zu räumen (ohne Garantie).
@@ -74,5 +101,4 @@ export function saveLog(log) {
       // Nicht unterstützt – kein Problem.
     }
   }
-  return true;
 }

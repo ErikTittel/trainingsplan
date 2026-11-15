@@ -13,16 +13,29 @@ und was beim letzten Mal geschafft wurde; das Erfassen kostet wenige Antipper.
 
 ## Aufbau der Seite
 
-1. **Kopf** – Plantitel; darunter Woche und Phase („Woche 6 von 12 · Phase 2“, ggf.
-   „· Entlastungswoche“; vor Planstart „Start am …“, danach „Plan abgeschlossen“).
-2. **Deine Einheit** – ein Knopf je Trainingstag (Kurzname der Einheit), daneben „Heute“ bzw.
-   der Wochentag („· nächste Einheit“ an Tagen ohne Krafttraining); Titel der Einheit und
-   Aufwärmtext. Vorgewählt: heutiger oder nächster Trainingstag.
-3. **Übungen** – Zahl der Übungen; Phasenknöpfe („Phase 1 · W1–4“ …, vorgewählt die Phase der
-   aktuellen Woche) für Vorgabe, Tempo und Ablauf; Legende; Meldungszeile des Protokolls; Karten.
-4. **Infokarten** (aufklappbar) – „Sicherheit zuerst“ (alle Sicherheitsregeln), „Plan &
-   Progression“ (Phasen, Entlastung, Pausen, Tempo-Schreibweise, Progressionsregeln),
-   „Protokoll sichern“.
+Ohne Großbuchstaben-Überschriften und ohne Erklärtexte über den Übungen; Texte mindestens
+0,85 rem.
+
+1. **Kopf** – Plantitel klein und gedämpft; darunter groß Woche und Phase („Woche 6 von 12 ·
+   Phase 2“, ggf. „· Entlastungswoche“; vor Planstart „Start am …“, danach „Plan abgeschlossen“).
+2. **Einheit** – ein Knopf je Trainingstag (Kurzname der Einheit); Titel der Einheit, daneben
+   „Heute“ bzw. der Wochentag („· nächste Einheit“ an Tagen ohne Krafttraining). Vorgewählt:
+   heutiger oder nächster Trainingstag.
+3. **Aufwärmen** – aufklappbarer Block „Aufwärmen · 9 Min“ mit nummerierten Schritten; Gruppen
+   („5 Min Mobility“) mit Unterpunkten. Offen beim Laden und nach einem Wechsel der Einheit.
+4. **Übungen** – Zähler „erfasst / gesamt“ (z. B. „3 / 8“); Phasenleiste in einer Zeile
+   („Phase 1 W1–4“ …, vorgewählt die Phase der aktuellen Woche) für Vorgabe, Tempo und Ablauf;
+   Meldungszeile des Protokolls; Karten.
+5. **Infokarten** (aufklappbar) – „Sicherheit zuerst“ (alle Sicherheitsregeln), „Kürzel &
+   Bedienung“ (Legende aller Kürzel und Symbole, Bedienhinweise), „Plan & Progression“ (Phasen,
+   Entlastung, Pausen, Tempo-Schreibweise, Progressionsregeln), „Protokoll sichern“.
+
+**Am selben Tag wieder geöffnet** (z. B. nachdem iOS die App beendet hat): gewählte Einheit und
+Phase, offene Übung, Zustand des Aufwärmens und Scrollposition werden wiederhergestellt. Am
+nächsten Tag beginnt die App neu (heutige Einheit, aktuelle Phase, alles geschlossen).
+
+**Bildschirm:** Solange die App sichtbar ist, bleibt der Bildschirm an (wo das Gerät es erlaubt;
+sonst ohne Hinweis nichts).
 
 ## Übungskarte
 
@@ -32,13 +45,20 @@ und was beim letzten Mal geschafft wurde; das Erfassen kostet wenige Antipper.
 │ +   4×8  ↓2 · 1 · ↑1  RPE 7 → 8  P 2 min    │  Kennzahlen: Vorgabe, Tempo, RPE, Pause
 │     Hüftstrecker für Sprint … „Straps, gut“ │  Zweck · Kommentar des jüngsten Eintrags
 │     • Ablaufschritt …                       │  nur bei Blöcken
-│     Hinweis …                               │  nur bei Blöcken
+│     Hinweis ▸ Aufstieg in die nächste …     │  nur bei Blöcken; eine Zeile, antippen = ganz
 └────────────────────────────────────────────┘
 ```
 
 - Feste Reihenfolge; die Vorgabe ist das kräftigste Element der Kennzahlenzeile; die Zeile bricht
   auf schmalen Geräten um. Jede Angabe einmal, leere Angaben fehlen ganz.
-- **Kürzel** (in der Legende erklärt): Tempo `↓3 · 1 · ↑1` = Absenken · Pause unten · Anheben
+- Rangordnung: Name, Vorgabe und Wert des jüngsten Eintrags fallen am stärksten auf; Zweck,
+  Kommentar und Hinweis sind zurückgenommen.
+- **Zustand** (ohne Höhenänderung): heute erfasst = Nummernfeld gefüllt, Rand in Akzentfarbe;
+  die erste noch nicht erfasste Karte = Akzentring („nächste Übung“). Nach jedem Speichern
+  leuchtet das ✓ kurz auf (ohne Animation bei reduzierter Bewegung).
+- **Hinweis** unter den Ablaufschritten: eingeklappt eine Zeile („Hinweis ▸ …“), Antippen zeigt
+  den ganzen Text, ohne den Protokollbereich zu öffnen.
+- **Kürzel** (in der Infokarte „Kürzel & Bedienung“ erklärt): Tempo `↓3 · 1 · ↑1` = Absenken · Pause unten · Anheben
   (· Pause oben), `X` = explosiv; `P` = Satzpause; `/S.` = pro Seite; `RPE` = Anstrengung 1–10;
   `✓` = heute erfasst; 🥵 schwach · 🙂 ok · 💪 stark = Power; `Entl.` = Entlastungswoche.
 - Unter dem Nummernfeld: `+` (heute nichts erfasst) bzw. `✓` (heute erfasst), ohne zusätzliche
@@ -51,30 +71,36 @@ und was beim letzten Mal geschafft wurde; das Erfassen kostet wenige Antipper.
 ## Protokollbereich
 
 Antippen der Kachel (oder des Nummernfelds, auch per Tastatur) öffnet bzw. schließt den Bereich
-unter den Planangaben. Höchstens einer ist offen; beim Laden und nach einem Wechsel der Einheit sind
-alle geschlossen, ein Phasenwechsel lässt ihn offen.
+unter den Planangaben. Höchstens einer ist offen; beim ersten Laden des Tages und nach einem
+Wechsel der Einheit sind alle geschlossen, ein Phasenwechsel lässt ihn offen.
 
 ```text
 │ ─────────────────────────────────────────── │
-│ Letztes Mal (W4 · 07.11. · Entl.): 80 kg 🥵 │  nur wenn heute erfasst und ein früheres
-│   · „Straps, Rücken gut“                    │  Training existiert
-│ Gewicht (kg)              Power: ok         │  links Werte laut Plan, rechts Power
-│ [ − ]   80   [ + ]     [ − ]  🙂  [ + ]      │
+│ Letztes Mal (W4 · 07.11. · Entl.): 80 kg 🥵 │  sobald ein früheres Training existiert
+│   · „Straps, Rücken gut“                    │
+│ Gewicht (kg)                                │  Wertfelder laut Plan, untereinander
+│ [  −  ]          80          [  +  ]        │
+│ Power                                       │
+│ [ 🥵 schwach ][ 🙂 ok ][ 💪 stark ]          │  ohne heutigen Eintrag: „ok“ gestrichelt
 │ [ Kommentar (optional)                   ]  │
-│ ✓ Heute erfasst            Eintrag löschen  │  bzw. „Noch nicht erfasst – Wert oder Power anpassen.“
+│ ✓ Heute erfasst            Eintrag löschen  │  bzw. „Noch nicht erfasst – Power wählen zum Speichern“
+│ [              Weiter →                  ]  │
 ```
 
 | Element | Verhalten |
 |---|---|
-| Werte | Felder je nach Übung (siehe unten), vorbelegt mit dem heutigen, sonst dem letzten Wert. −/+ speichert sofort (Gewicht in Schritten laut Plan, Standard 2,5 kg; Zeit in 5 s, erstes „+“ in leerem Feld = 30 s); Tastatureingabe speichert beim Verlassen bzw. mit Enter. Ungültig: Feld markiert, Meldung, nichts gespeichert. |
-| Power | −/+ zwischen schwach ↔ ok ↔ stark, Standard ok; an den Enden gesperrt. Jede Änderung speichert den ganzen sichtbaren Stand – ein Antippen übernimmt also unveränderte Werte. |
+| Werte | Felder je nach Übung (siehe unten), vorbelegt mit dem heutigen, sonst dem letzten Wert. −/+ speichert sofort (Gewicht in Schritten laut Plan, Standard 2,5 kg; Zeit in 5 s, erstes „+“ in leerem Feld = 30 s); Tastatureingabe speichert beim Verlassen bzw. mit Enter. Ungültig: Feld markiert, Meldung, nichts gespeichert. Gespeichert wird mit der heutigen Power, sonst ok. |
+| Power | drei Knöpfe schwach · ok · stark. Ein Antippen wählt die Stufe und speichert den ganzen sichtbaren Stand – auch „ok“ und auch unveränderte Werte vom letzten Mal. Die gespeicherte Stufe ist gefüllt (gedrückt); ohne heutigen Eintrag ist keine gewählt und „ok“ als Vorschlag gestrichelt. |
 | Kommentar | höchstens 200 Zeichen, speichert beim Verlassen bzw. Enter; ein leerer Kommentar allein legt keinen Eintrag an |
-| Eintrag löschen | nur bei heutigem Eintrag, mit Rückfrage; danach zeigt die Karte wieder das letzte Training |
+| Eintrag löschen | nur bei heutigem Eintrag, ohne Rückfrage; danach zeigt die Karte wieder das letzte Training, und unten erscheint 6 s lang „Eintrag gelöscht · Rückgängig“ (stellt den Eintrag unverändert wieder her). Verfällt auch beim nächsten Speichern und beim Wechsel von Einheit oder Phase. |
+| Weiter → | schließt den Bereich und öffnet die nächste noch nicht erfasste Übung (nach der aktuellen, dann von vorn) und scrollt zu ihr; gibt es keine, wird nur geschlossen |
+
+Bedienelemente im Bereich sind mindestens 48 px hoch.
 
 - Öffnen allein speichert nichts. Es gibt keine Felder für Sätze, Wiederholungen, RPE oder Seiten,
   keinen „erledigt“-Schalter, keinen Speichern-Knopf.
-- Speichern aktualisiert Angaben hinter Name/Zweck, Kennzeichen und Status, ohne den Bereich neu
-  aufzubauen (Fokus bleibt).
+- Speichern aktualisiert Angaben hinter Name/Zweck, Kennzeichen, Zähler, „nächste Übung“ und
+  Status, ohne den Bereich neu aufzubauen (Fokus bleibt).
 
 | Art der Übung | Beispiele | Felder |
 |---|---|---|

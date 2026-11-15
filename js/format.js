@@ -1,5 +1,6 @@
 // Anzeigeformate: macht aus Plan- und Protokollwerten kurze Texte für die Oberfläche.
-// Rein rechnerisch – kein DOM. Alle Kürzel, die hier entstehen, erklärt die Legende in index.html.
+// Rein rechnerisch – kein DOM. Alle Kürzel, die hier entstehen, erklärt die Infokarte
+// „Kürzel & Bedienung“ in index.html.
 
 import { DEFAULT_POWER, POWER_LEVELS } from "./log.js";
 import { parseDate, isDeloadWeek, phaseForWeek } from "./calendar.js";

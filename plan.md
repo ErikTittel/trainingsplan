@@ -52,7 +52,18 @@ Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden. Tempo-Sc
 
 ### Einheit 1 – Zug und Hüfte (Mo)
 
-**Aufwärmen (9 Min):** 2 Min Crosstrainer oder zügiges Gehen, dann 5 Min Mobility: 90/90-Hüftrotation 6/Seite, Open Book 8/Seite, Wall Slides 10, Brustwirbelsäulen-Extension an der Rolle 8. Danach 2 Min Aktivierung: Glute-Bridge-Halt 2×20 s, Einbeinstand mit geschlossenen Augen 30 s/Seite (links zuerst), Clean-Technik leer und 2 Aufbausätze.
+**Aufwärmen (9 Min):**
+
+1. 2 Min Crosstrainer oder zügiges Gehen
+2. 5 Min Mobility
+   - 90/90-Hüftrotation 6/Seite
+   - Open Book 8/Seite
+   - Wall Slides 10
+   - Brustwirbelsäulen-Extension an der Rolle 8
+3. 2 Min Aktivierung
+   - Glute-Bridge-Halt 2×20 s
+   - Einbeinstand mit geschlossenen Augen 30 s/Seite (links zuerst)
+   - Clean-Technik leer und 2 Aufbausätze
 
 | # | Übung | Phase 1 → 2 → 3 | Tempo | RPE | Warum |
 | --- | --- | --- | --- | --- | --- |
@@ -66,7 +77,16 @@ Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden. Tempo-Sc
 
 ### Einheit 2 – Beine, Fuß und Elastizität (Do)
 
-**Aufwärmen (10 Min):** 2 Min Crosstrainer (kein Rad wegen der hohen Frequenz), Hüfte: 90/90 und Hip Airplane 5/Seite, Sprunggelenk: Knee-to-Wall 8/Seite langsam und Band-Eversion/Inversion 10/Seite, Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s/Seite. Dann 3 Aufbausätze Kniebeuge (leer, 40 %, 60 %).
+**Aufwärmen (10 Min):**
+
+1. 2 Min Crosstrainer (kein Rad wegen der hohen Frequenz)
+2. Hüfte
+   - 90/90 und Hip Airplane 5/Seite
+3. Sprunggelenk
+   - Knee-to-Wall 8/Seite langsam
+   - Band-Eversion/Inversion 10/Seite
+4. Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s/Seite
+5. 3 Aufbausätze Kniebeuge (leer, 40 %, 60 %)
 
 | # | Übung | Phase 1 → 2 → 3 | Tempo | RPE | Warum |
 | --- | --- | --- | --- | --- | --- |
@@ -81,7 +101,17 @@ Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden. Tempo-Sc
 
 ### Einheit 3 – Druck und Beschleunigung (Sa)
 
-**Aufwärmen (9 Min):** 2 Min Geschicklichkeit statt Cardio (Koordinationsleiter nur mit Schritten, Bear Crawl vor/zurück), Band-Dislocates 10, Wall Slides 10, Brustwirbelsäulen-Extension 8, Hüftbeuger-Dehnung im Ausfallschritt mit Beckenkippung 30 s/Seite, Scap-Liegestütze 10, Aufbausätze Bank.
+**Aufwärmen (9 Min):**
+
+1. 2 Min Geschicklichkeit statt Cardio
+   - Koordinationsleiter nur mit Schritten
+   - Bear Crawl vor/zurück
+2. Band-Dislocates 10
+3. Wall Slides 10
+4. Brustwirbelsäulen-Extension 8
+5. Hüftbeuger-Dehnung im Ausfallschritt mit Beckenkippung 30 s/Seite
+6. Scap-Liegestütze 10
+7. Aufbausätze Bank
 
 | # | Übung | Phase 1 → 2 → 3 | Tempo | RPE | Warum |
 | --- | --- | --- | --- | --- | --- |

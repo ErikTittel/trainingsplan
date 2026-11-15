@@ -29,16 +29,16 @@ index.html ── js/app.js  (Einstieg + Steuerung: Zustand, Aktionen)
 
 | Datei | Aufgabe | darf benutzen |
 |---|---|---|
-| `js/app.js` | Einstieg: Service Worker registrieren, Plan und Protokoll laden. Hält den **Zustand** und die **Aktionen** (Tag/Phase wählen, Protokollbereich öffnen, Eintrag speichern/löschen, sichern, wiederherstellen) und stößt das Neuzeichnen an. | alle |
+| `js/app.js` | Einstieg: Service Worker registrieren, Plan und Protokoll laden, Bildschirm wachhalten (Wake Lock). Hält den **Zustand** und die **Aktionen** (Tag/Phase wählen, Protokollbereich öffnen, „Weiter“, Eintrag speichern/löschen/rückgängig, sichern, wiederherstellen, Anzeigezustand merken) und stößt das Neuzeichnen an. | alle |
 | `js/plan.js` | `plan.json` laden, prüfen, zum Plan-Modell aufbereiten (Phasenwerte immer als Objekt, Einheiten nach Wochentag sortiert, `totalWeeks`) | calendar, log |
 | `js/calendar.js` | Datum, Wochentage, Planwoche, Phase, Entlastungswoche, Trainingstag von heute/als Nächstes | – |
-| `js/log.js` | Protokoll-Regeln: Format, Grenzwerte, Prüfung, Einträge setzen/löschen, jüngster Eintrag, Migration, Import/Zusammenführen | calendar |
-| `js/log-storage.js` | einzige Stelle mit `localStorage`: laden (inkl. Migration, Beiseitelegen defekter Stände), speichern | log |
+| `js/log.js` | Protokoll-Regeln: Format, Grenzwerte, Prüfung, Einträge setzen/löschen/wiederherstellen, jüngster Eintrag, Migration, Import/Zusammenführen | calendar |
+| `js/log-storage.js` | einzige Stelle mit `localStorage`: Protokoll laden (inkl. Migration, Beiseitelegen defekter Stände) und speichern; Anzeigezustand laden/speichern | log |
 | `js/format.js` | Anzeigetexte: Tempo, Kürzel, Zahlen, Einträge, Woche/Phase, Power-Symbole | calendar, log |
 | `js/dom.js` | `makeElement`, `makeButton` | – |
-| `js/ui-workout.js` | Tag- und Phasenknöpfe, Kopf der Einheit, Übungsliste, Power-Legende | dom, calendar, format |
-| `js/ui-exercise.js` | Übungskarte und deren Protokoll-Zusammenfassung | dom, format, ui-log-panel |
-| `js/ui-log-panel.js` | Protokollbereich: Zahlen-Stepper, Power-Stepper, Kommentar, Status | dom, log, format |
+| `js/ui-workout.js` | Tag- und Phasenknöpfe, Kopf der Einheit, Aufwärmliste, Übungsliste mit Fortschritt („x / y“, nächste Übung), Power-Legende, Rückgängig-Leiste | dom, calendar, format |
+| `js/ui-exercise.js` | Übungskarte (inkl. einklappbarem Hinweis), Protokoll-Zusammenfassung, erledigt-Zustand, Speicher-Bestätigung | dom, format, ui-log-panel |
+| `js/ui-log-panel.js` | Protokollbereich: „Letztes Mal“, Zahlen-Stepper, Power-Knöpfe, Kommentar, Status, „Weiter →“ | dom, log, format |
 | `js/ui-info.js` | „Sicherheit zuerst“, „Plan & Progression“ | dom |
 | `js/ui-backup.js` | „Protokoll sichern“: Stand, Datei teilen/herunterladen, Datei wählen | – |
 
@@ -60,9 +60,14 @@ index.html ── js/app.js  (Einstieg + Steuerung: Zustand, Aktionen)
 | Feld | Bedeutung | gespeichert? |
 |---|---|---|
 | `plan` | Plan-Modell aus `plan.js` | nein (kommt aus `plan.json`) |
-| `workoutId`, `phaseId` | gewählte Einheit und Phase; Start: heutiger/nächster Trainingstag, Phase der aktuellen Woche | nein |
-| `openExerciseId` | Übung mit offenem Protokollbereich (höchstens eine; Einheitenwechsel schließt) | nein |
+| `workoutId`, `phaseId` | gewählte Einheit und Phase; Start: heutiger/nächster Trainingstag, Phase der aktuellen Woche | für denselben Tag¹ |
+| `openExerciseId` | Übung mit offenem Protokollbereich (höchstens eine; Einheitenwechsel schließt) | für denselben Tag¹ |
+| `warmupOpen` | Aufwärmblock offen (Einheitenwechsel öffnet) | für denselben Tag¹ |
 | `log`, `logWritable`, `logBlockedText` | Protokoll und ob gespeichert werden darf | `log` ja |
+| `undoTimer` | läuft, solange nach dem Löschen „Rückgängig“ angeboten wird | nein |
+
+¹ Anzeigezustand unter `trainingsplan.view` (samt Scrollposition), siehe
+[datenformate.md](datenformate.md) B1; `restoreView()` übernimmt ihn nur am selben Tag.
 
 Ablauf einer Aktion: Oberfläche ruft Rückruf → `app.js` ändert `state` bzw. `state.log` →
 speichert bei Protokolländerungen sofort (`commitLog`) → zeichnet neu. Zwei Arten des Neuzeichnens:
@@ -70,7 +75,8 @@ speichert bei Protokolländerungen sofort (`commitLog`) → zeichnet neu. Zwei A
 - `showWorkout()` baut die Einheit mit allen Karten neu (Tag/Phase wechseln, Bereich
   öffnen/schließen, Eintrag löschen, Wiederherstellen).
 - `updateCardSummary()` aktualisiert nach dem Speichern nur die Angaben einer Karte, **ohne
-  Neuaufbau** – so bleiben Fokus und Eingaben im offenen Bereich erhalten.
+  Neuaufbau** – so bleiben Fokus und Eingaben im offenen Bereich erhalten. Danach aktualisiert
+  `showProgress()` Zähler und „nächste Übung“, `flashSaved()` zeigt die Bestätigung.
 
 Schlägt Speichern fehl, lädt `commitLog` den gespeicherten Stand neu und zeigt eine Meldung in
 `#log-message`.
@@ -105,4 +111,4 @@ Wurzelverzeichnis liegen (Geltungsbereich `./`).
 | Neue Infokarte | Gerüst in `index.html`, Darstellung in `ui-info.js` (oder neues `ui-*.js`), Aufruf in `app.js` |
 | Neue Ansicht (z. B. Verlauf) | neues `ui-*.js`; Auswertung als reine Funktion in `log.js`; nicht in die Übungskarte (Verfassung III) |
 | Neue Datei | in `APP_SHELL` aufnehmen, `CACHE_NAME` hochzählen |
-| Neues Kürzel/Symbol | Legende in `index.html` bzw. Quelle in `format.js` (Power-Symbole: `POWER_DISPLAY`) |
+| Neues Kürzel/Symbol | Infokarte „Kürzel & Bedienung“ in `index.html` bzw. Quelle in `format.js` (Power-Symbole: `POWER_DISPLAY`) |

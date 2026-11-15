@@ -119,7 +119,29 @@
       "id": "e1",
       "title": "Einheit 1 – Zug und Hüfte",
       "day": "Mo",
-      "warmup": "Aufwärmen (9 Min): 2 Min Crosstrainer oder zügiges Gehen, dann 5 Min Mobility: 90/90-Hüftrotation 6/Seite, Open Book 8/Seite, Wall Slides 10, Brustwirbelsäulen-Extension an der Rolle 8. Danach 2 Min Aktivierung: Glute-Bridge-Halt 2×20 s, Einbeinstand mit geschlossenen Augen 30 s/Seite (links zuerst), Clean-Technik leer und 2 Aufbausätze.",
+      "warmup": {
+        "duration": "9 Min",
+        "steps": [
+          "2 Min Crosstrainer oder zügiges Gehen",
+          {
+            "title": "5 Min Mobility",
+            "items": [
+              "90/90-Hüftrotation 6/Seite",
+              "Open Book 8/Seite",
+              "Wall Slides 10",
+              "Brustwirbelsäulen-Extension an der Rolle 8"
+            ]
+          },
+          {
+            "title": "2 Min Aktivierung",
+            "items": [
+              "Glute-Bridge-Halt 2×20 s",
+              "Einbeinstand mit geschlossenen Augen 30 s/Seite (links zuerst)",
+              "Clean-Technik leer und 2 Aufbausätze"
+            ]
+          }
+        ]
+      },
       "exercises": [
         {
           "id": "hang-power-clean",
@@ -249,7 +271,27 @@
       "id": "e2",
       "title": "Einheit 2 – Beine, Fuß und Elastizität",
       "day": "Do",
-      "warmup": "Aufwärmen (10 Min): 2 Min Crosstrainer (kein Rad wegen der hohen Frequenz), Hüfte: 90/90 und Hip Airplane 5/Seite, Sprunggelenk: Knee-to-Wall 8/Seite langsam und Band-Eversion/Inversion 10/Seite, Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s/Seite. Dann 3 Aufbausätze Kniebeuge (leer, 40 %, 60 %).",
+      "warmup": {
+        "duration": "10 Min",
+        "steps": [
+          "2 Min Crosstrainer (kein Rad wegen der hohen Frequenz)",
+          {
+            "title": "Hüfte",
+            "items": [
+              "90/90 und Hip Airplane 5/Seite"
+            ]
+          },
+          {
+            "title": "Sprunggelenk",
+            "items": [
+              "Knee-to-Wall 8/Seite langsam",
+              "Band-Eversion/Inversion 10/Seite"
+            ]
+          },
+          "Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s/Seite",
+          "3 Aufbausätze Kniebeuge (leer, 40 %, 60 %)"
+        ]
+      },
       "exercises": [
         {
           "id": "sprungblock",
@@ -428,7 +470,24 @@
       "id": "e3",
       "title": "Einheit 3 – Druck und Beschleunigung",
       "day": "Sa",
-      "warmup": "Aufwärmen (9 Min): 2 Min Geschicklichkeit statt Cardio (Koordinationsleiter nur mit Schritten, Bear Crawl vor/zurück), Band-Dislocates 10, Wall Slides 10, Brustwirbelsäulen-Extension 8, Hüftbeuger-Dehnung im Ausfallschritt mit Beckenkippung 30 s/Seite, Scap-Liegestütze 10, Aufbausätze Bank.",
+      "warmup": {
+        "duration": "9 Min",
+        "steps": [
+          {
+            "title": "2 Min Geschicklichkeit statt Cardio",
+            "items": [
+              "Koordinationsleiter nur mit Schritten",
+              "Bear Crawl vor/zurück"
+            ]
+          },
+          "Band-Dislocates 10",
+          "Wall Slides 10",
+          "Brustwirbelsäulen-Extension 8",
+          "Hüftbeuger-Dehnung im Ausfallschritt mit Beckenkippung 30 s/Seite",
+          "Scap-Liegestütze 10",
+          "Aufbausätze Bank"
+        ]
+      },
       "exercises": [
         {
           "id": "beschleunigungsblock",

@@ -22,10 +22,11 @@ Stunden setzen, neu laden.
 
 | # | Prüfen | Erwartung |
 |---|---|---|
-| A1 | Hell- und Dark Mode | gut lesbar, ausreichender Kontrast |
-| A2 | Breite 320 px und 390 px | kein horizontales Scrollen, Kennzahlenzeile bricht um |
-| A3 | Alle Einheiten × alle Phasen durchschalten | Karten vollständig (Name, Vorgabe, Tempo, RPE, Pause, Zweck, Ablauf, Hinweis), leere Angaben fehlen ganz, Werte wechseln mit der Phase |
-| A4 | Legende unter „Übungen“ | erklärt ↓/↑, X, P, /S., RPE, ✓, Power-Symbole, Entl. |
+| A1 | Hell- und Dark Mode | gut lesbar, ausreichender Kontrast, keine sichtbare Schrift unter 0,85 rem |
+| A2 | Breite 320 px und 390 px | kein horizontales Scrollen, Kennzahlenzeile bricht um, Phasenleiste und Power-Knöpfe passen |
+| A3 | Alle Einheiten × alle Phasen durchschalten | Karten vollständig (Name, Vorgabe, Tempo, RPE, Pause, Zweck, Ablauf, Hinweis – dieser eingeklappt einzeilig, Antippen zeigt ihn ganz und öffnet nicht das Protokoll), leere Angaben fehlen ganz, Werte wechseln mit der Phase |
+| A4 | Infokarte „Kürzel & Bedienung“ | erklärt ↓/↑, X, P, /S., RPE, ✓/+, Power-Symbole, Entl., Bedienung; keine Legende über den Übungen |
+| A4a | Aufwärmen | „Aufwärmen · N Min“, nummerierte Schritte mit Unterpunkten, offen beim Laden und nach Einheitenwechsel, zuklappbar |
 | A5 | Wochenerkennung (Systemdatum ändern oder `startDate` in `plan.json`) | Untertitel „Woche N von 12 · Phase N“ (+ „Entlastungswoche“), vor Start „Start am …“, danach „Plan abgeschlossen“; vorgewählt sind heutiger bzw. nächster Trainingstag und die Phase der Woche |
 | A6 | „Sicherheit zuerst“ und „Plan & Progression“ öffnen | vollständig, aufklappbar |
 | A7 | Fehler in `plan.json` einbauen (z. B. doppelte `id`) | verständliche Ladefehlermeldung |
@@ -34,15 +35,19 @@ Stunden setzen, neu laden.
 
 | # | Schritte | Erwartung |
 |---|---|---|
-| B1 | Local Storage leeren, laden | keine Angaben hinter den Namen, alle Nummernfelder „+“, keine Meldung |
+| B1 | Local Storage leeren, laden | keine Angaben hinter den Namen, alle Nummernfelder „+“, Zähler „0 / N“, erste Karte als nächste markiert, keine Meldung |
 | B2 | Höhe von `#exercise-list` mit leerem Protokoll messen | gleich den Referenzwerten unten (Karten ohne Eintrag sind so hoch wie ohne Protokoll) |
-| B3 | „Rumänisches Kreuzheben“ antippen, Gewicht 80, Feld verlassen | Bereich bleibt offen; hinter dem Namen „80 kg 🙂“, Nummernfeld „✓“, Status „✓ Heute erfasst“ |
-| B4 | „+“ beim Gewicht, Power „+“ bis stark, Kommentar | „82,5 kg 💪“ hinter dem Namen, Kommentar hinter dem Zweck |
-| B5 | „abc“ bzw. Zeit „12,5“ eingeben | Feld markiert, Meldung, gespeichert bleibt der letzte gültige Wert |
-| B6 | Bereich A öffnen, dann B; Phase wechseln; Einheit wechseln; neu laden | nur B offen; bleibt beim Phasenwechsel offen; nach Einheitenwechsel und Neuladen alles zu |
+| B3 | „Rumänisches Kreuzheben“ antippen | drei Power-Knöpfe, keiner gedrückt, „ok“ gestrichelt; Status „Noch nicht erfasst – Power wählen zum Speichern“ |
+| B3a | Gewicht 80, Feld verlassen | Bereich bleibt offen; hinter dem Namen „80 kg 🙂“, Nummernfeld gefüllt „✓“ (leuchtet kurz auf), Zähler +1, nächste Karte markiert, Status „✓ Heute erfasst“, „ok“ gedrückt |
+| B4 | „+“ beim Gewicht, „stark“ antippen, Kommentar | „82,5 kg 💪“ hinter dem Namen, Kommentar hinter dem Zweck; erneutes Antippen von „stark“ ändert nichts |
+| B4a | Neue Übung öffnen, nur „ok“ antippen | sofort gespeichert (mit vorbelegten Werten) |
+| B4b | „Weiter →“ | Bereich zu, nächste nicht erfasste Übung offen und im Bild; ist keine mehr offen, wird nur geschlossen |
+| B5 | „abc“ bzw. Zeit „12,5“ eingeben, dann Power antippen | Feld markiert, Meldung, nichts gespeichert, keine Stufe gedrückt |
+| B6 | Bereich A öffnen, dann B; Phase wechseln; Einheit wechseln | nur B offen; bleibt beim Phasenwechsel offen; nach Einheitenwechsel alles zu, Aufwärmen offen |
+| B6a | Übung öffnen, Aufwärmen zuklappen, scrollen, neu laden | gleiche Einheit/Phase, gleiche Übung offen, Aufwärmen zu, gleiche Scrollposition. `date` in `trainingsplan.view` auf gestern setzen, neu laden → heutige Einheit, alles zu |
 | B7 | Klimmzug, Liegestütz; Spanish Squat; Copenhagen Plank; Sprungblock | „Zusatzlast (kg)“ / Zeit **und** Gewicht / nur Zeit / kein Zahlenfeld, nur Power und Kommentar |
-| B8 | Früheres Training erzeugen (siehe oben), neu laden, Bereich öffnen, nur Power antippen | vorher: Werte vom letzten Mal hinter Name/Zweck, „+“, Felder vorbelegt, Power ok; danach: für heute gespeichert, oben „Letztes Mal (W… · Datum): …“ |
-| B9 | „Eintrag löschen“ bestätigen | Eintrag weg, „+“, hinter dem Namen wieder das letzte Training |
+| B8 | Früheres Training erzeugen (siehe oben), neu laden, Bereich öffnen, nur Power antippen | vorher: Werte vom letzten Mal hinter Name/Zweck, „+“, Felder vorbelegt, „Letztes Mal (W… · Datum): …“ schon sichtbar; danach: für heute gespeichert, „Letztes Mal“ bleibt |
+| B9 | „Eintrag löschen“ | kein Dialog; Eintrag weg, „+“, hinter dem Namen wieder das letzte Training, unten „Eintrag gelöscht · Rückgängig“; Rückgängig → Eintrag unverändert zurück; ohne Antippen nach ca. 6 s verschwunden; verschwindet auch beim nächsten Speichern und bei Einheiten-/Phasenwechsel |
 | B10 | Neu laden; App-Update (`CACHE_NAME` hochzählen, zweimal laden) | alle Werte erhalten |
 | B11 | DevTools → Network → Offline, Wert ändern, neu laden | gespeichert |
 | B12 | Nummernfeld per Tastatur (Tab, Enter) | öffnet/schließt, `aria-expanded` wechselt |
@@ -56,21 +61,22 @@ Stunden setzen, neu laden.
 
 ### Referenz für B2
 
-Höhe von `#exercise-list` in px mit leerem Protokoll, Chrome (headless), gemessen am 2026-11-14
-und nach dem Architektur-Umbau am 2026-11-15 unverändert. Die absoluten Werte hängen von Browser
-und Schrift ab; entscheidend ist der Vergleich im selben Browser vor und nach einer Änderung.
+Höhe von `#exercise-list` in px mit leerem Protokoll, Chrome (headless), neu gemessen am
+2026-11-15 nach der UX-Überarbeitung (Feature 003: größere Schrift, einzeiliger Hinweis). Die
+Gesamtseite ist dabei in allen Fällen kürzer geworden. Die absoluten Werte hängen von Browser und
+Schrift ab; entscheidend ist der Vergleich im selben Browser vor und nach einer Änderung.
 
 | Einheit · Phase | 320 px | 390 px |
 |---|---|---|
-| Mo · Phase 1 | 939 | 821 |
-| Mo · Phase 2 | 939 | 821 |
-| Mo · Phase 3 | 963 | 821 |
-| Do · Phase 1 | 1572 | 1346 |
-| Do · Phase 2 | 1707 | 1349 |
-| Do · Phase 3 | 1670 | 1390 |
-| Sa · Phase 1 | 1340 | 1147 |
-| Sa · Phase 2 | 1291 | 1147 |
-| Sa · Phase 3 | 1402 | 1234 |
+| Mo · Phase 1 | 1004 | 862 |
+| Mo · Phase 2 | 1004 | 862 |
+| Mo · Phase 3 | 1030 | 887 |
+| Do · Phase 1 | 1505 | 1325 |
+| Do · Phase 2 | 1662 | 1333 |
+| Do · Phase 3 | 1643 | 1376 |
+| Sa · Phase 1 | 1372 | 1164 |
+| Sa · Phase 2 | 1347 | 1164 |
+| Sa · Phase 3 | 1437 | 1273 |
 
 ## C. Bei Änderungen am Service Worker
 
@@ -80,6 +86,9 @@ laden → App vollständig, Protokoll unverändert.
 ## D. Auf dem iPhone (vor dem ersten echten Training mit einer neuen Version)
 
 1. Safari → Teilen → „Zum Home-Bildschirm“.
-2. Zwei Einträge erfassen, App aus dem App-Umschalter wischen, öffnen → Einträge da.
+2. Zwei Einträge erfassen, App aus dem App-Umschalter wischen, öffnen → Einträge da, offene
+   Übung und Scrollposition wie vorher.
+2a. App 2 Minuten offen liegen lassen → Bildschirm bleibt an (ab iOS 18.4 in der
+   Home-Bildschirm-App; ältere Versionen sperren wie gewohnt).
 3. Flugmodus: Eintrag erfassen → gespeichert.
 4. „Sichern“ → Teilen-Dialog, „In Dateien sichern“; Datei per „Wiederherstellen“ wieder einlesbar.

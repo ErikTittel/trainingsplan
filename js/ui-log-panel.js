@@ -1,12 +1,13 @@
 // Oberfläche: aufklappbarer Protokollbereich einer Übungskarte.
-// Aufbau: „Letztes Mal“ (nur wenn heute erfasst) → eine Zeile mit Gewicht/Zeit links und Power
-// rechts → Kommentar → Status und „Eintrag löschen“.
+// Aufbau: „Letztes Mal“ (sobald es ein früheres Training gibt) → Wertfelder untereinander →
+// Power als drei Direkt-Knöpfe → Kommentar → Status und „Eintrag löschen“ → „Weiter →“.
 // Die Felder sind mit dem heutigen bzw. dem letzten Eintrag vorbelegt. Jede Änderung speichert
-// sofort den ganzen sichtbaren Stand; Öffnen allein speichert nichts.
+// sofort den ganzen sichtbaren Stand; ein Antippen einer Power-Stufe speichert also auch
+// unveränderte Werte. Öffnen allein speichert nichts.
 
 import { makeElement, makeButton } from "./dom.js";
 import { DEFAULT_POWER, LIMITS, POWER_LEVELS, isValidValue, parseNumber } from "./log.js";
-import { formatEntry, formatNumber, powerDisplay, trainingDetail } from "./format.js";
+import { POWER_DISPLAY, formatEntry, formatNumber, trainingDetail } from "./format.js";
 
 // Standard-Schrittweite der Gewichtsknöpfe in kg (plan.json: log.step)
 const DEFAULT_WEIGHT_STEP = 2.5;
@@ -21,8 +22,9 @@ export function panelId(exerciseId) {
 
 // info:    Protokollstand der Übung { today, latest, previous } (siehe app.js)
 // actions: save(raw)       → "saved" | "invalid" | "blocked" | "failed"
-//          remove()        – heutigen Eintrag löschen (mit Rückfrage)
+//          remove()        – heutigen Eintrag löschen (ohne Rückfrage, mit Rückgängig)
 //          hasTodayEntry() – gibt es jetzt (nicht beim Öffnen) einen heutigen Eintrag?
+//          next()          – Bereich schließen und nächste offene Übung öffnen
 export function renderLogPanel(exercise, info, actions) {
   const spec = exercise.log;
   const panel = makeElement("div", "log-panel");
@@ -35,6 +37,7 @@ export function renderLogPanel(exercise, info, actions) {
   panel.append(lastLine);
 
   const inputs = {};
+  // Power, mit der Wertänderungen gespeichert werden: heutige Stufe, sonst der Standard
   let power = today?.power ?? DEFAULT_POWER;
   const note = makeElement("input", "log-note-input");
 
@@ -46,10 +49,12 @@ export function renderLogPanel(exercise, info, actions) {
       power,
       note: note.value
     });
-    if (result !== "invalid") return;
-    for (const [field, input] of Object.entries(inputs)) {
-      if (!isValidValue(field, parseNumber(input.value))) input.setAttribute("aria-invalid", "true");
+    if (result === "invalid") {
+      for (const [field, input] of Object.entries(inputs)) {
+        if (!isValidValue(field, parseNumber(input.value))) input.setAttribute("aria-invalid", "true");
+      }
     }
+    return result;
   };
 
   const numbers = makeElement("div", "log-numbers");
@@ -74,20 +79,16 @@ export function renderLogPanel(exercise, info, actions) {
     inputs.weight = stepper.input;
     numbers.append(stepper.element);
   }
+  if (numbers.children.length) panel.append(numbers);
 
-  const powerStepper = makePowerStepper(power, (next) => {
-    power = next;
-    save();
-  });
-
-  const row = makeElement("div", "log-row");
-  if (numbers.children.length) {
-    row.append(numbers);
-  } else {
-    row.classList.add("log-row-power-only");
-  }
-  row.append(powerStepper);
-  panel.append(row);
+  // Ein Antippen wählt die Stufe und speichert. Die bereits gespeicherte Stufe erneut antippen
+  // ändert nichts. Scheitert das Speichern, gilt wieder die vorherige Stufe.
+  panel.append(makePowerChoice(exercise.id, (level) => {
+    if (actions.hasTodayEntry() && level === power) return;
+    const previous = power;
+    power = level;
+    if (save() !== "saved") power = previous;
+  }));
 
   note.type = "text";
   note.maxLength = LIMITS.noteLength;
@@ -96,7 +97,7 @@ export function renderLogPanel(exercise, info, actions) {
   note.value = today?.note ?? "";
   note.addEventListener("change", () => {
     // Ein leerer Kommentar allein legt keinen Eintrag an.
-    if (!today && !note.value.trim() && !actions.hasTodayEntry()) return;
+    if (!note.value.trim() && !actions.hasTodayEntry()) return;
     save();
   });
   note.addEventListener("keydown", (event) => {
@@ -110,20 +111,26 @@ export function renderLogPanel(exercise, info, actions) {
   remove.addEventListener("click", () => actions.remove());
   status.append(remove);
   panel.append(status);
+
+  const next = makeButton("log-next", "Weiter →");
+  next.setAttribute("aria-label", "Weiter zur nächsten offenen Übung");
+  next.addEventListener("click", () => actions.next());
+  panel.append(next);
   return panel;
 }
 
 // Aktualisiert Power, Status, „Eintrag löschen“ und „Letztes Mal“ ohne Neuaufbau.
 export function updateLogPanel(panel, exercise, info, totalWeeks) {
   const { today, previous } = info;
-  showPower(panel.querySelector(".power-stepper"), today?.power ?? DEFAULT_POWER);
+  showPower(panel.querySelector(".power-choice"), today?.power ?? null);
   panel.querySelector(".log-status-text").textContent = today
     ? "✓ Heute erfasst"
-    : "Noch nicht erfasst – Wert oder Power anpassen.";
+    : "Noch nicht erfasst – Power wählen zum Speichern";
   panel.querySelector(".log-remove").hidden = !today;
+  // „Letztes Mal“ steht im offenen Bereich, sobald es ein früheres Training gibt
+  // (Verfassung III: Ausnahme von „jede Angabe genau einmal“).
   const lastLine = panel.querySelector(".log-last");
-  // Das letzte Training steht im Bereich nur, solange die Karte die heutigen Werte zeigt.
-  if (today && previous) {
+  if (previous) {
     const formatted = formatEntry(previous.entry, exercise.log);
     lastLine.textContent = `Letztes Mal (${trainingDetail(previous.session, totalWeeks)}): ${formatted.text}`;
     if (previous.entry.note) lastLine.textContent += ` · „${previous.entry.note}“`;
@@ -175,38 +182,36 @@ function makeStepper(options) {
   return { element: wrapper, input };
 }
 
-// Power als −/+-Stepper: schwach ↔ ok ↔ stark. onChange(neue Stufe) bei jedem Wechsel.
-function makePowerStepper(initial, onChange) {
-  let power = initial;
-  const stepper = makeElement("div", "stepper power-stepper");
-  stepper.setAttribute("role", "group");
-  stepper.setAttribute("aria-label", "Power (wahrgenommene Anstrengung)");
-  const controls = makeElement("div", "stepper-controls");
-  const minus = makeButton("stepper-button power-minus", "−");
-  const plus = makeButton("stepper-button power-plus", "+");
-  minus.setAttribute("aria-label", "Power verringern");
-  plus.setAttribute("aria-label", "Power erhöhen");
-  const shift = (direction) => {
-    const next = POWER_LEVELS[POWER_LEVELS.indexOf(power) + direction];
-    if (!next) return;
-    power = next;
-    showPower(stepper, power);
-    onChange(power);
-  };
-  minus.addEventListener("click", () => shift(-1));
-  plus.addEventListener("click", () => shift(1));
-  controls.append(minus, makeElement("span", "power-value"), plus);
-  stepper.append(makeElement("span", "stepper-label"), controls);
-  showPower(stepper, power);
-  return stepper;
+// Power als drei Direkt-Knöpfe (schwach · ok · stark). onChoose(stufe) bei jedem Antippen.
+function makePowerChoice(exerciseId, onChoose) {
+  const wrapper = makeElement("div", "power");
+  const label = makeElement("span", "power-label", "Power");
+  label.id = `power-label-${exerciseId}`;
+  const choice = makeElement("div", "power-choice");
+  choice.setAttribute("role", "group");
+  choice.setAttribute("aria-labelledby", label.id);
+  for (const level of POWER_LEVELS) {
+    const display = POWER_DISPLAY[level];
+    const button = makeButton("power-button");
+    button.dataset.power = level;
+    button.setAttribute("aria-label", `Power ${display.label}`);
+    button.append(
+      makeElement("span", "power-symbol", display.symbol),
+      makeElement("span", "power-word", display.label)
+    );
+    button.addEventListener("click", () => onChoose(level));
+    choice.append(button);
+  }
+  wrapper.append(label, choice);
+  return wrapper;
 }
 
-// Zeigt die Power im Stepper an: Beschriftung „Power: ok“, Symbol in der Mitte, −/+ am Rand
-// gesperrt, wenn es nach dieser Seite nicht weitergeht.
-function showPower(stepper, power) {
-  const index = POWER_LEVELS.indexOf(power);
-  stepper.querySelector(".stepper-label").textContent = `Power: ${powerDisplay(power).label}`;
-  stepper.querySelector(".power-value").textContent = powerDisplay(power).symbol;
-  stepper.querySelector(".power-minus").disabled = index <= 0;
-  stepper.querySelector(".power-plus").disabled = index >= POWER_LEVELS.length - 1;
+// Zeigt die gespeicherte Stufe als gewählt (aria-pressed). Ohne heutigen Eintrag (saved = null)
+// ist keine Stufe gewählt, der Standard „ok“ ist als Vorschlag markiert.
+function showPower(choice, saved) {
+  for (const button of choice.querySelectorAll(".power-button")) {
+    const level = button.dataset.power;
+    button.setAttribute("aria-pressed", String(level === saved));
+    button.classList.toggle("is-suggested", saved === null && level === DEFAULT_POWER);
+  }
 }

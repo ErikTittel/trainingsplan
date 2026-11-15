@@ -175,6 +175,14 @@ export function removeEntry(log, session, exerciseId) {
   return true;
 }
 
+// Stellt einen gelöschten Eintrag wieder her („Rückgängig“). Wurde das Training beim Löschen
+// entfernt, weil es leer war, wird es wieder angelegt.
+export function restoreEntry(log, session, exerciseId, entry) {
+  log.sessions[session.id] = session;
+  session.entries[exerciseId] = entry;
+  session.updatedAt = new Date().toISOString();
+}
+
 // Jüngster Eintrag zu einer Übung – optional ohne ein bestimmtes Training (z. B. das heutige).
 // Ergebnis: { session, entry } oder null.
 export function lastEntry(log, exerciseId, excludeSessionId = null) {

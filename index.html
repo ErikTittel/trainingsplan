@@ -17,36 +17,31 @@
 <body>
   <main class="app-shell">
     <header class="app-header">
-      <p class="eyebrow">DEIN TRAININGSPLAN</p>
       <h1 id="plan-title">Trainingsplan</h1>
-      <p id="plan-subtitle" class="muted">Trainingsplan wird geladen …</p>
+      <p id="plan-subtitle" class="plan-subtitle">Trainingsplan wird geladen …</p>
     </header>
 
-    <section class="day-section" aria-labelledby="day-heading">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">DEINE EINHEIT</p>
-          <h2 id="day-heading">Trainingstag auswählen</h2>
-        </div>
+    <section class="day-section" aria-labelledby="workout-title">
+      <nav id="day-navigation" class="day-navigation" aria-label="Trainingstag" hidden></nav>
+      <div class="workout-head">
+        <h2 id="workout-title" class="workout-title"></h2>
         <span id="today-label" class="today-label"></span>
       </div>
-      <nav id="day-navigation" class="day-navigation" aria-label="Trainingstag" hidden></nav>
-      <p id="workout-title" class="workout-title"></p>
-      <p id="workout-warmup" class="warmup"></p>
+      <details id="workout-warmup" class="warmup" open hidden>
+        <summary>
+          <span id="warmup-heading" class="warmup-heading">Aufwärmen</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <ol id="warmup-steps" class="warmup-steps"></ol>
+      </details>
     </section>
 
     <section class="exercise-section" aria-labelledby="exercise-heading">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow">DEIN ABLAUF</p>
-          <h2 id="exercise-heading">Übungen</h2>
-        </div>
+        <h2 id="exercise-heading">Übungen</h2>
         <span id="exercise-count" class="count-badge"></span>
       </div>
-      <p class="eyebrow phase-label">PHASE FÜR PROGRESSION &amp; TEMPO WÄHLEN</p>
-      <nav id="phase-navigation" class="phase-navigation" aria-label="Trainingsphase" hidden></nav>
-      <p class="exercise-legend">Tempo ↓ ab · Pause · ↑ auf (X = explosiv) · P = Satzpause · /S. = pro Seite · RPE = Anstrengung 1–10</p>
-      <p class="exercise-legend">Kachel antippen = Protokoll · ✓ = heute erfasst · hinter dem Namen: letztes Gewicht/Zeit und Power <span id="power-legend"></span> · Entl. = Entlastungswoche</p>
+      <nav id="phase-navigation" class="phase-navigation" aria-label="Trainingsphase für Vorgabe und Tempo" hidden></nav>
       <p id="log-message" class="log-message" role="status" hidden></p>
       <div id="exercise-list" class="exercise-list" aria-live="polite"></div>
     </section>
@@ -59,6 +54,33 @@
           <span class="chevron" aria-hidden="true"></span>
         </summary>
         <div id="safety-rules" class="info-content"></div>
+      </details>
+
+      <details class="info-card">
+        <summary>
+          <span class="summary-icon legend-icon" aria-hidden="true">?</span>
+          <span><strong>Kürzel &amp; Bedienung</strong><small>Was die Zeichen auf den Karten bedeuten</small></span>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="info-content">
+          <h3>Kürzel auf den Karten</h3>
+          <ul>
+            <li><strong>4×8</strong> = Sätze × Wiederholungen (Vorgabe der gewählten Phase)</li>
+            <li><strong>↓3 · 1 · ↑1</strong> = Tempo in Sekunden: Absenken · Pause unten · Anheben (· Pause oben); <strong>X</strong> = explosiv</li>
+            <li><strong>RPE</strong> = Anstrengung 1–10 · <strong>P</strong> = Satzpause · <strong>/S.</strong> = pro Seite</li>
+            <li>Hinter dem Namen: letztes Gewicht bzw. Zeit und Power; hinter dem Zweck: dein Kommentar</li>
+            <li>Power: <span id="power-legend"></span></li>
+            <li><strong>Entl.</strong> = Entlastungswoche</li>
+          </ul>
+          <h3>Bedienung</h3>
+          <ul>
+            <li>Karte antippen öffnet das Protokoll der Übung.</li>
+            <li>Power antippen speichert sofort – auch mit unveränderten Werten vom letzten Mal.</li>
+            <li>„Weiter →“ springt zur nächsten offenen Übung.</li>
+            <li><strong>+</strong> = heute noch offen · <strong>✓</strong> = heute erfasst · grüner Rahmen = nächste Übung</li>
+            <li>„Eintrag löschen“ lässt sich einige Sekunden lang rückgängig machen.</li>
+          </ul>
+        </div>
       </details>
 
       <details class="info-card">
@@ -90,7 +112,11 @@
     </section>
 
     <p id="load-error" class="load-error" role="alert" hidden></p>
-    <footer class="app-footer">In deinem Tempo. Sauber und schmerzarm trainieren.</footer>
   </main>
+
+  <div id="undo-bar" class="undo-bar" role="status" hidden>
+    <span id="undo-text"></span>
+    <button id="undo-button" class="undo-button" type="button">Rückgängig</button>
+  </div>
 </body>
 </html>

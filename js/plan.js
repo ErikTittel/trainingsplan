@@ -77,6 +77,9 @@ function prepareWorkouts(list, phases) {
     }
     if (days.has(workout.day)) throw new Error(`Für ${workout.day} ist in plan.json mehr als eine Einheit eingetragen.`);
     days.add(workout.day);
+    if (!isValidWarmup(workout.warmup)) {
+      throw new Error(`Das Aufwärmen (warmup) für ${workout.title} ist ungültig: erwartet { duration, steps } mit mindestens einem Schritt.`);
+    }
     if (!Array.isArray(workout.exercises)) {
       throw new Error(`Die Übungen (exercises) für ${workout.title} fehlen in plan.json.`);
     }
@@ -86,6 +89,19 @@ function prepareWorkouts(list, phases) {
   // Montag zuerst, Sonntag zuletzt
   const order = (workout) => (WEEKDAYS[workout.day].number + 6) % 7;
   return workouts.sort((a, b) => order(a) - order(b));
+}
+
+// Aufwärmen: { duration: Text, steps: [Schritt, …] } mit mindestens einem Schritt.
+// Schritt = Text oder Gruppe { title: Text, items: [Text, …] } mit mindestens einem Punkt.
+function isValidWarmup(warmup) {
+  const isText = (value) => typeof value === "string" && value !== "";
+  const isStep = (step) => isText(step)
+    || (isPlainObject(step) && isText(step.title)
+      && Array.isArray(step.items) && step.items.length > 0 && step.items.every(isText));
+  return isPlainObject(warmup)
+    && isText(warmup.duration)
+    && Array.isArray(warmup.steps) && warmup.steps.length > 0
+    && warmup.steps.every(isStep);
 }
 
 function prepareExercise(exercise, phases, exerciseIds) {

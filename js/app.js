@@ -7,15 +7,23 @@ import { loadPlan } from "./plan.js";
 import { isDeloadWeek, localDate, nextWorkout, phaseForWeek, planWeek } from "./calendar.js";
 import {
   currentSession, emptyLog, exportLog, lastEntry, markExported, mergeLog, parseImport,
-  removeEntry, setEntry, validateEntry
+  removeEntry, restoreEntry, setEntry, validateEntry
 } from "./log.js";
-import { loadLog, saveLog } from "./log-storage.js";
+import { loadLog, loadViewState, saveLog, saveViewState } from "./log-storage.js";
 import { describeWeek } from "./format.js";
-import { findCard, renderDayNavigation, renderLegend, renderPhaseNavigation, renderWorkout } from "./ui-workout.js";
-import { renderExerciseCard, updateCardSummary } from "./ui-exercise.js";
+import {
+  findCard, hideUndo, renderDayNavigation, renderLegend, renderPhaseNavigation, renderProgress,
+  renderWorkout, setupWarmup, showUndo
+} from "./ui-workout.js";
+import { flashSaved, renderExerciseCard, updateCardSummary } from "./ui-exercise.js";
 import { panelId, renderLogPanel } from "./ui-log-panel.js";
 import { renderPlanDetails, renderSafetyRules } from "./ui-info.js";
 import { deliverFile, renderBackup, setupBackup, showBackupResult } from "./ui-backup.js";
+
+// So lange wird nach dem Löschen „Rückgängig“ angeboten (Millisekunden)
+const UNDO_MS = 6000;
+// Verzögerung, bevor die Scrollposition gespeichert wird (Millisekunden)
+const SCROLL_SAVE_DELAY_MS = 300;
 
 const elements = {
   title: document.querySelector("#plan-title"),
@@ -24,16 +32,18 @@ const elements = {
   error: document.querySelector("#load-error")
 };
 
-// Zustand der App. Gespeichert wird nur das Protokoll (state.log, über log-storage.js);
-// alles andere ist Anzeigezustand und beginnt bei jedem Laden neu.
+// Zustand der App. Dauerhaft gespeichert wird das Protokoll (state.log); der Anzeigezustand
+// (Einheit, Phase, offene Übung, Aufwärmen, Scrollposition) wird nur für denselben Tag gemerkt.
 const state = {
   plan: null,            // Plan-Modell aus plan.js
   workoutId: null,       // gewählte Einheit
   phaseId: null,         // gewählte Phase (für Vorgabe, Tempo, Ablauf)
   openExerciseId: null,  // Übung mit offenem Protokollbereich – höchstens eine
+  warmupOpen: true,      // Aufwärmblock aufgeklappt?
   log: emptyLog(),       // Trainingsprotokoll
   logWritable: true,     // false, wenn das Protokoll nicht gespeichert werden darf/kann
-  logBlockedText: ""     // Meldung, warum nicht gespeichert wird
+  logBlockedText: "",    // Meldung, warum nicht gespeichert wird
+  undoTimer: null        // läuft, solange „Rückgängig“ angeboten wird
 };
 
 // ---------------------------------------------------------------------------
@@ -51,14 +61,21 @@ async function start() {
     elements.subtitle.textContent = describeWeek(plan, week);
     state.phaseId = week === null ? plan.phases[0].id : phaseForWeek(plan.phases, week).id;
     state.workoutId = nextWorkout(plan.workouts).id;
+    const restored = restoreView();
 
     showDayNavigation();
     showPhaseNavigation();
+    setupWarmup((open) => {
+      state.warmupOpen = open;
+      saveView();
+    });
     showWorkout();
     renderSafetyRules(plan.safetyRules);
     renderPlanDetails(plan);
     setupBackup({ onExport: exportBackup, onImport: importBackup });
     renderBackup(state.log, state.logWritable);
+    if (restored) requestAnimationFrame(() => window.scrollTo(0, restored.scrollY));
+    setupViewSaving();
   } catch (error) {
     elements.error.hidden = false;
     elements.error.textContent = `${error.message} Öffne die Seite über einen lokalen Webserver, damit der Browser plan.json laden kann.`;
@@ -81,6 +98,73 @@ function openLog() {
 }
 
 // ---------------------------------------------------------------------------
+// Anzeigezustand für denselben Tag (z. B. nachdem iOS die App beendet hat)
+// ---------------------------------------------------------------------------
+
+// Übernimmt den gemerkten Zustand, wenn er von heute ist und die IDs im Plan noch existieren.
+// Gibt ihn zurück (für die Scrollposition) oder null.
+function restoreView() {
+  const view = loadViewState();
+  if (!view || view.date !== localDate()) return null;
+  const { plan } = state;
+  const workout = plan.workouts.find((item) => item.id === view.workoutId);
+  if (workout) {
+    state.workoutId = workout.id;
+    if (workout.exercises.some((exercise) => exercise.id === view.openExerciseId)) {
+      state.openExerciseId = view.openExerciseId;
+    }
+  }
+  if (plan.phases.some((phase) => phase.id === view.phaseId)) state.phaseId = view.phaseId;
+  if (typeof view.warmupOpen === "boolean") state.warmupOpen = view.warmupOpen;
+  history.scrollRestoration = "manual";
+  return { scrollY: Number.isFinite(view.scrollY) ? view.scrollY : 0 };
+}
+
+function saveView() {
+  if (!state.plan) return;
+  saveViewState({
+    date: localDate(),
+    workoutId: state.workoutId,
+    phaseId: state.phaseId,
+    openExerciseId: state.openExerciseId,
+    warmupOpen: state.warmupOpen,
+    scrollY: Math.round(window.scrollY)
+  });
+}
+
+function setupViewSaving() {
+  let timer = null;
+  window.addEventListener("scroll", () => {
+    clearTimeout(timer);
+    timer = setTimeout(saveView, SCROLL_SAVE_DELAY_MS);
+  }, { passive: true });
+  window.addEventListener("pagehide", saveView);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") saveView();
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Bildschirm wachhalten, solange die App sichtbar ist (wo das Gerät es erlaubt)
+// ---------------------------------------------------------------------------
+
+let wakeLock = null;
+let wakeLockPending = false;
+
+async function keepScreenOn() {
+  if (!navigator.wakeLock || document.visibilityState !== "visible") return;
+  if (wakeLockPending || (wakeLock && !wakeLock.released)) return;
+  wakeLockPending = true;
+  try {
+    wakeLock = await navigator.wakeLock.request("screen");
+  } catch (error) {
+    // Nicht erlaubt (z. B. ohne Nutzeraktion oder im Stromsparmodus) – stillschweigend weiter.
+  } finally {
+    wakeLockPending = false;
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Anzeige
 // ---------------------------------------------------------------------------
 
@@ -90,18 +174,23 @@ function currentWorkout() {
 
 function showDayNavigation() {
   renderDayNavigation(state.plan.workouts, state.workoutId, (workoutId) => {
+    cancelUndo();
     state.workoutId = workoutId;
     state.openExerciseId = null;
+    state.warmupOpen = true;
     showDayNavigation();
     showWorkout();
+    saveView();
   });
 }
 
 function showPhaseNavigation() {
   renderPhaseNavigation(state.plan.phases, state.phaseId, (phaseId) => {
+    cancelUndo();
     state.phaseId = phaseId;
     showPhaseNavigation();
     showWorkout();
+    saveView();
   });
 }
 
@@ -117,10 +206,20 @@ function showWorkout() {
     renderPanel: () => renderLogPanel(exercise, exerciseLog(workout, exercise), {
       save: (raw) => saveEntry(workout, exercise, raw),
       remove: () => deleteEntry(workout, exercise),
-      hasTodayEntry: () => Boolean(todaySession(workout)?.entries[exercise.id])
+      hasTodayEntry: () => Boolean(todaySession(workout)?.entries[exercise.id]),
+      next: () => openNextExercise(workout, exercise)
     })
   }));
-  renderWorkout(workout, state.plan.workouts, cards);
+  renderWorkout(workout, state.plan.workouts, cards, state.warmupOpen);
+  showProgress(workout);
+}
+
+// Zähler „erfasst / gesamt“ und Markierung der ersten noch offenen Übung.
+function showProgress(workout) {
+  const entries = todaySession(workout)?.entries ?? {};
+  const done = workout.exercises.filter((exercise) => entries[exercise.id]);
+  const next = workout.exercises.find((exercise) => !entries[exercise.id]);
+  renderProgress(done.length, workout.exercises.length, next?.id ?? null);
 }
 
 // Öffnet bzw. schließt den Protokollbereich einer Übung (höchstens einer ist offen).
@@ -130,6 +229,24 @@ function toggleExercise(exercise) {
   focusToggle(exercise);
   const panel = document.getElementById(panelId(exercise.id));
   if (panel) panel.scrollIntoView({ block: "nearest" });
+  saveView();
+}
+
+// „Weiter →“: schließt den Bereich und öffnet die nächste noch nicht erfasste Übung – erst nach
+// der aktuellen, dann von vorn. Gibt es keine mehr, wird nur geschlossen.
+function openNextExercise(workout, exercise) {
+  const entries = todaySession(workout)?.entries ?? {};
+  const list = workout.exercises;
+  const index = list.indexOf(exercise);
+  const next = [...list.slice(index + 1), ...list.slice(0, index)]
+    .find((candidate) => !entries[candidate.id]);
+  state.openExerciseId = next?.id ?? null;
+  showWorkout();
+  const target = next ?? exercise;
+  const card = findCard(target.id);
+  if (card) card.scrollIntoView({ block: next ? "start" : "nearest" });
+  focusToggle(target);
+  saveView();
 }
 
 function focusToggle(exercise) {
@@ -208,18 +325,49 @@ function saveEntry(workout, exercise, raw) {
   const target = exercise.phaseProgression[state.phaseId];
   setEntry(state.log, todaySession(workout, true), exercise.id, raw, target);
   if (!commitLog()) return "failed";
+  cancelUndo();
   const card = findCard(exercise.id);
-  if (card) updateCardSummary(card, exercise, exerciseLog(workout, exercise), state.plan.totalWeeks);
+  if (card) {
+    updateCardSummary(card, exercise, exerciseLog(workout, exercise), state.plan.totalWeeks);
+    flashSaved(card);
+  }
+  showProgress(workout);
   return "saved";
 }
 
+// Löscht den heutigen Eintrag ohne Rückfrage und bietet einige Sekunden „Rückgängig“ an.
 function deleteEntry(workout, exercise) {
   if (!ensureWritable()) return;
-  if (!window.confirm("Heutigen Eintrag zu dieser Übung löschen?")) return;
-  if (removeEntry(state.log, todaySession(workout), exercise.id) && commitLog()) {
+  const session = todaySession(workout);
+  const entry = session?.entries[exercise.id];
+  if (!entry || !removeEntry(state.log, session, exercise.id) || !commitLog()) return;
+  showWorkout();
+  focusToggle(exercise);
+  offerUndo(() => {
+    if (!ensureWritable()) return;
+    restoreEntry(state.log, session, exercise.id, entry);
+    if (!commitLog()) return;
+    if (state.workoutId !== workout.id) return;
     showWorkout();
-    focusToggle(exercise);
-  }
+    const card = findCard(exercise.id);
+    if (card) flashSaved(card);
+  });
+}
+
+function offerUndo(onUndo) {
+  cancelUndo();
+  state.undoTimer = setTimeout(cancelUndo, UNDO_MS);
+  showUndo("Eintrag gelöscht", () => {
+    cancelUndo();
+    onUndo();
+  });
+}
+
+// „Rückgängig“ verfällt: nach Ablauf, beim nächsten Speichern, beim Wechsel von Einheit/Phase.
+function cancelUndo() {
+  clearTimeout(state.undoTimer);
+  state.undoTimer = null;
+  hideUndo();
 }
 
 // ---------------------------------------------------------------------------
@@ -253,6 +401,7 @@ async function importBackup(file) {
     return;
   }
   if (!ensureWritable()) return;
+  cancelUndo();
   const result = mergeLog(state.log, parsed.doc);
   if (!commitLog()) {
     showBackupResult("Die Sicherung konnte nicht gespeichert werden.");
@@ -270,5 +419,12 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") keepScreenOn();
+});
+// Manche Browser erlauben das Wachhalten erst nach einer Nutzeraktion.
+document.addEventListener("pointerdown", keepScreenOn, { passive: true });
+
 renderLegend();
+keepScreenOn();
 start();

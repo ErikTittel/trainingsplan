@@ -61,7 +61,7 @@ beginnen; die letzte `lastWeek` ist die Planlänge.
 | `id` | ja | Stabile Kennung (`e1` …). Nie umbenennen oder wiederverwenden. |
 | `day` | ja | `Mo`, `Di`, `Mi`, `Do`, `Fr`, `Sa` oder `So`; je Tag höchstens eine Einheit. Nur Tage mit einer Einheit erscheinen in der Tagesauswahl (Lauf-/Recovery-Tage stehen nicht in `workouts`). |
 | `title` | ja | „Einheit 1 – Zug und Hüfte“; der Tagesknopf zeigt den Teil nach „Einheit N –“ |
-| `warmup` | ja | Aufwärmtext |
+| `warmup` | ja | Aufwärmen: `{ "duration": "9 Min", "steps": [...] }`. Ein Schritt ist ein Text oder eine Gruppe `{ "title": "5 Min Mobility", "items": ["Open Book 8/Seite", …] }`. Angezeigt als „Aufwärmen · 9 Min“ mit nummerierten Schritten, Gruppen mit Unterpunkten. |
 | `exercises[]` | ja | Übungen in Anzeigereihenfolge, siehe A4 |
 
 ### A4. Übung (`exercises[]`)
@@ -79,7 +79,7 @@ Eine Übung = eine Karte; kombinierte Übungen („A + B“) werden als 6a/6b au
 | `rpe` | nein | | z. B. „7 → 8“ |
 | `why` | nein | | Zweck |
 | `instructions` | nein | ja | Liste der Ablaufschritte (Blöcke) |
-| `instructionsNote` | nein | | Hinweis unter den Ablaufschritten |
+| `instructionsNote` | nein | | Hinweis unter den Ablaufschritten (eingeklappt einzeilig) |
 | `log.fields` | ja | | Erfasste Werte, siehe A5; leere Liste = nur Power und Kommentar |
 | `log.step` | nein | | Schrittweite der Gewichtsknöpfe in kg (Standard 2,5) |
 
@@ -104,7 +104,9 @@ Gesamtgewicht.
 `plan.js` bricht mit einer verständlichen Meldung ab, wenn: keine Phasen oder Einheiten vorhanden
 sind; Phasenwochen nicht lückenlos bei 1 beginnen oder eine Entlastungswoche außerhalb ihrer Phase
 liegt; eine `id` fehlt, ungültig ist oder doppelt vorkommt; ein `day` ungültig ist oder doppelt
-vorkommt; ein Name fehlt; `log.fields` keine Liste ist, ein unbekanntes oder doppeltes Feld oder
+vorkommt; ein Name fehlt; `warmup` keine `duration` (Text) oder keine nichtleere `steps`-Liste hat
+oder ein Schritt weder Text noch `{ title, items }` mit mindestens einem Punkt ist; `log.fields`
+keine Liste ist, ein unbekanntes oder doppeltes Feld oder
 `weight` und `addedWeight` zugleich enthält; `log.step` keine Zahl > 0 ist; ein Phasenwert für eine
 Phase fehlt oder den falschen Typ hat.
 
@@ -119,9 +121,15 @@ Phase fehlt oder den falschen Typ hat.
 | `trainingsplan.log.v1` | Protokoll-Dokument (JSON) | bei jeder Eingabe |
 | `trainingsplan.log.backup` | Stand vor der letzten Migration | bei Migration |
 | `trainingsplan.log.defekt` | unlesbarer Stand | beim Laden, falls gefunden |
+| `trainingsplan.view` | Anzeigezustand (kein Protokoll), siehe unten | bei Auswahl, Aufklappen, Scrollen, Verlassen der App |
 
 Der Schlüsselname bleibt „…v1“; die Formatversion steht im Dokument (`schema`). Der Service
 Worker berührt diese Schlüssel nie.
+
+**Anzeigezustand** `trainingsplan.view`: `{ date, workoutId, phaseId, openExerciseId,
+warmupOpen, scrollY }`. Wird nur übernommen, wenn `date` der heutige Tag ist; unbekannte IDs
+werden ignoriert. Er gehört nicht zum Protokoll und nicht zur Sicherungsdatei; Lese- und
+Schreibfehler werden still ignoriert.
 
 ### B2. Protokoll-Dokument (Schema 2)
 
@@ -158,8 +166,9 @@ Worker berührt diese Schlüssel nie.
 | `note` | Text | nein | höchstens 200 Zeichen; leer wird weggelassen |
 
 Grenzwerte: `LIMITS` in `log.js`. Ein Eintrag entsteht bei der ersten Änderung im
-Protokollbereich und wird bei jeder weiteren vollständig durch den sichtbaren Stand ersetzt. Ein
-Training ohne Einträge wird entfernt. Sätze, Wiederholungen, RPE und Seiten werden nicht erfasst.
+Protokollbereich (auch beim Antippen einer Power-Stufe) und wird bei jeder weiteren vollständig
+durch den sichtbaren Stand ersetzt. Ein Training ohne Einträge wird entfernt; „Rückgängig“ nach
+dem Löschen legt es mit dem Eintrag wieder an (`restoreEntry`). Sätze, Wiederholungen, RPE und Seiten werden nicht erfasst.
 
 ```json
 {
@@ -188,7 +197,8 @@ Training ohne Einträge wird entfernt. Sätze, Wiederholungen, RPE und Seiten we
 |---|---|
 | Aktuelles Training | `sessions[heute_workoutId]`; sonst das jüngste Training derselben Einheit, das vor weniger als 6 Stunden geändert wurde (Training über Mitternacht); sonst wird es beim ersten Eintrag angelegt |
 | Jüngster Eintrag (hinter Name/Zweck) | heutiger Eintrag, sonst der des Trainings mit dem spätesten `date` |
-| Letztes Mal (im offenen Bereich) | jüngster Eintrag ohne das aktuelle Training; nur gezeigt, wenn heute erfasst ist |
+| Letztes Mal (im offenen Bereich) | jüngster Eintrag ohne das aktuelle Training; gezeigt, sobald es ihn gibt |
+| Fortschritt | Zahl der Übungen der Einheit mit Eintrag im aktuellen Training; „nächste Übung“ = erste ohne Eintrag |
 | Vorbelegung | Werte des heutigen, sonst des jüngsten Eintrags; Power heutige, sonst `ok`; Kommentar nur vom heutigen Eintrag |
 
 ### B6. Versionen und Migration

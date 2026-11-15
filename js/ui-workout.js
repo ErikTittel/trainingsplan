@@ -1,4 +1,5 @@
-// Oberfläche: Auswahl von Trainingstag und Phase sowie Kopf und Liste der Einheit.
+// Oberfläche: Auswahl von Trainingstag und Phase, Kopf der Einheit mit Aufwärmen, Übungsliste
+// mit Fortschritt, Power-Legende und Rückgängig-Leiste.
 
 import { makeElement, makeButton } from "./dom.js";
 import { WEEKDAYS, workoutOnDay } from "./calendar.js";
@@ -10,9 +11,14 @@ const elements = {
   today: document.querySelector("#today-label"),
   workoutTitle: document.querySelector("#workout-title"),
   warmup: document.querySelector("#workout-warmup"),
+  warmupHeading: document.querySelector("#warmup-heading"),
+  warmupSteps: document.querySelector("#warmup-steps"),
   exerciseCount: document.querySelector("#exercise-count"),
   exerciseList: document.querySelector("#exercise-list"),
-  powerLegend: document.querySelector("#power-legend")
+  powerLegend: document.querySelector("#power-legend"),
+  undoBar: document.querySelector("#undo-bar"),
+  undoText: document.querySelector("#undo-text"),
+  undoButton: document.querySelector("#undo-button")
 };
 
 // Ein Knopf je Einheit (nur Krafttrainingstage – andere Tage stehen nicht in workouts).
@@ -31,6 +37,7 @@ export function renderDayNavigation(workouts, selectedWorkoutId, onSelect) {
   elements.dayNavigation.hidden = false;
 }
 
+// Phasenleiste: eine Zeile „Phase 1  W1–4“ je Phase.
 export function renderPhaseNavigation(phases, selectedPhaseId, onSelect) {
   elements.phaseNavigation.replaceChildren(...phases.map((phase) => {
     const button = makeButton("phase-button");
@@ -46,17 +53,46 @@ export function renderPhaseNavigation(phases, selectedPhaseId, onSelect) {
   elements.phaseNavigation.hidden = false;
 }
 
-// Kopf der Einheit und Übungskarten (cards: fertig gebaute Kartenelemente).
-export function renderWorkout(workout, workouts, cards, today = new Date()) {
+// Meldet Auf- und Zuklappen des Aufwärmblocks (onToggle(offen?)).
+export function setupWarmup(onToggle) {
+  elements.warmup.addEventListener("toggle", () => onToggle(elements.warmup.open));
+}
+
+// Kopf der Einheit, Aufwärmen und Übungskarten (cards: fertig gebaute Kartenelemente).
+// warmupOpen: Aufwärmblock geöffnet?
+export function renderWorkout(workout, workouts, cards, warmupOpen, today = new Date()) {
   elements.workoutTitle.textContent = workout.title;
-  elements.warmup.textContent = workout.warmup;
-  elements.exerciseCount.textContent = String(workout.exercises.length);
+  renderWarmup(workout.warmup, warmupOpen);
   elements.exerciseList.replaceChildren(...cards);
 
   const todayWorkout = workoutOnDay(workouts, today);
   elements.today.textContent = todayWorkout === workout
     ? "Heute"
     : `${WEEKDAYS[workout.day].name}${todayWorkout ? "" : " · nächste Einheit"}`;
+}
+
+// Aufwärmen als nummerierte Liste; Gruppen ({ title, items }) mit Unterpunkten.
+function renderWarmup(warmup, open) {
+  elements.warmupHeading.textContent = `Aufwärmen · ${warmup.duration}`;
+  elements.warmupSteps.replaceChildren(...warmup.steps.map((step) => {
+    if (typeof step === "string") return makeElement("li", "", step);
+    const item = makeElement("li");
+    const list = makeElement("ul");
+    for (const text of step.items) list.append(makeElement("li", "", text));
+    item.append(makeElement("strong", "", step.title), list);
+    return item;
+  }));
+  elements.warmup.open = open;
+  elements.warmup.hidden = false;
+}
+
+// Fortschritt der Einheit: Zähler „erfasst / gesamt“ und Markierung der nächsten offenen Übung.
+export function renderProgress(doneCount, total, nextExerciseId) {
+  elements.exerciseCount.textContent = `${doneCount} / ${total}`;
+  elements.exerciseCount.setAttribute("aria-label", `${doneCount} von ${total} Übungen heute erfasst`);
+  for (const card of elements.exerciseList.querySelectorAll(".exercise-card")) {
+    card.classList.toggle("is-next", card.dataset.exerciseId === nextExerciseId);
+  }
 }
 
 // Die Power-Symbole in der Legende kommen aus derselben Quelle wie die Anzeige auf den Karten.
@@ -67,4 +103,16 @@ export function renderLegend() {
 // Karte einer Übung in der aktuell angezeigten Liste (oder null)
 export function findCard(exerciseId) {
   return elements.exerciseList.querySelector(`[data-exercise-id="${exerciseId}"]`);
+}
+
+// Rückgängig-Leiste: Text und Knopf; onUndo wird beim Antippen aufgerufen.
+export function showUndo(text, onUndo) {
+  elements.undoText.textContent = text;
+  elements.undoButton.onclick = onUndo;
+  elements.undoBar.hidden = false;
+}
+
+export function hideUndo() {
+  elements.undoBar.hidden = true;
+  elements.undoButton.onclick = null;
 }
