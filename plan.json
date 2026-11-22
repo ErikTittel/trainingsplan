@@ -299,7 +299,7 @@
             ]
           },
           "Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s/Seite",
-          "3 Aufbausätze Safety-Bar-Kniebeuge (leer, 40 %, 60 %)"
+          "3 Aufbausätze Goblet-Squat (leer, 40 %, 60 %)"
         ]
       },
       "exercises": [
@@ -359,8 +359,8 @@
           }
         },
         {
-          "id": "kniebeuge-box-ssb",
-          "name": "Kniebeuge zur Box (Safety Bar)",
+          "id": "beinpresse",
+          "name": "Beinpresse (limitierte ROM)",
           "rest": "2–2,5 min",
           "phaseProgression": {
             "phase1": "4×8",
@@ -373,8 +373,8 @@
             "phase3": "2-1-X"
           },
           "rpe": "7 → 8",
-          "why": "Quadrizeps-Hypertrophie; Box-Höhe = Tiefenlimit (ca. 70° → 90° → parallel). Die Safety Bar wird an den Griffen vor dem Körper gehalten – keine Handgelenk-Überstreckung wie bei Back oder Front Squat",
-          "instructionsNote": "Ohne Safety Bar: Belt Squat zur Box, Hände locker an den Griffen. Die Variante beibehalten, damit die Werte vergleichbar bleiben.",
+          "why": "Quadrizeps-Hypertrophie; Tiefenlimit: ca. 70° → 90° → parallel. Keine Handgelenk-Überstreckung wie bei Back oder Front Squat",
+          "instructionsNote": "Alternative: Belt Squat zur Box, Hände locker an den Griffen.",
           "log": {
             "fields": [
               "weight"
@@ -437,7 +437,7 @@
         },
         {
           "id": "liegestuetz",
-          "name": "Optional bei Zeitnot streichen: Liegestütz an Griffen, Füße erhöht (Weste)",
+          "name": "Liegestütz an Griffen, Füße erhöht",
           "phaseProgression": {
             "phase1": "3×12–15",
             "phase2": "3×10–12 + 5 kg",
@@ -455,11 +455,11 @@
         },
         {
           "id": "kabelrudern-neutral",
-          "name": "Optional bei Zeitnot streichen: Kabelrudern sitzend (V-Griff)",
+          "name": "Kabelrudern sitzend (V-Griff)",
           "phaseProgression": "3×10–12",
           "tempo": "3-1-1",
           "rpe": "8",
-          "why": "Zugfrequenz; der feste V-Griff hält die Hände parallel – Ringe drehen frei und rotieren das Handgelenk",
+          "why": "Zugfrequenz; der feste V-Griff hält die Hände parallel",
           "log": {
             "fields": [
               "weight"
@@ -487,8 +487,7 @@
           "Wall Slides 10",
           "Brustwirbelsäulen-Extension 8",
           "Hüftbeuger-Dehnung im Ausfallschritt mit Beckenkippung 30 s/Seite",
-          "Scap-Liegestütze an Griffen oder Kurzhanteln (Neutralgriff) 10",
-          "Aufbausätze Schrägbank (Neutralgriff)"
+          "Scap-Liegestütze an Griffen oder Kurzhanteln (Neutralgriff) 10"
         ]
       },
       "exercises": [
@@ -569,7 +568,7 @@
           "phaseProgression": "3×8–10",
           "tempo": "2-0-1",
           "rpe": "8",
-          "why": "Schulterhypertrophie, gelenkfreundlich; Handflächen zueinander, keine Landmine (Hantelende in der Hand überstreckt das Handgelenk)",
+          "why": "Schulterhypertrophie, gelenkfreundlich; Handflächen zueinander",
           "log": {
             "fields": [
               "weight"
@@ -578,11 +577,11 @@
         },
         {
           "id": "seitheben-reverse-fly",
-          "name": "Seitheben/Reverse Fly",
+          "name": "Seitheben (Kurzhantel oder Kabelzug)",
           "phaseProgression": "3×10–15",
           "tempo": "2-1-2",
           "rpe": "8",
-          "why": "Delta hinten und seitlich; Kurzhanteln im Neutralgriff, Handgelenk gerade. Erst 15 Wiederholungen sauber, dann mehr Last",
+          "why": "Delta hinten und seitlich; Kurzhanteln im Neutralgriff oder Manschette am Kabelzug, Handgelenk gerade. Erst 15 Wiederholungen sauber, dann mehr Last",
           "log": {
             "fields": [
               "weight"
@@ -600,7 +599,7 @@
           },
           "tempo": "2-1-1",
           "rpe": "8",
-          "why": "Gesäß für Sprint und Lauf, ohne Knielast; Hantel mit Polster, rechte Hand nur locker auflegen oder Hip-Thrust-Maschine",
+          "why": "Gesäß für Sprint und Lauf, ohne Knielast; Hip-Thrust-Maschine",
           "log": {
             "fields": [
               "weight"
@@ -609,11 +608,11 @@
         },
         {
           "id": "copenhagen-plank",
-          "name": "Copenhagen Plank",
+          "name": "Copenhagen Plank (Fuß auf Bank, Unterarm auf Boden)",
           "phaseProgression": {
-            "phase1": "3×15–20 s/Seite, kurzer Hebel (Knie auf der Bank)",
-            "phase2": "3×20–30 s/Seite, langer Hebel (Fuß auf der Bank)",
-            "phase3": "3×30 s/Seite, langer Hebel"
+            "phase1": "3×15–20 s + 3 Wdh./Seite",
+            "phase2": "3×20–30 s + 3 Wdh./Seite",
+            "phase3": "3×30 s + 6 Wdh./Seite"
           },
           "tempo": "statisch",
           "rpe": "7",
@@ -626,7 +625,7 @@
         },
         {
           "id": "seil-pushdown",
-          "name": "Optional: Seil-Pushdown",
+          "name": "Seil-Pushdown",
           "phaseProgression": "3×12",
           "tempo": "2-0-2",
           "rpe": "8",
@@ -639,7 +638,7 @@
         },
         {
           "id": "hammer-curl",
-          "name": "Optional: Hammer Curl",
+          "name": "Hammer Curl",
           "phaseProgression": "3×12",
           "tempo": "2-0-2",
           "rpe": "8",
