@@ -16,8 +16,9 @@ und was beim letzten Mal geschafft wurde; das Erfassen kostet wenige Antipper.
 Ohne Großbuchstaben-Überschriften und ohne Erklärtexte über den Übungen; Texte mindestens
 0,85 rem.
 
-1. **Kopf** – Plantitel klein und gedämpft; darunter groß Woche und Phase („Woche 6 von 12 ·
-   Phase 2“, ggf. „· Entlastungswoche“; vor Planstart „Start am …“, danach „Plan abgeschlossen“).
+1. **Kopf** – Plantitel klein und gedämpft; darunter groß die Woche („Woche 6 von 12“), rechts
+   daneben die Knöpfe **−** und **+**, darunter die Phase („Phase 2“, ggf. „· Entlastungswoche“).
+   Siehe „Woche und Phase“.
 2. **Einheit** – ein Knopf je Trainingstag (Kurzname der Einheit); Titel der Einheit, daneben
    „Heute“ bzw. der Wochentag („· nächste Einheit“ an Tagen ohne Krafttraining). Vorgewählt:
    heutiger oder nächster Trainingstag.
@@ -30,9 +31,21 @@ Ohne Großbuchstaben-Überschriften und ohne Erklärtexte über den Übungen; Te
    Bedienung“ (Legende aller Kürzel und Symbole, Bedienhinweise), „Plan & Progression“ (Phasen,
    Entlastung, Pausen, Tempo-Schreibweise, Progressionsregeln), „Protokoll sichern“.
 
+**Woche und Phase:** Die aktuelle Woche stellt der Trainierende selbst ein – der Kalender zählt
+nicht mit. „+“ startet die nächste Woche, wenn die Leistung es erlaubt; „−“ kehrt zur vorherigen
+zurück. Ein Antippen, keine Rückfrage; die Gegenrichtung nimmt einen Wechsel vollständig zurück.
+Nach jedem Wechsel ist die Phase gewählt, zu der die neue Woche laut Plan gehört (auch wenn vorher
+eine andere Phase angesehen wurde); Karten zeigen sofort deren Werte, Einheit, offene Übung und
+Aufwärmen bleiben. Bereich 1 bis letzte Planwoche; an der Grenze ist der Knopf deaktiviert. Die
+Woche bleibt dauerhaft erhalten (Neuladen, folgende Tage, App-Update), ist Teil der Sicherung und
+wird bei einem neuen Training im Protokoll vermerkt (ein schon angelegtes Training behält seine
+Woche). Beim allerersten Start gilt die aus `startDate` berechnete Woche (begrenzt auf den Plan),
+ohne Startdatum Woche 1. Kann nicht gespeichert werden, bleibt die Woche und es erscheint die
+Meldung über der Übungsliste.
+
 **Am selben Tag wieder geöffnet** (z. B. nachdem iOS die App beendet hat): gewählte Einheit und
 Phase, offene Übung, Zustand des Aufwärmens und Scrollposition werden wiederhergestellt. Am
-nächsten Tag beginnt die App neu (heutige Einheit, aktuelle Phase, alles geschlossen).
+nächsten Tag beginnt die App neu (heutige Einheit, Phase der eingestellten Woche, alles geschlossen).
 
 **Bildschirm:** Solange die App sichtbar ist, bleibt der Bildschirm an (wo das Gerät es erlaubt;
 sonst ohne Hinweis nichts).
@@ -132,7 +145,9 @@ zurückliegt (oder nie war).
   Download.
 - **Wiederherstellen** (gesperrt, wenn nicht gespeichert werden kann): Datei wählen, prüfen,
   pro Training zusammenführen; Ergebnis „x neu, y aktualisiert, z unverändert“ bzw. Fehlermeldung
-  ohne Änderung.
+  ohne Änderung. Die eingestellte Woche der Sicherung wird übernommen, wenn sie neuer ist als die
+  auf dem Gerät eingestellte (oder dort noch keine eingestellt wurde) – dann „Woche N übernommen.“
+  und die Phase der Woche ist gewählt.
 
 ## Bewusst nicht enthalten
 

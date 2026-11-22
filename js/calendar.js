@@ -32,8 +32,9 @@ export function parseDate(text) {
   return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
 }
 
-// Planwoche aus dem Startdatum (JJJJ-MM-TT). Woche 1 beginnt am Starttag.
-// Ergebnis: Zahl (kann < 1 oder größer als der Plan sein) oder null ohne gültiges Startdatum.
+// Kalenderwoche des Plans aus dem Startdatum (JJJJ-MM-TT). Woche 1 beginnt am Starttag.
+// Nur noch für den Startwert beim Umstieg (initialWeek) – die aktuelle Woche stellt der Nutzer
+// selbst ein. Ergebnis: Zahl (kann < 1 oder größer als der Plan sein) oder null ohne gültiges Datum.
 export function planWeek(startDate, today = new Date()) {
   const start = parseDate(startDate);
   if (!start) return null;
@@ -41,6 +42,18 @@ export function planWeek(startDate, today = new Date()) {
   const todayDay = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
   const days = Math.round((todayDay - startDay) / DAY_MS);
   return Math.floor(days / 7) + 1;
+}
+
+// Begrenzt eine Woche auf den Plan (1 … totalWeeks). Keine Ganzzahl → 1.
+export function clampWeek(week, totalWeeks) {
+  if (!Number.isInteger(week)) return 1;
+  return Math.min(Math.max(week, 1), totalWeeks);
+}
+
+// Startwert der aktuellen Woche, wenn der Nutzer noch keine eingestellt hat: die bisher aus dem
+// Startdatum berechnete Woche, begrenzt auf den Plan; ohne gültiges Startdatum Woche 1.
+export function initialWeek(startDate, totalWeeks, today = new Date()) {
+  return clampWeek(planWeek(startDate, today) ?? 1, totalWeeks);
 }
 
 // Phase zu einer Woche; Wochen vor bzw. nach dem Plan zählen zur ersten bzw. letzten Phase.

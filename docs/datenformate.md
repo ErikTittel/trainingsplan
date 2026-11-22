@@ -33,8 +33,8 @@ Dateien nachziehen. Rein technische Felder (`id`, `log`, Wochenzahlen) stehen nu
 | Feld | Pflicht | Verwendet für |
 |---|---|---|
 | `title` | ja | Überschrift |
-| `created` | ja | Untertitel, wenn kein gültiges `startDate` gesetzt ist |
-| `startDate` | nein | `JJJJ-MM-TT`, Beginn von Woche 1 – daraus berechnet die App Woche, Phase und Entlastungswoche. Fehlt es, gibt es keine Wochenerkennung. |
+| `created` | ja | Stand des Plans (Text); derzeit nicht angezeigt |
+| `startDate` | nein | `JJJJ-MM-TT`, geplanter Beginn von Woche 1 – nur Startwert der aktuellen Woche beim allerersten Start (daraus berechnete Woche, begrenzt auf den Plan; ohne Startdatum Woche 1). Danach stellt der Nutzer die Woche selbst ein (`currentWeek`, B2). |
 | `safetyRules[]` | ja | „Sicherheit zuerst“: `title`, `text` (darf leer sein), `subItems[]` |
 | `periodization.phases[]` | ja | Phasen, siehe A2 |
 | `periodization.deloadNote`, `workoutGeneralNotes.breaks`, `workoutGeneralNotes.tempoNotation`, `phaseProgressionRules[]` | ja | „Plan & Progression“ |
@@ -118,7 +118,7 @@ Phase fehlt oder den falschen Typ hat.
 
 | Schlüssel | Inhalt | geschrieben |
 |---|---|---|
-| `trainingsplan.log.v1` | Protokoll-Dokument (JSON) | bei jeder Eingabe |
+| `trainingsplan.log.v1` | Protokoll-Dokument (JSON) | bei jeder Eingabe und jedem Wochenwechsel; beim ersten Start mit dem Startwert der Woche |
 | `trainingsplan.log.backup` | Stand vor der letzten Migration | bei Migration |
 | `trainingsplan.log.defekt` | unlesbarer Stand | beim Laden, falls gefunden |
 | `trainingsplan.view` | Anzeigezustand (kein Protokoll), siehe unten | bei Auswahl, Aufklappen, Scrollen, Verlassen der App |
@@ -131,14 +131,15 @@ warmupOpen, scrollY }`. Wird nur übernommen, wenn `date` der heutige Tag ist; u
 werden ignoriert. Er gehört nicht zum Protokoll und nicht zur Sicherungsdatei; Lese- und
 Schreibfehler werden still ignoriert.
 
-### B2. Protokoll-Dokument (Schema 2)
+### B2. Protokoll-Dokument (Schema 3)
 
 | Feld | Typ | Beschreibung |
 |---|---|---|
 | `app` | Text | immer `"trainingsplan-log"` |
-| `schema` | Ganzzahl | Formatversion, aktuell `2` (`LOG_SCHEMA`) |
+| `schema` | Ganzzahl | Formatversion, aktuell `3` (`LOG_SCHEMA`) |
 | `updatedAt` | Zeitstempel | letzte Änderung (ISO 8601, UTC) |
 | `lastExportAt` | Zeitstempel / `null` | letzte Sicherung |
+| `currentWeek` | Objekt / `null` | vom Nutzer eingestellte Planwoche: `number` (Ganzzahl ≥ 1; für Anzeige und Protokoll auf 1 … letzte Planwoche begrenzt) und `changedAt` (Zeitstempel der letzten Änderung durch den Nutzer, `null` = nur Startwert). `null` nur direkt nach der Migration; ein ungültiger Wert gilt als `null` |
 | `sessions` | Objekt | Trainings, Schlüssel = `session.id` |
 
 ### B3. Training (`session`)
@@ -148,10 +149,10 @@ Schreibfehler werden still ignoriert.
 | `id` | Text | `<date>_<workoutId>`, z. B. `2026-11-16_e1` |
 | `date` | Text | Kalendertag in Ortszeit, `JJJJ-MM-TT` |
 | `workoutId` | Text | `id` der Einheit |
-| `planStart` | Text / `null` | `startDate` zum Zeitpunkt des Trainings |
-| `week` | Ganzzahl / `null` | Planwoche zum Zeitpunkt des Trainings |
+| `planStart` | Text / `null` | `startDate` zum Zeitpunkt des Trainings (nur informativ) |
+| `week` | Ganzzahl / `null` | beim Anlegen eingestellte Woche (`null` nur in alten Trainings ohne Startdatum) |
 | `phase` | Text | gewählte Phase beim ersten Eintrag |
-| `deload` | Wahr/Falsch | Entlastungswoche |
+| `deload` | Wahr/Falsch | die beim Anlegen eingestellte Woche ist eine Entlastungswoche |
 | `updatedAt` | Zeitstempel | letzte Änderung; entscheidet beim Zusammenführen |
 | `entries` | Objekt | Einträge, Schlüssel = Übungs-`id` |
 
@@ -173,9 +174,10 @@ dem Löschen legt es mit dem Eintrag wieder an (`restoreEntry`). Sätze, Wiederh
 ```json
 {
   "app": "trainingsplan-log",
-  "schema": 2,
+  "schema": 3,
   "updatedAt": "2026-11-19T18:42:10.000Z",
   "lastExportAt": null,
+  "currentWeek": { "number": 6, "changedAt": "2026-11-17T06:30:00.000Z" },
   "sessions": {
     "2026-11-19_e2": {
       "id": "2026-11-19_e2", "date": "2026-11-19", "workoutId": "e2",
@@ -195,6 +197,7 @@ dem Löschen legt es mit dem Eintrag wieder an (`restoreEntry`). Sätze, Wiederh
 
 | Wert | Berechnung |
 |---|---|
+| Aktuelle Woche | `currentWeek.number`, begrenzt auf 1 … letzte Planwoche; Phase und Entlastung dazu aus `plan.json`. Fehlt `currentWeek` beim Start, setzt die App `{ number: <Startwert aus startDate>, changedAt: null }` (A1) |
 | Aktuelles Training | `sessions[heute_workoutId]`; sonst das jüngste Training derselben Einheit, das vor weniger als 6 Stunden geändert wurde (Training über Mitternacht); sonst wird es beim ersten Eintrag angelegt |
 | Jüngster Eintrag (hinter Name/Zweck) | heutiger Eintrag, sonst der des Trainings mit dem spätesten `date` |
 | Letztes Mal (im offenen Bereich) | jüngster Eintrag ohne das aktuelle Training; gezeigt, sobald es ihn gibt |
@@ -210,6 +213,8 @@ dem Löschen legt es mit dem Eintrag wieder an (`restoreEntry`). Sätze, Wiederh
   Umwandlung im Speicher wird der alte Stand unter `trainingsplan.log.backup` abgelegt.
 - Schritt 1 → 2: pro Eintrag höchstes `weight` und längste `seconds` der Sätze, `note` bleibt,
   `power` = `"ok"`; Wiederholungen, RPE, Seiten, `done`, `count` entfallen.
+- Schritt 2 → 3: `currentWeek: null` ergänzen, Trainings unverändert; den Startwert setzt die App
+  beim nächsten Start (B5).
 - Ein Dokument mit höherem `schema`, als die App kennt, wird nicht verändert; die App meldet das
   und speichert nichts. Unlesbare Stände werden unter `trainingsplan.log.defekt` beiseitegelegt.
 
@@ -222,9 +227,14 @@ dem Löschen legt es mit dem Eintrag wieder an (`restoreEntry`). Sätze, Wiederh
   Speicher. Höheres `schema` → Hinweis, die App zu aktualisieren.
 - Zusammenführen pro ganzem Training: fehlt es auf dem Gerät → übernehmen; Datei-Stand neuer
   (`updatedAt`) → ersetzen; sonst bleibt der Gerätestand.
+- Woche (`currentWeek`): übernommen, wenn sie in der Datei vom Nutzer eingestellt wurde
+  (`changedAt` gesetzt) und auf dem Gerät nur ein Startwert steht (`changedAt: null`) oder die
+  Gerätewoche älter ist. Fehlt sie in der Datei (Schema 2) oder ist sie ungültig, bleibt die
+  Gerätewoche; die Trainings werden trotzdem übernommen.
 
 ### B8. Planänderungen
 
-Name, Nummer oder Reihenfolge ändern: keine Wirkung (die `id` bleibt). Geänderte `log.fields`:
+Name, Nummer oder Reihenfolge ändern: keine Wirkung (die `id` bleibt). Plan kürzer als die
+eingestellte Woche: gespeicherte Zahl bleibt, angezeigt und vermerkt wird die letzte Planwoche. Geänderte `log.fields`:
 alte Einträge bleiben, angezeigt wird, was sie enthalten. Entfernte Übung: Einträge bleiben im
 Speicher und in der Sicherung.

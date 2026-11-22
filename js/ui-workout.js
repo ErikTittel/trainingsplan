@@ -1,11 +1,15 @@
-// Oberfläche: Auswahl von Trainingstag und Phase, Kopf der Einheit mit Aufwärmen, Übungsliste
-// mit Fortschritt, Power-Legende und Rückgängig-Leiste.
+// Oberfläche: Wochensteuerung im Kopf, Auswahl von Trainingstag und Phase, Kopf der Einheit mit
+// Aufwärmen, Übungsliste mit Fortschritt, Power-Legende und Rückgängig-Leiste.
 
 import { makeElement, makeButton } from "./dom.js";
 import { WEEKDAYS, workoutOnDay } from "./calendar.js";
 import { phaseLabel, phaseWeeks, powerLegend, shortWorkoutTitle } from "./format.js";
 
 const elements = {
+  weekBack: document.querySelector("#week-back"),
+  weekText: document.querySelector("#plan-subtitle"),
+  weekPhase: document.querySelector("#week-phase"),
+  weekForward: document.querySelector("#week-forward"),
   dayNavigation: document.querySelector("#day-navigation"),
   phaseNavigation: document.querySelector("#phase-navigation"),
   today: document.querySelector("#today-label"),
@@ -20,6 +24,37 @@ const elements = {
   undoText: document.querySelector("#undo-text"),
   undoButton: document.querySelector("#undo-button")
 };
+
+// Rückruf für „−“/„+“; die Knöpfe stehen fest in index.html, die Ereignisse werden nur einmal gebunden.
+let onWeekChange = null;
+
+// Kopf: Woche groß, daneben „−“ (Woche zurück) und „+“ (nächste Woche), darunter die Phase.
+// view = { week, phase, canBack, canForward, backLabel, forwardLabel }; onChange(-1 | +1).
+export function renderWeekControl(view, onChange) {
+  if (!onWeekChange) {
+    elements.weekBack.addEventListener("click", () => onWeekChange(-1));
+    elements.weekForward.addEventListener("click", () => onWeekChange(1));
+  }
+  onWeekChange = onChange;
+  elements.weekText.textContent = view.week;
+  elements.weekPhase.textContent = view.phase;
+  elements.weekPhase.hidden = false;
+  setWeekButton(elements.weekBack, view.canBack, view.backLabel);
+  setWeekButton(elements.weekForward, view.canForward, view.forwardLabel);
+}
+
+function setWeekButton(button, enabled, label) {
+  button.disabled = !enabled;
+  button.setAttribute("aria-label", label);
+  button.hidden = false;
+}
+
+// Gibt den Fokus an einen bedienbaren Wochenknopf (nach dem Wechsel, falls einer deaktiviert wurde).
+export function focusWeekButton(direction) {
+  const preferred = direction < 0 ? elements.weekBack : elements.weekForward;
+  const other = direction < 0 ? elements.weekForward : elements.weekBack;
+  (preferred.disabled ? other : preferred).focus({ preventScroll: true });
+}
 
 // Ein Knopf je Einheit (nur Krafttrainingstage – andere Tage stehen nicht in workouts).
 export function renderDayNavigation(workouts, selectedWorkoutId, onSelect) {

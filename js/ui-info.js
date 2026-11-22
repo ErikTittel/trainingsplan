@@ -33,7 +33,9 @@ export function renderPlanDetails(plan) {
     plan.workoutGeneralNotes.tempoNotation,
     ...plan.phaseProgressionRules
   ];
-  elements.planDetails.replaceChildren(...phases, makeList(notes));
+  // Bedienhinweis (kein Trainingsinhalt): Die Woche zählt nicht der Kalender, sondern der Nutzer.
+  const weekHint = makeElement("p", "", "Die Woche zählst du selbst weiter („+“ oben neben der Woche), sobald du für die nächste bereit bist. Die Phase folgt der Woche.");
+  elements.planDetails.replaceChildren(weekHint, ...phases, makeList(notes));
 }
 
 function makeList(items) {

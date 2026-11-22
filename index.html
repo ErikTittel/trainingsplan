@@ -18,7 +18,14 @@
   <main class="app-shell">
     <header class="app-header">
       <h1 id="plan-title">Trainingsplan</h1>
-      <p id="plan-subtitle" class="plan-subtitle">Trainingsplan wird geladen …</p>
+      <div class="week-control">
+        <div class="week-text" aria-live="polite">
+          <p id="plan-subtitle" class="plan-subtitle">Trainingsplan wird geladen …</p>
+          <p id="week-phase" class="week-phase" hidden></p>
+        </div>
+        <button id="week-back" class="week-button" type="button" hidden>−</button>
+        <button id="week-forward" class="week-button" type="button" hidden>+</button>
+      </div>
     </header>
 
     <section class="day-section" aria-labelledby="workout-title">
@@ -74,6 +81,7 @@
           </ul>
           <h3>Bedienung</h3>
           <ul>
+            <li><strong>−</strong> / <strong>+</strong> neben der Woche: zur vorherigen Woche zurück bzw. nächste Woche starten – wenn die Leistung es erlaubt. Die Phase folgt der Woche.</li>
             <li>Karte antippen öffnet das Protokoll der Übung.</li>
             <li>Power antippen speichert sofort – auch mit unveränderten Werten vom letzten Mal.</li>
             <li>„Weiter →“ springt zur nächsten offenen Übung.</li>

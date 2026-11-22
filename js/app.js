@@ -4,16 +4,16 @@
 // die Darstellung in den ui-*.js-Modulen. Überblick: docs/architektur.md.
 
 import { loadPlan } from "./plan.js";
-import { isDeloadWeek, localDate, nextWorkout, phaseForWeek, planWeek } from "./calendar.js";
+import { clampWeek, initialWeek, isDeloadWeek, localDate, nextWorkout, phaseForWeek } from "./calendar.js";
 import {
-  currentSession, emptyLog, exportLog, lastEntry, markExported, mergeLog, parseImport,
-  removeEntry, restoreEntry, setEntry, validateEntry
+  currentSession, emptyLog, ensureCurrentWeek, exportLog, lastEntry, markExported, mergeLog,
+  parseImport, removeEntry, restoreEntry, setCurrentWeek, setEntry, validCurrentWeek, validateEntry
 } from "./log.js";
 import { loadLog, loadViewState, saveLog, saveViewState } from "./log-storage.js";
-import { describeWeek } from "./format.js";
+import { describeWeek, weekButtonLabels } from "./format.js";
 import {
-  findCard, hideUndo, renderDayNavigation, renderLegend, renderPhaseNavigation, renderProgress,
-  renderWorkout, setupWarmup, showUndo
+  findCard, focusWeekButton, hideUndo, renderDayNavigation, renderLegend, renderPhaseNavigation,
+  renderProgress, renderWeekControl, renderWorkout, setupWarmup, showUndo
 } from "./ui-workout.js";
 import { flashSaved, renderExerciseCard, updateCardSummary } from "./ui-exercise.js";
 import { panelId, renderLogPanel } from "./ui-log-panel.js";
@@ -53,13 +53,18 @@ const state = {
 async function start() {
   try {
     state.plan = await loadPlan();
-    openLog();
+    const logStatus = openLog();
 
     const { plan } = state;
-    const week = planWeek(plan.startDate);
+    // Erster Start nach dem Umstieg (oder leerer Speicher): Startwert aus dem Startdatum.
+    // Ein unlesbarer Stand wird dabei nicht überschrieben – das passiert erst bei einer Eingabe.
+    const weekAdded = ensureCurrentWeek(state.log, initialWeek(plan.startDate, plan.totalWeeks));
+    if (weekAdded && state.logWritable && logStatus !== "defekt") {
+      saveLog(state.log); // klappt das nicht, gilt der Startwert nur bis zum nächsten Start
+    }
     elements.title.textContent = plan.title;
-    elements.subtitle.textContent = describeWeek(plan, week);
-    state.phaseId = week === null ? plan.phases[0].id : phaseForWeek(plan.phases, week).id;
+    showWeek();
+    state.phaseId = phaseForWeek(plan.phases, currentWeek()).id;
     state.workoutId = nextWorkout(plan.workouts).id;
     const restored = restoreView();
 
@@ -95,6 +100,7 @@ function openLog() {
   }
   if (!state.logWritable) showLogMessage(state.logBlockedText);
   if (status === "defekt") showLogMessage("Das gespeicherte Protokoll war unlesbar und wurde beiseitegelegt.");
+  return status;
 }
 
 // ---------------------------------------------------------------------------
@@ -168,8 +174,48 @@ async function keepScreenOn() {
 // Anzeige
 // ---------------------------------------------------------------------------
 
+// Vom Nutzer eingestellte Woche, begrenzt auf den Plan (der Plan kann kürzer geworden sein).
+function currentWeek() {
+  return clampWeek(validCurrentWeek(state.log.currentWeek)?.number ?? 1, state.plan.totalWeeks);
+}
+
 function currentWorkout() {
   return state.plan.workouts.find((workout) => workout.id === state.workoutId);
+}
+
+// Kopf mit Woche, Phase und den Knöpfen „−“/„+“.
+function showWeek() {
+  const { plan } = state;
+  const week = currentWeek();
+  const labels = weekButtonLabels(week, plan.totalWeeks);
+  renderWeekControl({
+    ...describeWeek(plan, week),
+    canBack: week > 1,
+    canForward: week < plan.totalWeeks,
+    backLabel: labels.back,
+    forwardLabel: labels.forward
+  }, changeWeek);
+}
+
+// „−“/„+“: Woche um eins zurück bzw. weiter. Die Phase der neuen Woche wird gewählt; offene Übung
+// und Aufwärmen bleiben wie beim Phasenwechsel. Kann nicht gespeichert werden, bleibt alles beim Alten.
+function changeWeek(delta) {
+  if (!ensureWritable()) return;
+  const { plan } = state;
+  const next = clampWeek(currentWeek() + delta, plan.totalWeeks);
+  if (next === currentWeek()) return;
+  setCurrentWeek(state.log, next);
+  if (!commitLog()) {
+    showWeek();
+    return;
+  }
+  cancelUndo();
+  state.phaseId = phaseForWeek(plan.phases, next).id;
+  showWeek();
+  showPhaseNavigation();
+  showWorkout();
+  focusWeekButton(delta);
+  saveView();
 }
 
 function showDayNavigation() {
@@ -267,13 +313,13 @@ function showLogMessage(text) {
 // Angaben zum heutigen Training, die beim Anlegen gespeichert werden.
 function sessionContext() {
   const { plan } = state;
-  const week = planWeek(plan.startDate);
+  const week = currentWeek();
   return {
     date: localDate(),
     planStart: plan.startDate || null,
     week,
     phase: state.phaseId,
-    deload: week !== null && isDeloadWeek(plan.phases, week)
+    deload: isDeloadWeek(plan.phases, week)
   };
 }
 
@@ -407,8 +453,17 @@ async function importBackup(file) {
     showBackupResult("Die Sicherung konnte nicht gespeichert werden.");
     return;
   }
+  let weekText = "";
+  if (result.weekTaken !== null) {
+    // Die Woche aus der Sicherung gilt jetzt – samt ihrer Phase.
+    state.phaseId = phaseForWeek(state.plan.phases, currentWeek()).id;
+    showWeek();
+    showPhaseNavigation();
+    weekText = ` Woche ${currentWeek()} übernommen.`;
+  }
   showWorkout();
-  showBackupResult(`Wiederhergestellt: ${result.added} neu, ${result.updated} aktualisiert, ${result.unchanged} unverändert.`);
+  saveView();
+  showBackupResult(`Wiederhergestellt: ${result.added} neu, ${result.updated} aktualisiert, ${result.unchanged} unverändert.${weekText}`);
 }
 
 // ---------------------------------------------------------------------------

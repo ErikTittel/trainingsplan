@@ -3,7 +3,7 @@
 // „Kürzel & Bedienung“ in index.html.
 
 import { DEFAULT_POWER, POWER_LEVELS } from "./log.js";
-import { parseDate, isDeloadWeek, phaseForWeek } from "./calendar.js";
+import { isDeloadWeek, phaseForWeek } from "./calendar.js";
 
 // Darstellung der Power-Stufen (Reihenfolge und Standard: POWER_LEVELS/DEFAULT_POWER in log.js)
 export const POWER_DISPLAY = {
@@ -31,12 +31,6 @@ export function formatNumber(value) {
   return String(value).replace(".", ",");
 }
 
-// "2026-10-12" → "12. Oktober 2026"
-export function formatDateLong(text) {
-  const date = parseDate(text);
-  return date ? date.toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" }) : text;
-}
-
 export function phaseLabel(phase) {
   return `Phase ${phase.number}`;
 }
@@ -46,13 +40,22 @@ export function phaseWeeks(phase) {
   return `W${phase.firstWeek}–${phase.lastWeek}`;
 }
 
-// Untertitel im Kopf: aktuelle Woche und Phase oder Hinweis vor bzw. nach dem Plan.
+// Kopf: eingestellte Woche (1 … totalWeeks) und darunter ihre Phase, z. B.
+// { week: "Woche 8 von 12", phase: "Phase 2 · Entlastungswoche" }.
 export function describeWeek(plan, week) {
-  if (week === null) return `${plan.totalWeeks} Wochen · ${plan.created}`;
-  if (week < 1) return `Start am ${formatDateLong(plan.startDate)}`;
-  if (week > plan.totalWeeks) return `Plan abgeschlossen · ${plan.totalWeeks} von ${plan.totalWeeks} Wochen`;
   const deload = isDeloadWeek(plan.phases, week) ? " · Entlastungswoche" : "";
-  return `Woche ${week} von ${plan.totalWeeks} · ${phaseLabel(phaseForWeek(plan.phases, week))}${deload}`;
+  return {
+    week: `Woche ${week} von ${plan.totalWeeks}`,
+    phase: `${phaseLabel(phaseForWeek(plan.phases, week))}${deload}`
+  };
+}
+
+// Screenreader-Beschriftung der Knöpfe „−“ und „+“ neben der Woche.
+export function weekButtonLabels(week, totalWeeks) {
+  return {
+    back: week > 1 ? `Zurück zu Woche ${week - 1}` : "Woche zurück",
+    forward: week < totalWeeks ? `Woche ${week + 1} starten` : "Woche weiter"
+  };
 }
 
 // "Einheit 1 – Zug und Hüfte" → "Zug und Hüfte" (für die Tagesknöpfe)

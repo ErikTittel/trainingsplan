@@ -5,7 +5,7 @@
 import { localDate, DATE_PATTERN } from "./calendar.js";
 
 export const LOG_APP = "trainingsplan-log";
-export const LOG_SCHEMA = 2;
+export const LOG_SCHEMA = 3;
 
 // Werte, die eine Übung laut plan.json (log.fields) erfassen kann:
 // weight = Gewicht, addedWeight = Zusatzlast zum Körpergewicht (gespeichert als weight),
@@ -50,7 +50,10 @@ const MIGRATIONS = {
       if (Object.keys(entries).length) sessions[id] = { ...session, entries };
     }
     return { ...doc, schema: 2, sessions };
-  }
+  },
+  // Ab Version 3 steht die vom Nutzer eingestellte Planwoche im Dokument (currentWeek). Ältere
+  // Stände haben keine; den Startwert setzt die App beim nächsten Start (ensureCurrentWeek).
+  2: (doc) => ({ ...doc, schema: 3, currentWeek: null })
 };
 
 export function isPlainObject(value) {
@@ -58,7 +61,7 @@ export function isPlainObject(value) {
 }
 
 export function emptyLog() {
-  return { app: LOG_APP, schema: LOG_SCHEMA, updatedAt: null, lastExportAt: null, sessions: {} };
+  return { app: LOG_APP, schema: LOG_SCHEMA, updatedAt: null, lastExportAt: null, currentWeek: null, sessions: {} };
 }
 
 // Grobe Prüfung, ob ein Objekt ein Protokoll-Dokument (beliebiger Version) ist.
@@ -82,11 +85,40 @@ export function migrate(doc) {
 }
 
 // ---------------------------------------------------------------------------
+// Aktuelle Woche (vom Nutzer eingestellt)
+// ---------------------------------------------------------------------------
+
+// Gültige Angabe { number, changedAt } – oder null. number: Ganzzahl ≥ 1;
+// changedAt: Zeitstempel der letzten Änderung durch den Nutzer oder null (nur Startwert).
+export function validCurrentWeek(value) {
+  if (!isPlainObject(value)) return null;
+  const { number, changedAt } = value;
+  if (!Number.isInteger(number) || number < 1) return null;
+  if (changedAt !== null && typeof changedAt !== "string") return null;
+  return { number, changedAt };
+}
+
+// Der Nutzer stellt eine Woche ein.
+export function setCurrentWeek(log, number) {
+  log.currentWeek = { number, changedAt: new Date().toISOString() };
+}
+
+// Setzt den Startwert, wenn noch keine gültige Woche gespeichert ist. Gibt true zurück, wenn
+// etwas gesetzt wurde. changedAt bleibt null, damit beim Wiederherstellen jede vom Nutzer
+// eingestellte Woche Vorrang hat.
+export function ensureCurrentWeek(log, startNumber) {
+  if (validCurrentWeek(log.currentWeek)) return false;
+  log.currentWeek = { number: startNumber, changedAt: null };
+  return true;
+}
+
+// ---------------------------------------------------------------------------
 // Trainings und Einträge
 // ---------------------------------------------------------------------------
 
-// Findet das aktuelle Training der Einheit. context = { date, planStart, week, phase, deload }.
-// Mit create = true wird es angelegt, falls es noch keines gibt.
+// Findet das aktuelle Training der Einheit. context = { date, planStart, week, phase, deload };
+// week ist die vom Nutzer eingestellte Woche. Mit create = true wird das Training angelegt, falls
+// es noch keines gibt – Woche, Phase und Entlastung bleiben danach so, wie sie beim Anlegen waren.
 export function currentSession(log, workoutId, context, create = false) {
   const id = `${context.date}_${workoutId}`;
   if (log.sessions[id]) return log.sessions[id];
@@ -239,18 +271,31 @@ export function parseImport(text) {
       && isPlainObject(session.entries);
     if (!valid) return { error: "Die Sicherung enthält ein unvollständiges Training und wurde nicht übernommen." };
   }
+  let migrated;
   try {
-    return { doc: migrate(doc) };
+    migrated = migrate(doc);
   } catch (error) {
     return { error: error.message };
   }
+  // Eine unbrauchbare Wochenangabe verhindert die Wiederherstellung der Trainings nicht.
+  migrated.currentWeek = validCurrentWeek(migrated.currentWeek);
+  return { doc: migrated };
 }
 
 // Führt eine Sicherung mit dem Protokoll auf dem Gerät zusammen – immer ganze Trainings:
 // fehlt eines auf dem Gerät, wird es übernommen; gibt es dasselbe auf beiden Seiten,
 // gewinnt der zuletzt geänderte Stand.
+// Die eingestellte Woche wird übernommen, wenn sie in der Sicherung vom Nutzer eingestellt wurde
+// (changedAt gesetzt) und auf dem Gerät nur ein Startwert steht oder die Gerätewoche älter ist.
+// Ergebnis: { added, updated, unchanged, weekTaken } – weekTaken = übernommene Woche oder null.
 export function mergeLog(log, imported) {
-  const result = { added: 0, updated: 0, unchanged: 0 };
+  const result = { added: 0, updated: 0, unchanged: 0, weekTaken: null };
+  const incoming = validCurrentWeek(imported.currentWeek);
+  const local = validCurrentWeek(log.currentWeek);
+  if (incoming?.changedAt && (!local?.changedAt || incoming.changedAt > local.changedAt)) {
+    log.currentWeek = incoming;
+    result.weekTaken = incoming.number;
+  }
   for (const session of Object.values(imported.sessions)) {
     const existing = log.sessions[session.id];
     if (!existing) {

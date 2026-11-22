@@ -27,7 +27,7 @@ Stunden setzen, neu laden.
 | A3 | Alle Einheiten × alle Phasen durchschalten | Karten vollständig (Name, Vorgabe, Tempo, RPE, Pause, Zweck, Ablauf, Hinweis – dieser eingeklappt einzeilig, Antippen zeigt ihn ganz und öffnet nicht das Protokoll), leere Angaben fehlen ganz, Werte wechseln mit der Phase |
 | A4 | Infokarte „Kürzel & Bedienung“ | erklärt ↓/↑, X, P, /S., RPE, ✓/+, Power-Symbole, Entl., Bedienung; keine Legende über den Übungen |
 | A4a | Aufwärmen | „Aufwärmen · N Min“, nummerierte Schritte mit Unterpunkten, offen beim Laden und nach Einheitenwechsel, zuklappbar |
-| A5 | Wochenerkennung (Systemdatum ändern oder `startDate` in `plan.json`) | Untertitel „Woche N von 12 · Phase N“ (+ „Entlastungswoche“), vor Start „Start am …“, danach „Plan abgeschlossen“; vorgewählt sind heutiger bzw. nächster Trainingstag und die Phase der Woche |
+| A5 | Wochensteuerung: „−“/„+“ im Kopf, u. a. über die Phasengrenzen 4↔5 und 8↔9; vorher eine andere Phase in der Leiste wählen | „Woche N von 12“, darunter „Phase N“ (+ „Entlastungswoche“); jeder Wechsel wählt die Phase der neuen Woche, offene Übung bleibt; in Woche 1 ist „−“, in Woche 12 „+“ deaktiviert; Neuladen und Folgetag (Systemdatum) behalten die Woche; vorgewählt sind heutiger bzw. nächster Trainingstag und die Phase der Woche; 320 px: Knöpfe 44 × 44 px, kein Querscrollen |
 | A6 | „Sicherheit zuerst“ und „Plan & Progression“ öffnen | vollständig, aufklappbar |
 | A7 | Fehler in `plan.json` einbauen (z. B. doppelte `id`) | verständliche Ladefehlermeldung |
 
@@ -55,7 +55,10 @@ Stunden setzen, neu laden.
 | B14 | Nach dem Sichern einen Wert ändern, ältere Datei wiederherstellen | neuerer Gerätestand bleibt („unverändert“) |
 | B15 | `plan.json` als Sicherung wählen | Fehlermeldung, Daten unverändert |
 | B16 | Dokument im alten Format (Schema 1 mit `sets`) in den Local Storage legen, laden | umgewandelt (höchstes Gewicht, längste Zeit, Kommentar, Power ok); alter Stand unter `trainingsplan.log.backup` |
-| B17 | `schema` auf 99 setzen, laden, Wert ändern | Hinweis „neuere App-Version“, nichts wird überschrieben |
+| B16a | Dokument mit Schema 2 (ohne `currentWeek`) in den Local Storage legen, laden | Schema 3, `currentWeek` = aus `startDate` berechnete Woche mit `changedAt: null`, Kopf zeigt diese Woche; Trainings unverändert; alter Stand unter `trainingsplan.log.backup` |
+| B16b | Woche einstellen, „Sichern“, Local Storage leeren, „Wiederherstellen“; danach am Gerät eine Woche weiter und dieselbe Datei erneut; zuletzt eine Sicherung mit Schema 2 | erst „… Woche N übernommen.“ samt Phase; dann bleibt die Gerätewoche; Schema 2: Trainings übernommen, Woche unverändert |
+| B16c | In Woche 4 eine Power antippen, dann „+“ | heutiges Training mit `week: 4`, `deload: true`; es behält Woche 4 nach dem Wechsel |
+| B17 | `schema` auf 99 setzen, laden, Wert ändern bzw. „+“ antippen | Hinweis „neuere App-Version“, Woche bleibt, nichts wird überschrieben |
 | B18 | Unlesbaren Text unter `trainingsplan.log.v1` ablegen, laden | Meldung, Stand unter `trainingsplan.log.defekt`, App läuft leer weiter |
 | B19 | Namen einer Übung in `plan.json` ändern (`id` gleich) | Angaben hinter dem Namen bleiben |
 

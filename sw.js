@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "trainingsplan-v14";
+const CACHE_NAME = "trainingsplan-v15";
 const APP_SHELL = [
   "./",
   "./index.html",
