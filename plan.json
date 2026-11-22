@@ -145,7 +145,7 @@
       "exercises": [
         {
           "id": "hang-power-clean",
-          "name": "Hang Power Clean (ab Knie)",
+          "name": "Hang Power Clean",
           "rest": "90 s",
           "phaseProgression": {
             "phase1": "4×3 @ ca. 55 %",
