@@ -111,7 +111,7 @@
     "Nach einem Langlauf über 90 Minuten wird der RDL am Montag eine RPE-Stufe niedriger gefahren."
   ],
   "workoutGeneralNotes": {
-    "breaks": "Pausen: Hauptübungen 90–150 s, Supersätze 60 s zwischen den Runden.",
+    "breaks": "Pausen: Hauptübungen 90–150 s, übrige Übungen 60–90 s.",
     "tempoNotation": "Tempo-Schreibweise: Absenken – Pause unten – Anheben – Pause oben."
   },
   "workouts": [
@@ -145,7 +145,6 @@
       "exercises": [
         {
           "id": "hang-power-clean",
-          "number": "1",
           "name": "Hang Power Clean (ab Knie)",
           "rest": "90 s",
           "phaseProgression": {
@@ -164,7 +163,6 @@
         },
         {
           "id": "klimmzug",
-          "number": "2a",
           "name": "Klimmzug (Parallelgriff/Ringe)",
           "phaseProgression": {
             "phase1": "4×4–5",
@@ -187,7 +185,6 @@
         },
         {
           "id": "face-pull",
-          "number": "2b",
           "name": "Face Pull (Seil)",
           "phaseProgression": "3×12–15",
           "tempo": "2-1-2",
@@ -201,7 +198,6 @@
         },
         {
           "id": "rdl",
-          "number": "3",
           "name": "Rumänisches Kreuzheben (Straps)",
           "rest": "2 min",
           "phaseProgression": {
@@ -224,7 +220,6 @@
         },
         {
           "id": "einbein-rdl",
-          "number": "4a",
           "name": "Einbein-RDL (Kurzhantel)",
           "phaseProgression": "3×8/Seite",
           "tempo": "3-0-1",
@@ -239,7 +234,6 @@
         },
         {
           "id": "wadenheben-sitzend",
-          "number": "4b",
           "name": "Sitzendes Wadenheben",
           "phaseProgression": "3×12–15",
           "tempo": "2-1-2",
@@ -253,7 +247,6 @@
         },
         {
           "id": "latzug",
-          "number": "5",
           "name": "Latzug neutral (Straps)",
           "phaseProgression": "3×10–12",
           "tempo": "2-1-2",
@@ -295,7 +288,6 @@
       "exercises": [
         {
           "id": "sprungblock",
-          "number": "1",
           "name": "Sprung-/Elastizitätsblock (ca. 8 Min)",
           "phaseProgression": {
             "phase1": "Basis · W1–2: 0, W3–4: 30–40 Kontakte",
@@ -333,7 +325,6 @@
         },
         {
           "id": "spanish-squat",
-          "number": "2",
           "name": "Spanish Squat (Isometrik mit Band)",
           "phaseProgression": {
             "phase1": "2×40 s",
@@ -352,7 +343,6 @@
         },
         {
           "id": "kniebeuge-box",
-          "number": "3",
           "name": "Kniebeuge zur Box (Back oder Front)",
           "rest": "2–2,5 min",
           "phaseProgression": {
@@ -375,7 +365,6 @@
         },
         {
           "id": "shrimp-squat",
-          "number": "4",
           "name": "Shrimp-Squat",
           "rest": "90 s nach beiden Seiten",
           "phaseProgression": {
@@ -395,7 +384,6 @@
         },
         {
           "id": "beinbeuger",
-          "number": "5a",
           "name": "Beinbeuger",
           "phaseProgression": {
             "phase1": "3×10–12",
@@ -413,7 +401,6 @@
         },
         {
           "id": "wadenheben-einbein",
-          "number": "5b",
           "name": "Einbein-Wadenheben (gerade Knie), links zuerst",
           "phaseProgression": {
             "phase1": "3×10",
@@ -432,7 +419,6 @@
         },
         {
           "id": "liegestuetz",
-          "number": "6a",
           "name": "Optional bei Zeitnot streichen: Liegestütz Füße erhöht (Weste)",
           "phaseProgression": {
             "phase1": "3×12–15",
@@ -451,7 +437,6 @@
         },
         {
           "id": "ringrudern",
-          "number": "6b",
           "name": "Optional bei Zeitnot streichen: Ringrudern",
           "phaseProgression": "3×10–12",
           "tempo": "3-1-1",
@@ -491,7 +476,6 @@
       "exercises": [
         {
           "id": "beschleunigungsblock",
-          "number": "1",
           "name": "Beschleunigungsblock (Medball + Band-Starts)",
           "phaseProgression": {
             "phase1": "4×15 m leicht",
@@ -523,7 +507,6 @@
         },
         {
           "id": "schraegbank",
-          "number": "2",
           "name": "Schrägbank (Kurzhantel)",
           "rest": "2 min",
           "phaseProgression": {
@@ -547,7 +530,6 @@
         },
         {
           "id": "rudern-brustgestuetzt",
-          "number": "3",
           "name": "Brustgestütztes Rudern (Straps)",
           "phaseProgression": {
             "phase1": "4×10–12",
@@ -565,7 +547,6 @@
         },
         {
           "id": "druecken-stehend",
-          "number": "4a",
           "name": "Landmine- oder Schulterdrücken stehend",
           "phaseProgression": "3×8–10",
           "tempo": "2-0-1",
@@ -579,7 +560,6 @@
         },
         {
           "id": "seitheben-reverse-fly",
-          "number": "4b",
           "name": "Seitheben/Reverse Fly",
           "phaseProgression": "3×12–15",
           "tempo": "2-1-2",
@@ -594,7 +574,6 @@
         },
         {
           "id": "hip-thrust",
-          "number": "5a",
           "name": "Hip Thrust",
           "phaseProgression": {
             "phase1": "3×10",
@@ -612,7 +591,6 @@
         },
         {
           "id": "copenhagen-plank",
-          "number": "5b",
           "name": "Copenhagen Plank",
           "phaseProgression": "3×20–30 s/Seite",
           "tempo": "statisch",
@@ -626,7 +604,6 @@
         },
         {
           "id": "seil-pushdown",
-          "number": "6a",
           "name": "Optional: Seil-Pushdown",
           "phaseProgression": "3×12",
           "tempo": "2-0-2",
@@ -640,7 +617,6 @@
         },
         {
           "id": "hammer-curl",
-          "number": "6b",
           "name": "Optional: Hammer Curl",
           "phaseProgression": "3×12",
           "tempo": "2-0-2",
@@ -656,6 +632,7 @@
       ]
     }
   ],
+  "retiredExercises": [],
   "jumpAndSpeedProgression": {
     "note": "Der Einbeinstand auf festem Untergrund (3×60 s mit geschlossenen Augen, seitengleich) erfüllt das Stabilitätskriterium bereits, deshalb läuft die Propriozeption von Anfang an auf dem Balance-Pad."
   },

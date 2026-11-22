@@ -6,7 +6,7 @@ Maßgebliche Beschreibung beider Datenbestände der App. Die Regeln dahinter ste
 | | **Plan (Soll)** | **Protokoll (Ist)** |
 |---|---|---|
 | Ort | `plan.json` im Repository | `localStorage` auf dem Gerät |
-| Wer schreibt | Entwickler, per Commit | App, bei jeder Eingabe |
+| Wer schreibt | Mensch oder KI-Agent, per Commit ([plan-anleitung.md](../plan-anleitung.md)) | App, bei jeder Eingabe |
 | Inhalt | Phasen, Einheiten, Übungen, Hinweise | Trainings mit je einem Eintrag pro Übung |
 | Code | [js/plan.js](../js/plan.js) (lesen, prüfen, aufbereiten) | [js/log.js](../js/log.js) (Regeln), [js/log-storage.js](../js/log-storage.js) (Speicher) |
 | Verbindung | – | über `workoutId` und Übungs-`id` |
@@ -24,9 +24,10 @@ workouts[] (id: "e1")  ◄─────────────  session.worko
 
 ## Teil A – `plan.json`
 
-`plan.json` ist die einzige Quelle der Trainingsinhalte und der Planstruktur. Die App liest sie
-nur. [plan.md](../plan.md) ist die Lesefassung desselben Plans; inhaltliche Änderungen in beiden
-Dateien nachziehen. Rein technische Felder (`id`, `log`, Wochenzahlen) stehen nur in `plan.json`.
+`plan.json` ist die einzige Quelle der Trainingsinhalte und der Planstruktur; es gibt keine
+weitere Fassung des Plans (die Lesefassung zeigt die App selbst, das ursprüngliche PDF liegt nur
+noch als Archiv unter `docs/archiv/`). Die App liest die Datei nur. Wie Menschen und KI-Agenten
+den Plan ändern, ohne Leistungsdaten zu verlieren: [plan-anleitung.md](../plan-anleitung.md).
 
 ### A1. Oberste Ebene
 
@@ -39,7 +40,8 @@ Dateien nachziehen. Rein technische Felder (`id`, `log`, Wochenzahlen) stehen nu
 | `periodization.phases[]` | ja | Phasen, siehe A2 |
 | `periodization.deloadNote`, `workoutGeneralNotes.breaks`, `workoutGeneralNotes.tempoNotation`, `phaseProgressionRules[]` | ja | „Plan & Progression“ |
 | `workouts[]` | ja | Einheiten, siehe A3 |
-| `basicIdea`, `assumptions`, `weeklySchedule`, `weeklyScheduleNotes`, `jumpAndSpeedProgression`, `badDayTrafficLightRules`, `missedTrainingAndSittingNotes`, `metrics`, `finalNote` | nein | derzeit nicht angezeigt; Teil des vollständigen Plans für spätere Funktionen |
+| `retiredExercises[]` | nein | entfernte Übungen, siehe A6 |
+| `basicIdea` (Text), `assumptions` (Textliste), `weeklySchedule` (`[{ day, content }]`), `weeklyScheduleNotes` (Textliste), `jumpAndSpeedProgression` (`{ note }`), `badDayTrafficLightRules` (`[{ level, condition, action }]`), `missedTrainingAndSittingNotes` (Textliste), `metrics` (`[{ metric, start, week6, week12, ifStalled }]`), `finalNote` (Text) | nein | „Plan & Progression“ (vollständiger Plan); fehlende Teile werden weggelassen |
 
 ### A2. Phase (`periodization.phases[]`)
 
@@ -62,16 +64,17 @@ beginnen; die letzte `lastWeek` ist die Planlänge.
 | `day` | ja | `Mo`, `Di`, `Mi`, `Do`, `Fr`, `Sa` oder `So`; je Tag höchstens eine Einheit. Nur Tage mit einer Einheit erscheinen in der Tagesauswahl (Lauf-/Recovery-Tage stehen nicht in `workouts`). |
 | `title` | ja | „Einheit 1 – Zug und Hüfte“; der Tagesknopf zeigt den Teil nach „Einheit N –“ |
 | `warmup` | ja | Aufwärmen: `{ "duration": "9 Min", "steps": [...] }`. Ein Schritt ist ein Text oder eine Gruppe `{ "title": "5 Min Mobility", "items": ["Open Book 8/Seite", …] }`. Angezeigt als „Aufwärmen · 9 Min“ mit nummerierten Schritten, Gruppen mit Unterpunkten. |
-| `exercises[]` | ja | Übungen in Anzeigereihenfolge, siehe A4 |
+| `exercises[]` | ja | Übungen in Anzeigereihenfolge, siehe A4. Die Nummer (1, 2, 3 …) ergibt sich aus der Position. |
 
 ### A4. Übung (`exercises[]`)
 
-Eine Übung = eine Karte; kombinierte Übungen („A + B“) werden als 6a/6b aufgeteilt.
+Eine Übung = eine Karte. Es gibt keine Supersätze oder kombinierten Übungen: Jede Übung steht für
+sich und lässt sich unabhängig verschieben. Die Nummer vergibt `plan.js` aus der Position in
+`exercises` (ein Feld `number` gibt es nicht mehr; steht es noch in der Datei, wird es ignoriert).
 
 | Feld | Pflicht | Phasenwert¹ | Beschreibung |
 |---|---|---|---|
 | `id` | ja | | Stabile Kennung, im ganzen Plan eindeutig, nur `a–z`, `0–9`, `-`. **Nie umbenennen oder wiederverwenden** – daran hängt das Protokoll. |
-| `number` | ja | | „1“, „2a“ … (Nummernfeld) |
 | `name` | ja | | Anzeigename |
 | `rest` | nein | | Satzpause, z. B. „90 s“, „2 min“ → Kennzahl `P 90 s` |
 | `phaseProgression` | ja | ja | Vorgabe (Sätze × Wdh., Last); „/Seite“ wird als „/S.“ angezeigt |
@@ -99,11 +102,20 @@ einem Wert je Phasen-`id` (`"tempo": { "phase1": "3-1-1", "phase2": "3-0-1", "ph
 Einseitige Übungen haben keine Seitenangabe. Kurzhantel = Gewicht einer Hantel, Langhantel =
 Gesamtgewicht.
 
-### A6. Prüfung beim Laden
+### A6. Entfernte Übungen (`retiredExercises[]`)
+
+Wird eine Übung aus `exercises` gelöscht, kommt sie hierher: `{ "id": "…", "name": "…",
+"retired": "JJJJ-MM-TT" }` (`retired` freiwillig). Die `id` ist damit gesperrt und kann nicht
+versehentlich für eine andere Übung wiederverwendet werden; alte Protokolleinträge behalten so
+einen lesbaren Namen (auch im KI-Paket, Teil C).
+
+### A7. Prüfung beim Laden
 
 `plan.js` bricht mit einer verständlichen Meldung ab, wenn: keine Phasen oder Einheiten vorhanden
 sind; Phasenwochen nicht lückenlos bei 1 beginnen oder eine Entlastungswoche außerhalb ihrer Phase
-liegt; eine `id` fehlt, ungültig ist oder doppelt vorkommt; ein `day` ungültig ist oder doppelt
+liegt; eine `id` fehlt, ungültig ist oder doppelt vorkommt; eine Übung eine `id` aus `retiredExercises`
+benutzt; ein Eintrag in `retiredExercises` keine gültige `id` oder keinen `name` hat; ein
+freiwilliger Planteil aus A1 nicht die angegebene Form hat; ein `day` ungültig ist oder doppelt
 vorkommt; ein Name fehlt; `warmup` keine `duration` (Text) oder keine nichtleere `steps`-Liste hat
 oder ein Schritt weder Text noch `{ title, items }` mit mindestens einem Punkt ist; `log.fields`
 keine Liste ist, ein unbekanntes oder doppeltes Feld oder
@@ -234,7 +246,30 @@ dem Löschen legt es mit dem Eintrag wieder an (`restoreEntry`). Sätze, Wiederh
 
 ### B8. Planänderungen
 
-Name, Nummer oder Reihenfolge ändern: keine Wirkung (die `id` bleibt). Plan kürzer als die
+Regeln für Planänderungen: [plan-anleitung.md](../plan-anleitung.md). Wirkung auf das Protokoll:
+Name, Beschreibung oder Reihenfolge ändern, auch Verschieben in eine andere Einheit: keine Wirkung
+(die `id` bleibt; „Letztes Mal“ sucht über alle Einheiten). Plan kürzer als die
 eingestellte Woche: gespeicherte Zahl bleibt, angezeigt und vermerkt wird die letzte Planwoche. Geänderte `log.fields`:
 alte Einträge bleiben, angezeigt wird, was sie enthalten. Entfernte Übung: Einträge bleiben im
-Speicher und in der Sicherung.
+Speicher und in der Sicherung; der Name steht in `retiredExercises` (A6).
+
+---
+
+## Teil C – KI-Paket („Für KI kopieren“)
+
+Text (Markdown), den die App aus Plan, Protokoll und Anleitung zusammensetzt
+([js/ai-package.js](../js/ai-package.js)). Er geht in die Zwischenablage; ist sie nicht verfügbar,
+wird er als Datei `ki-paket-JJJJ-MM-TT.md` (`text/markdown`) wie die Sicherung weitergegeben. Die
+App speichert ihn nicht; die Anweisungen im Eingabefeld werden nicht gemerkt.
+
+| Abschnitt | Inhalt |
+|---|---|
+| Kopf | „Trainingsplan optimieren“, Datum, eingestellte Woche, Phase (Nummer und Name, ggf. Entlastungswoche), Zahl der Trainings |
+| Zusätzliche Anweisungen | Text aus dem Eingabefeld, leer = „keine“ |
+| Anleitung | [plan-anleitung.md](../plan-anleitung.md) unverändert, Überschriften eine Ebene tiefer |
+| Aktueller Trainingsplan | `plan.json` unverändert (wie geladen, ohne berechnete Felder) als JSON-Block |
+| Leistungsdaten | `{ currentWeek, sessions }` aus dem Protokoll (B2, B3), Trainings nach Datum sortiert, als JSON-Block |
+
+`plan-anleitung.md` lädt die App beim Start vorab (für Safari muss das Schreiben in die
+Zwischenablage ohne Warten auf das Netz geschehen). Die Datei ist die einzige Quelle der
+Bearbeitungsregeln – für das KI-Paket und für Agenten, die direkt im Repository arbeiten.

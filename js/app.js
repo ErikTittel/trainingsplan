@@ -10,7 +10,7 @@ import {
   parseImport, removeEntry, restoreEntry, setCurrentWeek, setEntry, validCurrentWeek, validateEntry
 } from "./log.js";
 import { loadLog, loadViewState, saveLog, saveViewState } from "./log-storage.js";
-import { describeWeek, weekButtonLabels } from "./format.js";
+import { describeWeek, phaseLabel, weekButtonLabels } from "./format.js";
 import {
   findCard, focusWeekButton, hideUndo, renderDayNavigation, renderLegend, renderPhaseNavigation,
   renderProgress, renderWeekControl, renderWorkout, setupWarmup, showUndo
@@ -19,6 +19,8 @@ import { flashSaved, renderExerciseCard, updateCardSummary } from "./ui-exercise
 import { panelId, renderLogPanel } from "./ui-log-panel.js";
 import { renderPlanDetails, renderSafetyRules } from "./ui-info.js";
 import { deliverFile, renderBackup, setupBackup, showBackupResult } from "./ui-backup.js";
+import { aiPackageFilename, buildAiPackage, loadGuide } from "./ai-package.js";
+import { copyText, setupAiCopy, showAiResult } from "./ui-ai.js";
 
 // So lange wird nach dem Löschen „Rückgängig“ angeboten (Millisekunden)
 const UNDO_MS = 6000;
@@ -41,6 +43,7 @@ const state = {
   openExerciseId: null,  // Übung mit offenem Protokollbereich – höchstens eine
   warmupOpen: true,      // Aufwärmblock aufgeklappt?
   log: emptyLog(),       // Trainingsprotokoll
+  guide: null,           // Text von plan-anleitung.md für „Für KI kopieren“ (null = noch nicht geladen)
   logWritable: true,     // false, wenn das Protokoll nicht gespeichert werden darf/kann
   logBlockedText: "",    // Meldung, warum nicht gespeichert wird
   undoTimer: null        // läuft, solange „Rückgängig“ angeboten wird
@@ -79,6 +82,9 @@ async function start() {
     renderPlanDetails(plan);
     setupBackup({ onExport: exportBackup, onImport: importBackup });
     renderBackup(state.log, state.logWritable);
+    setupAiCopy({ onCopy: copyForAi });
+    // Vorab laden, damit „Für KI kopieren“ ohne Warten in die Zwischenablage schreiben kann
+    loadGuide().then((text) => { state.guide = text; }).catch(() => {});
     if (restored) requestAnimationFrame(() => window.scrollTo(0, restored.scrollY));
     setupViewSaving();
   } catch (error) {
@@ -464,6 +470,50 @@ async function importBackup(file) {
   showWorkout();
   saveView();
   showBackupResult(`Wiederhergestellt: ${result.added} neu, ${result.updated} aktualisiert, ${result.unchanged} unverändert.${weekText}`);
+}
+
+// ---------------------------------------------------------------------------
+// Für KI kopieren
+// ---------------------------------------------------------------------------
+
+// Baut das KI-Paket und legt es in die Zwischenablage; geht das nicht, wird es als Datei
+// weitergegeben. Die Daten verlassen das Gerät nur durch diese ausdrückliche Aktion.
+async function copyForAi(instructions) {
+  if (state.guide === null) {
+    try {
+      state.guide = await loadGuide();
+    } catch (error) {
+      showAiResult(`${error.message} Bitte mit Netz erneut versuchen.`);
+      return;
+    }
+  }
+  const { plan } = state;
+  const week = currentWeek();
+  const phase = phaseForWeek(plan.phases, week);
+  const date = localDate();
+  const text = buildAiPackage({
+    guide: state.guide,
+    planSource: plan.source,
+    log: state.log,
+    instructions,
+    context: {
+      date,
+      week,
+      totalWeeks: plan.totalWeeks,
+      phaseName: `${phaseLabel(phase)} ${phase.name}`,
+      deload: isDeloadWeek(plan.phases, week)
+    }
+  });
+  if (await copyText(text)) {
+    showAiResult("Kopiert. Jetzt in einen KI-Chat einfügen und absenden.");
+    return;
+  }
+  const filename = aiPackageFilename(date);
+  if (await deliverFile(filename, text, "text/markdown") === "aborted") {
+    showAiResult("Abgebrochen.");
+    return;
+  }
+  showAiResult(`Die Zwischenablage ist nicht verfügbar – stattdessen „${filename}“ erstellt. Die Datei in einen KI-Chat hochladen.`);
 }
 
 // ---------------------------------------------------------------------------

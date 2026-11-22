@@ -8,7 +8,7 @@ Grundsätze (kein Build, Mobile-first, alles auf einen Blick, lokales Protokoll 
 ## Ziel und Nutzung
 
 Eine mobile Trainingsplan-App für das iPhone im Fitnessstudio – für einen 12-Wochen-Plan
-([plan.md](plan.md)). Zwischen zwei Sätzen soll in Sekunden ablesbar sein, was als Nächstes kommt
+([plan.json](plan.json), einzige Quelle; die App ist zugleich seine Lesefassung). Zwischen zwei Sätzen soll in Sekunden ablesbar sein, was als Nächstes kommt
 und was beim letzten Mal geschafft wurde; das Erfassen kostet wenige Antipper.
 
 ## Aufbau der Seite
@@ -24,12 +24,16 @@ Ohne Großbuchstaben-Überschriften und ohne Erklärtexte über den Übungen; Te
    heutiger oder nächster Trainingstag.
 3. **Aufwärmen** – aufklappbarer Block „Aufwärmen · 9 Min“ mit nummerierten Schritten; Gruppen
    („5 Min Mobility“) mit Unterpunkten. Offen beim Laden und nach einem Wechsel der Einheit.
-4. **Übungen** – Zähler „erfasst / gesamt“ (z. B. „3 / 8“); Phasenleiste in einer Zeile
+4. **Übungen** – nummeriert 1, 2, 3 … in der Reihenfolge des Plans (keine Supersätze); Zähler
+   „erfasst / gesamt“ (z. B. „3 / 8“); Phasenleiste in einer Zeile
    („Phase 1 W1–4“ …, vorgewählt die Phase der aktuellen Woche) für Vorgabe, Tempo und Ablauf;
    Meldungszeile des Protokolls; Karten.
 5. **Infokarten** (aufklappbar) – „Sicherheit zuerst“ (alle Sicherheitsregeln), „Kürzel &
-   Bedienung“ (Legende aller Kürzel und Symbole, Bedienhinweise), „Plan & Progression“ (Phasen,
-   Entlastung, Pausen, Tempo-Schreibweise, Progressionsregeln), „Protokoll sichern“.
+   Bedienung“ (Legende aller Kürzel und Symbole, Bedienhinweise), „Plan & Progression“ (der
+   vollständige übergreifende Plan: Bedienhinweis zur Woche, Grundidee, Annahmen, Wochenverteilung
+   mit Laufen, Phasen, Progression mit Entlastung, Pausen und Tempo-Schreibweise, Ampelregel,
+   verpasste Einheiten und Sitz-Ausgleich, Kennzahlen, Schlussbemerkung; Teile, die nicht in
+   `plan.json` stehen, fehlen), „Protokoll sichern“, „Mit KI optimieren“.
 
 **Woche und Phase:** Die aktuelle Woche stellt der Trainierende selbst ein – der Kalender zählt
 nicht mit. „+“ startet die nächste Woche, wenn die Leistung es erlaubt; „−“ kehrt zur vorherigen
@@ -149,15 +153,33 @@ zurückliegt (oder nie war).
   auf dem Gerät eingestellte (oder dort noch keine eingestellt wurde) – dann „Woche N übernommen.“
   und die Phase der Woche ist gewählt.
 
+## Mit KI optimieren
+
+Infokarte mit kurzer Erklärung, Eingabefeld „Zusätzliche Anweisungen (optional)“ (wird nicht
+gespeichert) und Knopf **Für KI kopieren**. Der Knopf legt das KI-Paket in die Zwischenablage:
+Anleitung ([plan-anleitung.md](plan-anleitung.md)), `plan.json`, alle Leistungsdaten und die
+Anweisungen (Aufbau: [docs/datenformate.md](docs/datenformate.md), Teil C). Meldung „Kopiert. Jetzt
+in einen KI-Chat einfügen und absenden.“ Ist die Zwischenablage nicht verfügbar, wird das Paket
+als Datei `ki-paket-JJJJ-MM-TT.md` wie eine Sicherung weitergegeben (Meldung mit Dateiname;
+„Abgebrochen.“, wenn der Teilen-Dialog abgebrochen wird). Konnte die Anleitung nicht geladen
+werden (erster Start offline), erscheint eine Meldung mit der Bitte, es mit Netz erneut zu
+versuchen. Der Knopf ist auch ohne Trainings nutzbar. Die KI antwortet mit Änderungen und einer
+neuen `plan.json`; diese kommt per Commit ins Repository – die App ändert den Plan nie selbst.
+
+## Plan ändern
+
+Der Plan wird nur in `plan.json` geändert (Regeln: [plan-anleitung.md](plan-anleitung.md)). Bei
+Netz zeigt die App beim nächsten Öffnen den neuen Plan, ohne App-Update; offline gilt der zuletzt
+geladene Stand. Leistungsdaten bleiben erhalten, solange die `id` einer Übung gleich bleibt.
+
 ## Bewusst nicht enthalten
 
 Lauf- und Recovery-Tage, Verläufe und Diagramme über viele Wochen, automatische Lastvorschläge,
-Synchronisation zwischen Geräten, Pausen-Timer.
+Synchronisation zwischen Geräten, Pausen-Timer, Supersätze, Bearbeiten des Plans in der App,
+direkte Anbindung an einen KI-Dienst.
 
 ## Offene Punkte
 
 - schematische Darstellung der Übungen
 - Auswertung des Protokolls über mehrere Wochen – als eigene Ansicht, nicht in der Übungskarte
 - Synchronisation zwischen Geräten (erfordert eine Änderung der Verfassung, Prinzip VII)
-- Anzeige weiterer Planteile, die bereits in `plan.json` stehen (Ampelregel, Kennzahlen,
-  Wochenverteilung)

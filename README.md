@@ -22,11 +22,12 @@ z. B. GitHub Pages – alle Pfade sind relativ.
 index.html            Seitengerüst
 style.css             Gestaltung (Farbvariablen, Dark Mode)
 js/                   JavaScript-Module (Einstieg: js/app.js)
-plan.json             Trainingsplan für die App (einzige Datenquelle)
+plan.json             Trainingsplan (einzige Quelle; die App zeigt ihn an)
+plan-anleitung.md     Regeln zum Bearbeiten des Plans, Auftrag an KI-Agenten
 sw.js                 Service Worker (Offline-Betrieb)
 manifest.webmanifest  PWA-Angaben, icons/ App-Symbole
-plan.md, *.pdf        Trainingsplan zum Lesen
-docs/                 technische Dokumentation
+docs/                 technische Dokumentation (docs/archiv/: ursprüngliches PDF, nicht gepflegt)
+daten/                Leistungsdaten für KI-Agenten (nicht im Repository, siehe .gitignore)
 specs/                Feature-Spezifikationen (Archiv, Spec Kit)
 .specify/             Spec Kit: Verfassung, Vorlagen, Skripte
 ```
@@ -42,7 +43,8 @@ Jede Information steht an genau einer maßgeblichen Stelle; die anderen Dokument
 | Wie ist der Code aufgebaut, wo ändere ich was? | [docs/architektur.md](docs/architektur.md) |
 | Wie sehen `plan.json` und das Protokoll aus? | [docs/datenformate.md](docs/datenformate.md) |
 | Was prüfe ich vor einem Commit? | [docs/pruefung.md](docs/pruefung.md) |
-| Was steht im Trainingsplan? | [plan.md](plan.md) (Lesefassung), [plan.json](plan.json) (für die App) |
+| Was steht im Trainingsplan? | [plan.json](plan.json); lesbar in der App („Plan & Progression“ und die Einheiten) |
+| Wie ändere oder optimiere ich den Plan (auch mit KI)? | [plan-anleitung.md](plan-anleitung.md) |
 | Wie entstand ein Feature? | [specs/](specs/README.md) (abgeschlossene Feature-Spezifikationen) |
 | Hinweise für Claude Code | [CLAUDE.md](CLAUDE.md) |
 

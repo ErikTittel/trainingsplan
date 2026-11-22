@@ -1,4 +1,5 @@
 // Oberfläche: Infokarte „Protokoll sichern“ (Stand anzeigen, Datei weitergeben, Datei wählen).
+// deliverFile nutzt auch „Für KI kopieren“, wenn die Zwischenablage nicht verfügbar ist.
 
 const elements = {
   hint: document.querySelector("#backup-hint"),
@@ -46,9 +47,9 @@ export function showBackupResult(text) {
 
 // Gibt eine Datei über den Teilen-Dialog weiter oder lädt sie, wo es den nicht gibt, herunter.
 // Ergebnis: "saved" oder "aborted" (Nutzer hat den Teilen-Dialog abgebrochen).
-export async function deliverFile(filename, text) {
+export async function deliverFile(filename, text, type = "application/json") {
   try {
-    const file = new File([text], filename, { type: "application/json" });
+    const file = new File([text], filename, { type });
     if (navigator.canShare?.({ files: [file] })) {
       await navigator.share({ files: [file] });
       return "saved";
@@ -56,7 +57,7 @@ export async function deliverFile(filename, text) {
   } catch (error) {
     if (error.name === "AbortError") return "aborted";
   }
-  const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+  const url = URL.createObjectURL(new Blob([text], { type }));
   const link = document.createElement("a");
   link.href = url;
   link.download = filename;

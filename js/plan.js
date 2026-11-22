@@ -17,19 +17,72 @@ export async function loadPlan(url = "plan.json") {
 // Prüft den Inhalt von plan.json und gibt das Plan-Modell zurück:
 // - phases: Phasen mit number (1, 2, …), firstWeek, lastWeek, deloadWeek und den Texten
 // - totalWeeks: Länge des Plans in Wochen
-// - workouts: nach Wochentag sortiert; jede Übung mit phasenabhängigen Werten als
-//   Objekt { <phasen-id>: Wert } (auch wenn plan.json den Wert nur einmal angibt)
+// - workouts: nach Wochentag sortiert; jede Übung mit number ("1", "2", … in der Reihenfolge der
+//   Einheit) und phasenabhängigen Werten als Objekt { <phasen-id>: Wert } (auch wenn plan.json
+//   den Wert nur einmal angibt)
+// - retiredExercises: entfernte Übungen (Liste, ggf. leer)
+// - source: der unveränderte Inhalt von plan.json (für „Für KI kopieren“)
 // Alle übrigen Inhalte (Titel, Sicherheitsregeln, Hinweise …) bleiben unverändert.
 export function preparePlan(raw) {
   if (!isPlainObject(raw)) throw new Error("plan.json ist kein gültiger Plan.");
+  checkOverviewTexts(raw);
   const phases = preparePhases(raw.periodization?.phases);
-  const workouts = prepareWorkouts(raw.workouts, phases);
+  const retiredExercises = prepareRetiredExercises(raw.retiredExercises);
+  const workouts = prepareWorkouts(raw.workouts, phases, retiredExercises);
   return {
     ...raw,
     phases,
     totalWeeks: phases[phases.length - 1].lastWeek,
-    workouts
+    workouts,
+    retiredExercises,
+    source: raw
   };
+}
+
+const isText = (value) => typeof value === "string";
+const isTextList = (value) => Array.isArray(value) && value.every(isText);
+const isObjectList = (value, keys) => Array.isArray(value)
+  && value.every((item) => isPlainObject(item) && keys.every((key) => isText(item[key])));
+
+// Übergreifende Planteile, die in „Plan & Progression“ angezeigt werden. Alle sind freiwillig;
+// stehen sie in plan.json, müssen sie die erwartete Form haben.
+const OVERVIEW_TEXTS = {
+  basicIdea: isText,
+  assumptions: isTextList,
+  weeklySchedule: (value) => isObjectList(value, ["day", "content"]),
+  weeklyScheduleNotes: isTextList,
+  jumpAndSpeedProgression: (value) => isPlainObject(value) && (value.note === undefined || isText(value.note)),
+  badDayTrafficLightRules: (value) => isObjectList(value, ["level", "condition", "action"]),
+  missedTrainingAndSittingNotes: isTextList,
+  metrics: (value) => isObjectList(value, ["metric", "start", "week6", "week12", "ifStalled"]),
+  finalNote: isText
+};
+
+function checkOverviewTexts(raw) {
+  for (const [key, isValid] of Object.entries(OVERVIEW_TEXTS)) {
+    if (raw[key] !== undefined && !isValid(raw[key])) {
+      throw new Error(`Die Angabe „${key}“ in plan.json hat nicht die erwartete Form (siehe docs/datenformate.md, Teil A).`);
+    }
+  }
+}
+
+// Entfernte Übungen: [{ id, name, retired? }]. Ihre IDs sind gesperrt, damit sie nie für eine
+// andere Übung wiederverwendet werden (das Protokoll hängt an der ID).
+function prepareRetiredExercises(list) {
+  if (list === undefined) return [];
+  if (!Array.isArray(list)) throw new Error("Die entfernten Übungen (retiredExercises) in plan.json müssen eine Liste sein.");
+  const ids = new Set();
+  for (const exercise of list) {
+    if (!isPlainObject(exercise) || !ID_PATTERN.test(exercise.id ?? "") || !isText(exercise.name) || !exercise.name) {
+      throw new Error("Ein Eintrag in retiredExercises (plan.json) braucht eine gültige id und einen name.");
+    }
+    if (exercise.retired !== undefined && !isText(exercise.retired)) {
+      throw new Error(`Das Datum (retired) der entfernten Übung „${exercise.id}“ muss ein Text sein.`);
+    }
+    if (ids.has(exercise.id)) throw new Error(`Die Kennung „${exercise.id}“ steht in retiredExercises doppelt.`);
+    ids.add(exercise.id);
+  }
+  return list;
 }
 
 function preparePhases(list) {
@@ -59,13 +112,14 @@ function preparePhases(list) {
   });
 }
 
-function prepareWorkouts(list, phases) {
+function prepareWorkouts(list, phases, retiredExercises) {
   if (!Array.isArray(list) || !list.length) {
     throw new Error("plan.json enthält keine Trainingseinheiten.");
   }
   const workoutIds = new Set();
   const days = new Set();
   const exerciseIds = new Set();
+  const retiredIds = new Set(retiredExercises.map((exercise) => exercise.id));
   const workouts = list.map((workout) => {
     if (!ID_PATTERN.test(workout.id ?? "")) {
       throw new Error(`Die Kennung (id) für ${workout.title} fehlt in plan.json oder ist ungültig.`);
@@ -83,7 +137,11 @@ function prepareWorkouts(list, phases) {
     if (!Array.isArray(workout.exercises)) {
       throw new Error(`Die Übungen (exercises) für ${workout.title} fehlen in plan.json.`);
     }
-    const exercises = workout.exercises.map((exercise) => prepareExercise(exercise, phases, exerciseIds));
+    const exercises = workout.exercises.map((exercise, index) => ({
+      ...prepareExercise(exercise, phases, exerciseIds, retiredIds),
+      // Die Nummer ergibt sich aus der Reihenfolge – Verschieben braucht kein Umnummerieren.
+      number: String(index + 1)
+    }));
     return { ...workout, exercises };
   });
   // Montag zuerst, Sonntag zuletzt
@@ -104,11 +162,14 @@ function isValidWarmup(warmup) {
     && warmup.steps.every(isStep);
 }
 
-function prepareExercise(exercise, phases, exerciseIds) {
+function prepareExercise(exercise, phases, exerciseIds, retiredIds) {
   if (!ID_PATTERN.test(exercise.id ?? "")) {
     throw new Error(`Die Kennung (id) für ${exercise.name} fehlt in plan.json oder ist ungültig.`);
   }
   if (exerciseIds.has(exercise.id)) throw new Error(`Die Kennung „${exercise.id}“ ist in plan.json doppelt vergeben.`);
+  if (retiredIds.has(exercise.id)) {
+    throw new Error(`Die Kennung „${exercise.id}“ gehört zu einer entfernten Übung (retiredExercises) und darf nicht wiederverwendet werden.`);
+  }
   exerciseIds.add(exercise.id);
   if (typeof exercise.name !== "string" || !exercise.name) {
     throw new Error(`Der Name der Übung „${exercise.id}“ fehlt in plan.json.`);
@@ -131,8 +192,6 @@ function prepareExercise(exercise, phases, exerciseIds) {
     }
   }
 
-  const isText = (value) => typeof value === "string";
-  const isTextList = (value) => Array.isArray(value) && value.every(isText);
   return {
     ...exercise,
     phaseProgression: byPhase(exercise.phaseProgression, phases, isText,

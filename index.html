@@ -94,7 +94,7 @@
       <details class="info-card">
         <summary>
           <span class="summary-icon progression-icon" aria-hidden="true">↗</span>
-          <span><strong>Plan &amp; Progression</strong><small>Phasen, Pausen und Regeln für den Fortschritt</small></span>
+          <span><strong>Plan &amp; Progression</strong><small>Grundidee, Woche, Phasen, Regeln und Kennzahlen</small></span>
           <span class="chevron" aria-hidden="true"></span>
         </summary>
         <div id="plan-details" class="info-content"></div>
@@ -115,6 +115,23 @@
           </div>
           <input id="backup-file" type="file" accept="application/json,.json" hidden>
           <p id="backup-result" role="status"></p>
+        </div>
+      </details>
+
+      <details class="info-card">
+        <summary>
+          <span class="summary-icon ai-icon" aria-hidden="true">✦</span>
+          <span><strong>Mit KI optimieren</strong><small>Plan und Leistungsdaten für einen KI-Chat kopieren</small></span>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="info-content">
+          <p>Kopiert Anleitung, Trainingsplan, alle Leistungsdaten und deine Anweisungen als Text. In einen KI-Chat einfügen; die KI antwortet mit Änderungen und einer neuen <code>plan.json</code>, die per Commit ins Repository kommt.</p>
+          <label class="ai-label" for="ai-instructions">Zusätzliche Anweisungen (optional)</label>
+          <textarea id="ai-instructions" class="ai-instructions" rows="4" placeholder="z. B. Knie links meldet 3/10 bei Shrimp-Squats; Clean stagniert seit W5"></textarea>
+          <div class="backup-actions">
+            <button id="ai-copy" class="backup-button" type="button">Für KI kopieren</button>
+          </div>
+          <p id="ai-result" role="status"></p>
         </div>
       </details>
     </section>

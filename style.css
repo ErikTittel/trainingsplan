@@ -820,7 +820,8 @@ input:focus-visible {
 
 .info-card .progression-icon,
 .info-card .backup-icon,
-.info-card .legend-icon {
+.info-card .legend-icon,
+.info-card .ai-icon {
   background: var(--accent-soft);
   color: var(--accent);
 }
@@ -920,6 +921,33 @@ details[open] > summary .chevron {
   border-color: var(--line);
   background: var(--surface-raised);
   color: var(--text);
+}
+
+/* „Mit KI optimieren“ */
+.ai-label {
+  display: block;
+  margin: 12px 0 5px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.ai-instructions {
+  display: block;
+  width: 100%;
+  min-height: 96px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+/* Kennzahlen im vollständigen Plan */
+.metric-values {
+  margin-top: 4px;
 }
 
 /* ---------- 8 Meldungen und Rückgängig ---------- */

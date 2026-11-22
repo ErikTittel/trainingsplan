@@ -24,12 +24,14 @@ Stunden setzen, neu laden.
 |---|---|---|
 | A1 | Hell- und Dark Mode | gut lesbar, ausreichender Kontrast, keine sichtbare Schrift unter 0,85 rem |
 | A2 | Breite 320 px und 390 px | kein horizontales Scrollen, Kennzahlenzeile bricht um, Phasenleiste und Power-Knöpfe passen |
-| A3 | Alle Einheiten × alle Phasen durchschalten | Karten vollständig (Name, Vorgabe, Tempo, RPE, Pause, Zweck, Ablauf, Hinweis – dieser eingeklappt einzeilig, Antippen zeigt ihn ganz und öffnet nicht das Protokoll), leere Angaben fehlen ganz, Werte wechseln mit der Phase |
+| A3 | Alle Einheiten × alle Phasen durchschalten | Nummern 1, 2, 3 … lückenlos in Planreihenfolge (keine Buchstaben); Karten vollständig (Name, Vorgabe, Tempo, RPE, Pause, Zweck, Ablauf, Hinweis – dieser eingeklappt einzeilig, Antippen zeigt ihn ganz und öffnet nicht das Protokoll), leere Angaben fehlen ganz, Werte wechseln mit der Phase |
 | A4 | Infokarte „Kürzel & Bedienung“ | erklärt ↓/↑, X, P, /S., RPE, ✓/+, Power-Symbole, Entl., Bedienung; keine Legende über den Übungen |
 | A4a | Aufwärmen | „Aufwärmen · N Min“, nummerierte Schritte mit Unterpunkten, offen beim Laden und nach Einheitenwechsel, zuklappbar |
 | A5 | Wochensteuerung: „−“/„+“ im Kopf, u. a. über die Phasengrenzen 4↔5 und 8↔9; vorher eine andere Phase in der Leiste wählen | „Woche N von 12“, darunter „Phase N“ (+ „Entlastungswoche“); jeder Wechsel wählt die Phase der neuen Woche, offene Übung bleibt; in Woche 1 ist „−“, in Woche 12 „+“ deaktiviert; Neuladen und Folgetag (Systemdatum) behalten die Woche; vorgewählt sind heutiger bzw. nächster Trainingstag und die Phase der Woche; 320 px: Knöpfe 44 × 44 px, kein Querscrollen |
-| A6 | „Sicherheit zuerst“ und „Plan & Progression“ öffnen | vollständig, aufklappbar |
-| A7 | Fehler in `plan.json` einbauen (z. B. doppelte `id`) | verständliche Ladefehlermeldung |
+| A6 | „Sicherheit zuerst“ und „Plan & Progression“ öffnen | vollständig, aufklappbar; „Plan & Progression“ zeigt Grundidee, Annahmen, Wochenverteilung, Phasen, Progression, Ampelregel, verpasste Einheiten, Kennzahlen und Schlussbemerkung |
+| A7 | Fehler in `plan.json` einbauen (z. B. doppelte `id`; eine `id` aus `retiredExercises` bei einer Übung; `metrics` als Text) | verständliche Ladefehlermeldung |
+| A8 | Zwei Übungen in `plan.json` tauschen bzw. eine in eine andere Einheit verschieben, neu laden (ohne `CACHE_NAME` zu ändern, Service Worker aktiv) | neue Reihenfolge und Nummern sofort sichtbar; Angaben hinter dem Namen (jüngster Eintrag) bleiben an der Übung |
+| A9 | „Mit KI optimieren“: Anweisung eingeben, „Für KI kopieren“, in einen Texteditor einfügen | Meldung „Kopiert …“; Text enthält Kopf mit Woche/Phase, die Anweisung, die Anleitung, `plan.json` (ohne `number`) und alle Trainings; ohne Anweisung „keine“. Ohne Zwischenablage (z. B. `http://` über die Netzwerk-IP): Datei `ki-paket-…md` |
 
 ## B. Bei Änderungen am Protokoll
 
@@ -84,7 +86,9 @@ Schrift ab; entscheidend ist der Vergleich im selben Browser vor und nach einer 
 ## C. Bei Änderungen am Service Worker
 
 `CACHE_NAME` hochgezählt, neue Dateien in `APP_SHELL`; einmal online laden, dann offline neu
-laden → App vollständig, Protokoll unverändert.
+laden → App vollständig (auch Plan und „Für KI kopieren“), Protokoll unverändert. `plan.json`
+ändern und online neu laden → neuer Plan ohne Hochzählen; Network-Throttling „Offline“ bzw. sehr
+langsam → nach höchstens 4 s der zuletzt geladene Plan.
 
 ## D. Auf dem iPhone (vor dem ersten echten Training mit einer neuen Version)
 
@@ -95,3 +99,4 @@ laden → App vollständig, Protokoll unverändert.
    Home-Bildschirm-App; ältere Versionen sperren wie gewohnt).
 3. Flugmodus: Eintrag erfassen → gespeichert.
 4. „Sichern“ → Teilen-Dialog, „In Dateien sichern“; Datei per „Wiederherstellen“ wieder einlesbar.
+5. „Für KI kopieren“ → „Kopiert …“; in Notizen einfügen → vollständiger Text.

@@ -5,3 +5,6 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Leistungsdaten (Sicherungsdateien) für KI-Agenten – nie committen
+daten/
