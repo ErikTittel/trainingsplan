@@ -1,11 +1,12 @@
 <!--
 Sync Impact Report
-- Version: 2.3.0 → 2.4.0 (MINOR: Prinzip III um vier Ausnahmen erweitert)
-- Geändert: III – einklappbare lange Hinweistexte; Legende darf in aufklappbarer Infokarte stehen;
-  Wiederherstellen der offenen Übung am selben Tag; „Letztes Mal“ im geöffneten Protokollbereich
-  immer erlaubt
-- Entfernt: nichts
-- Folgedokumente: SPEC.md ✅, docs/*.md ✅ (mit Feature 003 nachgezogen);
+- Version: 2.4.0 → 2.5.0 (MINOR: Prinzip IV neu gefasst, Ausnahmen in V und VII)
+- Geändert: IV – `plan.json` ist die einzige Quelle des Plans (`plan.md` entfällt, PDF nur Archiv),
+  Regeln zum Bearbeiten in `plan-anleitung.md`, entfernte Übungen in `retiredExercises`, keine
+  Supersätze; V – `plan.json` und `plan-anleitung.md` network-first, kein Hochzählen von
+  `CACHE_NAME` für Planänderungen; VII – „Für KI kopieren“ als ausdrückliche Exportaktion
+- Entfernt: Pflicht, `plan.json` und `plan.md` konsistent zu halten
+- Folgedokumente: SPEC.md ✅, README.md ✅, CLAUDE.md ✅, docs/*.md ✅ (mit Feature 005);
   Vorlagen in .specify/templates ✅ (keine Änderung nötig)
 -->
 # Trainingsplan-PWA Constitution
@@ -75,8 +76,9 @@ wechselndem Licht und wenig Aufmerksamkeit für Bedienung.
   vorbelegt, ein unveränderter Wert ist mit einem Antippen übernommen, es gibt KEINE
   Pflichtfelder, und das Training ist auch ganz ohne Eingabe nutzbar.
 - Auswertungen und Verläufe über mehrere Wochen gehören NICHT in die Übungskarte.
-- Jede Karte steht für genau eine Übung; kombinierte Karten („A + B“) sind unzulässig, damit
-  jede Übung eigene Planangaben und ein eigenes Protokoll hat.
+- Jede Karte steht für genau eine Übung; kombinierte Karten („A + B“) und Supersätze sind
+  unzulässig, damit jede Übung eigene Planangaben und ein eigenes Protokoll hat und sich
+  unabhängig verschieben lässt. Die Nummer einer Übung ergibt sich aus ihrer Reihenfolge.
 
 **Begründung:** Im Studio zählt, die nächste Übung in Sekunden zu erfassen – ohne Tippen
 zwischen zwei Sätzen. Kompaktheit entsteht durch festes Layout und Abkürzungen, nicht durch
@@ -88,8 +90,13 @@ zugeklappt; dieser steht dort, wo die Entscheidung fällt („wie viel heute?“
 - Trainingsinhalte (Phasen, Wochen, Einheiten, Übungen, Sicherheitsregeln) und die Planstruktur
   (Phasengrenzen, Entlastungswochen, Trainingstage) liegen ausschließlich in `plan.json`; der Code
   enthält KEINE fest codierten Trainingsinhalte und keine Planstruktur.
-- `plan.md` und das PDF sind die menschenlesbare Quelle; inhaltliche Änderungen MÜSSEN
-  in `plan.json` und `plan.md` konsistent nachgezogen werden.
+- `plan.json` ist die EINZIGE Quelle des Trainingsplans; es gibt keine zweite, von Hand
+  gepflegte Fassung. Die menschenlesbare Darstellung liefert die App selbst. Das ursprüngliche
+  PDF liegt nur als Archiv unter `docs/archiv/` und wird nicht gepflegt.
+- Planänderungen (Übungen hinzufügen, entfernen, beschreiben, umsortieren; Aufwärmen) MÜSSEN
+  ohne Codeänderung möglich sein. Die Regeln dafür – für Menschen und KI-Agenten – stehen
+  ausschließlich in `plan-anleitung.md`. Entfernte Übungen werden in `retiredExercises`
+  eingetragen; ihre IDs sind gesperrt.
 - Änderungen am Datenformat von `plan.json` MÜSSEN im selben Commit im Code (Prüfung beim
   Laden) und in `docs/datenformate.md` berücksichtigt werden.
 - `plan.json` beschreibt das Soll, das Protokoll das Ist. `plan.json` enthält KEINE erfassten
@@ -109,7 +116,9 @@ bereits erfasste Trainings dürfen durch eine Planänderung nicht ihren Bezug ve
   damit die Seite unter `/<repo-name>/` (z. B. GitHub Pages) läuft.
 - Die App MUSS als PWA installierbar und nach dem ersten Laden offline nutzbar sein.
 - Jede Änderung an ausgelieferten Dateien MUSS `CACHE_NAME` in `sw.js` hochzählen;
-  neue Dateien MÜSSEN in `APP_SHELL` aufgenommen werden.
+  neue Dateien MÜSSEN in `APP_SHELL` aufgenommen werden. Ausnahme: Inhalte, die der Service
+  Worker network-first lädt (`plan.json`, `plan-anleitung.md`); sie MÜSSEN offline aus dem Cache
+  verfügbar bleiben.
 
 **Begründung:** Im Studio ist der Empfang oft schlecht; veraltete Caches sind die häufigste
 Fehlerquelle bei Service Workern.
@@ -133,7 +142,8 @@ Training nicht auffindbar sind, schützen nicht.
   Schließen der App, ein Neuladen oder ein Update der App DARF KEINE erfassten Werte kosten.
 - Das Protokoll MUSS als Datei exportierbar und aus einer solchen Datei wieder importierbar
   sein. Das ist die Sicherung und der Weg auf ein neues Gerät.
-- Protokolldaten verlassen das Gerät NUR durch eine ausdrückliche Aktion des Nutzers (Export).
+- Protokolldaten verlassen das Gerät NUR durch eine ausdrückliche Aktion des Nutzers (Export
+  oder „Für KI kopieren“). Die App überträgt nichts selbst an einen KI-Dienst.
   Sie DÜRFEN NICHT ins Repository gelangen und NICHT automatisch an Dritte übertragen werden.
 - Das gespeicherte Format trägt eine Versionsnummer. Ändert sich das Format, MUSS die App ältere
   Stände beim Laden in das neue Format überführen; vorhandene Daten zu verwerfen ist unzulässig.
@@ -191,4 +201,4 @@ Export/Import und Migration Pflicht und kein Komfort.
 - Jeder Implementierungsplan enthält einen Verfassungs-Check; Abweichungen MÜSSEN dort
   begründet werden, sonst ist der Plan abzulehnen.
 
-**Version**: 2.4.0 | **Ratified**: 2026-11-14 | **Last Amended**: 2026-11-15
+**Version**: 2.5.0 | **Ratified**: 2026-11-14 | **Last Amended**: 2026-11-22
