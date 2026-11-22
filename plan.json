@@ -179,41 +179,6 @@
           }
         },
         {
-          "id": "klimmzug",
-          "name": "Klimmzug (Parallelgriff)",
-          "phaseProgression": {
-            "phase1": "4×4–5",
-            "phase2": "4×5–7",
-            "phase3": "4×3–5 mit Zusatzlast"
-          },
-          "tempo": {
-            "phase1": "3-0-1",
-            "phase2": "2-0-1",
-            "phase3": "2-0-1"
-          },
-          "rpe": "8",
-          "why": "Zug-Hypertrophie; der Parallelgriff hält das Handgelenk neutral und schont den Zeigefinger. Bei nachlassendem Griff Straps nutzen, damit der Zug und nicht der Griff limitiert",
-          "log": {
-            "fields": [
-              "addedWeight"
-            ],
-            "step": 0.5
-          }
-        },
-        {
-          "id": "face-pull",
-          "name": "Face Pull (Seil, Daumen oben)",
-          "phaseProgression": "3×12–15",
-          "tempo": "2-1-2",
-          "rpe": "7",
-          "why": "Schulter-Ausgleich zum Sitzen; Seil im Neutralgriff, Handgelenke bleiben gerade",
-          "log": {
-            "fields": [
-              "weight"
-            ]
-          }
-        },
-        {
           "id": "trap-bar-rdl",
           "name": "Trap-Bar-RDL (Neutralgriff, Straps)",
           "rest": "2 min",
@@ -263,12 +228,47 @@
           }
         },
         {
+          "id": "klimmzug",
+          "name": "Klimmzug (Parallelgriff)",
+          "phaseProgression": {
+            "phase1": "4×4–5",
+            "phase2": "4×5–7",
+            "phase3": "4×3–5 mit Zusatzlast"
+          },
+          "tempo": {
+            "phase1": "3-0-1",
+            "phase2": "2-0-1",
+            "phase3": "2-0-1"
+          },
+          "rpe": "8",
+          "why": "Zug-Hypertrophie; der Parallelgriff hält das Handgelenk neutral und schont den Zeigefinger. Bei nachlassendem Griff Straps nutzen, damit der Zug und nicht der Griff limitiert",
+          "log": {
+            "fields": [
+              "addedWeight"
+            ],
+            "step": 0.5
+          }
+        },
+        {
           "id": "latzug",
           "name": "Latzug neutral (Straps)",
           "phaseProgression": "3×10–12",
           "tempo": "2-1-2",
           "rpe": "8",
           "why": "zusätzliches Lat-Volumen; Griff parallel, Handgelenke gerade",
+          "log": {
+            "fields": [
+              "weight"
+            ]
+          }
+        },
+        {
+          "id": "face-pull",
+          "name": "Face Pull (Seil, Daumen oben)",
+          "phaseProgression": "3×12–15",
+          "tempo": "2-1-2",
+          "rpe": "7",
+          "why": "Schulter-Ausgleich zum Sitzen; Seil im Neutralgriff, Handgelenke bleiben gerade",
           "log": {
             "fields": [
               "weight"
