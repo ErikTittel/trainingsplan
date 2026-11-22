@@ -2,10 +2,10 @@
   "title": "12-Wochen-Trainingsplan: Muskelaufbau mit Lauf-Support",
   "created": "12. Oktober 2026",
   "startDate": "2026-10-12",
-  "basicIdea": "Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt Cleans, Medball und Widerstandsband-Starts als Schnelligkeitsreiz ohne harte Stöße.",
+  "basicIdea": "Ein 3-Tage-Ganzkörperplan mit wechselnden Schwerpunkten (Zug und Hüfte / Beine und Elastizität / Druck und Beschleunigung). Er baut Muskeln mit langsamem, gelenkschonendem Tempo auf, erweitert Kniebeugetiefe und Sprungbelastung stufenweise und nutzt explosive Trap-Bar-Züge, Kabel-Rotationen und Widerstandsband-Starts als Schnelligkeitsreiz ohne harte Stöße. Alle Zug- und Druckübungen laufen im Neutralgriff, damit das rechte Handgelenk weder rotiert noch gebeugt oder überstreckt wird.",
   "assumptions": [
     "Lauftraining: 2–3 Läufe pro Woche, davon einer lang und einer mit Qualität.",
-    "Der Clean (70 kg) entspricht etwa dem Maximum, Prozentangaben beziehen sich darauf.",
+    "Explosive Übungen werden nach Bewegungsgeschwindigkeit dosiert: Die Last bleibt so, dass jede Wiederholung schnell bleibt.",
     "Training auf Gummiboden/Turf, nicht auf Hartboden. RPE 10 = Maximum, 8 = 2 Wiederholungen in Reserve, 7 = 3."
   ],
   "safetyRules": [
@@ -20,11 +20,22 @@
       "subItems": []
     },
     {
+      "title": "Rechte Hand",
+      "text": "Keine Rotation, keine Beugung und keine Überstreckung im rechten Handgelenk.",
+      "subItems": [
+        "Zug- und Druckübungen nur im Neutralgriff (Handflächen zueinander, Daumen oben).",
+        "Das Handgelenk bleibt unter Last gerade in Verlängerung des Unterarms; Gewicht nicht in die Finger kippen lassen.",
+        "Kein Abstützen auf der flachen Hand (Liegestütz, Bear Crawl, Planks): Griffe, Kurzhanteln oder Unterarm nutzen.",
+        "Keine Fangpositionen (Clean, Front Rack), keine Langhantel im Ober- oder Untergriff, keine frei drehenden Griffe wie Ringe.",
+        "Meldet die Hand mehr als 2/10, die Übung durch eine Variante ohne Handlast ersetzen (Maschine mit Polster, Manschette, Weste)."
+      ]
+    },
+    {
       "title": "Zeigefinger",
       "text": "",
       "subItems": [
-        "Klimmzüge am Parallelgriff oder an Ringen im vollen Umklammerungsgriff. Die Stange liegt in der Handfläche, Last auf Mittel- und Ringfinger sowie Handballen, der Zeigefinger liegt nur locker an. Kein Einhängen in die Fingerspitzen.",
-        "Straps bei Kreuzheben, Latzug und Rudern. Beim Clean Straps oder Hook-Grip nur, wenn der Zeigefinger höchstens 1/10 meldet.",
+        "Klimmzüge am Parallelgriff im vollen Umklammerungsgriff. Der Griff liegt in der Handfläche, Last auf Mittel- und Ringfinger sowie Handballen, der Zeigefinger liegt nur locker an. Kein Einhängen in die Fingerspitzen.",
+        "Straps bei Trap-Bar-Übungen, Latzug und Rudern.",
         "Dickere Griffe (z. B. Fat Grips) entlasten die vorderen Fingerglieder zusätzlich."
       ]
     },
@@ -46,7 +57,7 @@
         "volume": "ca. 8–10",
         "intensityAndTempo": "RPE 6–8, 3 s exzentrisch",
         "kneeDepth": "bis ca. 70°",
-        "jumpAndSpeed": "W1–2: keine Sprünge (Balance, Medball, Band-Starts, leichter Clean). W3–4: Mini-Pogos und Step-offs, ca. 30–40 Kontakte"
+        "jumpAndSpeed": "W1–2: keine Sprünge (Balance, Kabel-Rotation, Band-Starts, leichter Trap-Bar-Hang-Pull). W3–4: Mini-Pogos und Step-offs, ca. 30–40 Kontakte"
       },
       {
         "id": "phase2",
@@ -108,7 +119,7 @@
   "weeklyScheduleNotes": [
     "Bei nur 2 Läufen entfällt der Freitag.",
     "Zwischen Einheit 2 und einem harten Lauf sollten 48 h liegen.",
-    "Nach einem Langlauf über 90 Minuten wird der RDL am Montag eine RPE-Stufe niedriger gefahren."
+    "Nach einem Langlauf über 90 Minuten wird der Trap-Bar-RDL am Montag eine RPE-Stufe niedriger gefahren."
   ],
   "workoutGeneralNotes": {
     "breaks": "Pausen: Hauptübungen 90–150 s, übrige Übungen 60–90 s.",
@@ -137,24 +148,30 @@
             "items": [
               "Glute-Bridge-Halt 2×20 s",
               "Einbeinstand mit geschlossenen Augen 30 s/Seite (links zuerst)",
-              "Clean-Technik leer und 2 Aufbausätze"
+              "Trap-Bar-Hang-Pull leer und 2 Aufbausätze"
             ]
           }
         ]
       },
       "exercises": [
         {
-          "id": "hang-power-clean",
-          "name": "Hang Power Clean",
+          "id": "trap-bar-hang-pull",
+          "name": "Trap-Bar-Hang-Pull (explosiv, Neutralgriff, Straps)",
           "rest": "90 s",
           "phaseProgression": {
-            "phase1": "4×3 @ ca. 55 %",
-            "phase2": "5×3 @ 60–65 %",
-            "phase3": "5×2 @ 70–75 %"
+            "phase1": "4×3, leicht und schnell",
+            "phase2": "5×3, Last steigern solange jede Wdh. schnell bleibt",
+            "phase3": "5×2, schwer-schnell"
           },
           "tempo": "explosiv",
           "rpe": "6–7",
-          "why": "Schnelligkeit und Hüftkraft mit kleinem Kniewinkel; Fang hoch in der Viertelkniebeuge",
+          "why": "Schnelligkeit und Hüftkraft mit kleinem Kniewinkel wie beim Clean, aber ohne Fangposition – das rechte Handgelenk bleibt neutral",
+          "instructions": [
+            "Aus dem Stand die Trap-Bar bis knapp über die Knie absenken (Hüfte nach hinten, Knie nur leicht gebeugt)",
+            "Explosiv die Hüfte strecken bis auf die Fußballen, Arme bleiben lang, Handgelenke gerade",
+            "Kontrolliert zurück in den Stand, kurze Pause, nächste Wiederholung"
+          ],
+          "instructionsNote": "Ersetzt den Hang Power Clean: Die Fangposition zwingt das Handgelenk in Überstreckung und Rotation. Wird eine Wiederholung sichtbar langsamer, ist die Last zu hoch.",
           "log": {
             "fields": [
               "weight"
@@ -163,7 +180,7 @@
         },
         {
           "id": "klimmzug",
-          "name": "Klimmzug (Parallelgriff/Ringe)",
+          "name": "Klimmzug (Parallelgriff)",
           "phaseProgression": {
             "phase1": "4×4–5",
             "phase2": "4×5–7",
@@ -175,7 +192,7 @@
             "phase3": "2-0-1"
           },
           "rpe": "8",
-          "why": "Zug-Hypertrophie; Griff schont den Zeigefinger",
+          "why": "Zug-Hypertrophie; der Parallelgriff hält das Handgelenk neutral und schont den Zeigefinger. Bei nachlassendem Griff Straps nutzen, damit der Zug und nicht der Griff limitiert",
           "log": {
             "fields": [
               "addedWeight"
@@ -185,11 +202,11 @@
         },
         {
           "id": "face-pull",
-          "name": "Face Pull (Seil)",
+          "name": "Face Pull (Seil, Daumen oben)",
           "phaseProgression": "3×12–15",
           "tempo": "2-1-2",
           "rpe": "7",
-          "why": "Schulter-Ausgleich zum Sitzen",
+          "why": "Schulter-Ausgleich zum Sitzen; Seil im Neutralgriff, Handgelenke bleiben gerade",
           "log": {
             "fields": [
               "weight"
@@ -197,8 +214,8 @@
           }
         },
         {
-          "id": "rdl",
-          "name": "Rumänisches Kreuzheben (Straps)",
+          "id": "trap-bar-rdl",
+          "name": "Trap-Bar-RDL (Neutralgriff, Straps)",
           "rest": "2 min",
           "phaseProgression": {
             "phase1": "3×8",
@@ -211,7 +228,7 @@
             "phase3": "2-1-1"
           },
           "rpe": "7 → 8",
-          "why": "Hüftstrecker für Sprint und Laufökonomie, kaum Kniebelastung",
+          "why": "Hüftstrecker für Sprint und Laufökonomie, kaum Kniebelastung; die Trap-Bar ersetzt die Langhantel, deren Obergriff das Handgelenk rotiert",
           "log": {
             "fields": [
               "weight"
@@ -220,7 +237,7 @@
         },
         {
           "id": "einbein-rdl",
-          "name": "Einbein-RDL (Kurzhantel)",
+          "name": "Einbein-RDL (Kurzhantel, Neutralgriff)",
           "phaseProgression": "3×8/Seite",
           "tempo": "3-0-1",
           "rpe": "7",
@@ -251,7 +268,7 @@
           "phaseProgression": "3×10–12",
           "tempo": "2-1-2",
           "rpe": "8",
-          "why": "zusätzliches Lat-Volumen",
+          "why": "zusätzliches Lat-Volumen; Griff parallel, Handgelenke gerade",
           "log": {
             "fields": [
               "weight"
@@ -282,7 +299,7 @@
             ]
           },
           "Einbeinstand auf Balance-Pad mit geschlossenen Augen 30 s/Seite",
-          "3 Aufbausätze Kniebeuge (leer, 40 %, 60 %)"
+          "3 Aufbausätze Safety-Bar-Kniebeuge (leer, 40 %, 60 %)"
         ]
       },
       "exercises": [
@@ -342,8 +359,8 @@
           }
         },
         {
-          "id": "kniebeuge-box",
-          "name": "Kniebeuge zur Box (Back oder Front)",
+          "id": "kniebeuge-box-ssb",
+          "name": "Kniebeuge zur Box (Safety Bar)",
           "rest": "2–2,5 min",
           "phaseProgression": {
             "phase1": "4×8",
@@ -356,7 +373,8 @@
             "phase3": "2-1-X"
           },
           "rpe": "7 → 8",
-          "why": "Quadrizeps-Hypertrophie; Box-Höhe = Tiefenlimit (ca. 70° → 90° → parallel)",
+          "why": "Quadrizeps-Hypertrophie; Box-Höhe = Tiefenlimit (ca. 70° → 90° → parallel). Die Safety Bar wird an den Griffen vor dem Körper gehalten – keine Handgelenk-Überstreckung wie bei Back oder Front Squat",
+          "instructionsNote": "Ohne Safety Bar: Belt Squat zur Box, Hände locker an den Griffen. Die Variante beibehalten, damit die Werte vergleichbar bleiben.",
           "log": {
             "fields": [
               "weight"
@@ -374,7 +392,7 @@
           },
           "tempo": "3-1-1",
           "rpe": "7–8",
-          "why": "spezifisch und einbeinig; hier wird zuerst die Tiefe gesteigert, dann die Last",
+          "why": "spezifisch und einbeinig; hier wird zuerst die Tiefe gesteigert, dann die Last. Last als Weste oder Kurzhanteln im Neutralgriff seitlich am Körper",
           "log": {
             "fields": [
               "weight"
@@ -409,7 +427,7 @@
           },
           "tempo": "3-1-1",
           "rpe": "8",
-          "why": "Achilles und Sprunggelenk; bei Seitendifferenz links einen Extrasatz",
+          "why": "Achilles und Sprunggelenk; bei Seitendifferenz links einen Extrasatz. Zusatzlast als Weste oder Kurzhantel im Neutralgriff; rechts nur mit Unterarm oder lockerer Faust abstützen, nie mit flacher Hand",
           "log": {
             "fields": [
               "addedWeight"
@@ -419,7 +437,7 @@
         },
         {
           "id": "liegestuetz",
-          "name": "Optional bei Zeitnot streichen: Liegestütz Füße erhöht (Weste)",
+          "name": "Optional bei Zeitnot streichen: Liegestütz an Griffen, Füße erhöht (Weste)",
           "phaseProgression": {
             "phase1": "3×12–15",
             "phase2": "3×10–12 + 5 kg",
@@ -427,7 +445,7 @@
           },
           "tempo": "3-1-1",
           "rpe": "8",
-          "why": "Push-Frequenz",
+          "why": "Push-Frequenz; Liegestützgriffe oder Kurzhanteln im Neutralgriff statt flacher Hand, damit das Handgelenk nicht überstreckt",
           "log": {
             "fields": [
               "addedWeight"
@@ -436,17 +454,16 @@
           }
         },
         {
-          "id": "ringrudern",
-          "name": "Optional bei Zeitnot streichen: Ringrudern",
+          "id": "kabelrudern-neutral",
+          "name": "Optional bei Zeitnot streichen: Kabelrudern sitzend (V-Griff)",
           "phaseProgression": "3×10–12",
           "tempo": "3-1-1",
           "rpe": "8",
-          "why": "Zugfrequenz",
+          "why": "Zugfrequenz; der feste V-Griff hält die Hände parallel – Ringe drehen frei und rotieren das Handgelenk",
           "log": {
             "fields": [
-              "addedWeight"
-            ],
-            "step": 1
+              "weight"
+            ]
           }
         }
       ]
@@ -462,21 +479,22 @@
             "title": "2 Min Geschicklichkeit statt Cardio",
             "items": [
               "Koordinationsleiter nur mit Schritten",
-              "Bear Crawl vor/zurück"
+              "Seitliche Shuffles und Carioca locker"
             ]
           },
-          "Band-Dislocates 10",
+          "Armkreisen groß 10 vor/10 zurück",
+          "Band Pull-Aparts mit Daumen oben 15",
           "Wall Slides 10",
           "Brustwirbelsäulen-Extension 8",
           "Hüftbeuger-Dehnung im Ausfallschritt mit Beckenkippung 30 s/Seite",
-          "Scap-Liegestütze 10",
-          "Aufbausätze Bank"
+          "Scap-Liegestütze an Griffen oder Kurzhanteln (Neutralgriff) 10",
+          "Aufbausätze Schrägbank (Neutralgriff)"
         ]
       },
       "exercises": [
         {
           "id": "beschleunigungsblock",
-          "name": "Beschleunigungsblock (Medball + Band-Starts)",
+          "name": "Beschleunigungsblock (Kabel-Rotation + Band-Starts)",
           "phaseProgression": {
             "phase1": "4×15 m leicht",
             "phase2": "6×15 m",
@@ -487,27 +505,27 @@
           "why": "Schnelligkeit ohne Stoß, kaum Knietiefe",
           "instructions": {
             "phase1": [
-              "Medball-Brustpass/Rotationswurf 3×5",
+              "Kabel-Rotation explosiv, beidhändig am Einzelgriff im Neutralgriff, Arme lang, Drehung aus der Hüfte: 3×5/Seite",
               "Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert: 4×15 m leicht"
             ],
             "phase2": [
-              "Medball-Brustpass/Rotationswurf 3×5",
+              "Kabel-Rotation explosiv, beidhändig am Einzelgriff im Neutralgriff, Arme lang, Drehung aus der Hüfte: 3×5/Seite",
               "Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert: 6×15 m"
             ],
             "phase3": [
-              "Medball-Brustpass/Rotationswurf 3×5",
+              "Kabel-Rotation explosiv, beidhändig am Einzelgriff im Neutralgriff, Arme lang, Drehung aus der Hüfte: 3×5/Seite",
               "Widerstandsband-Starts mit Hüftgurt, Band am Rack fixiert: 6×20 m schwer-schnell",
               "Ab W9 flache Sprints (siehe Sprungblock, Einheit 2)"
             ]
           },
-          "instructionsNote": "Alternative zu den Band-Starts: Laufband-Gehen bergauf bei 10–12 % Steigung, 6×20–30 s zügig statt Strecke.",
+          "instructionsNote": "Die Kabel-Rotation ersetzt Medball-Brustpass und Rotationswurf: Abwurf und Fangen belasten das Handgelenk in Beugung und Überstreckung. Alternative zu den Band-Starts: Laufband-Gehen bergauf bei 10–12 % Steigung, 6×20–30 s zügig statt Strecke.",
           "log": {
             "fields": []
           }
         },
         {
           "id": "schraegbank",
-          "name": "Schrägbank (Kurzhantel)",
+          "name": "Schrägbank (Kurzhantel, Neutralgriff)",
           "rest": "2 min",
           "phaseProgression": {
             "phase1": "4×8–10",
@@ -520,7 +538,7 @@
             "phase3": "2-1-1"
           },
           "rpe": "8",
-          "why": "Brust und Schulter",
+          "why": "Brust und Schulter; Handflächen zueinander, Handgelenk gerade über dem Unterarm",
           "log": {
             "fields": [
               "weight"
@@ -530,7 +548,7 @@
         },
         {
           "id": "rudern-brustgestuetzt",
-          "name": "Brustgestütztes Rudern (Straps)",
+          "name": "Brustgestütztes Rudern (Neutralgriff, Straps)",
           "phaseProgression": {
             "phase1": "4×10–12",
             "phase2": "4×8–10",
@@ -547,11 +565,11 @@
         },
         {
           "id": "druecken-stehend",
-          "name": "Landmine- oder Schulterdrücken stehend",
+          "name": "Schulterdrücken stehend (Kurzhantel, Neutralgriff)",
           "phaseProgression": "3×8–10",
           "tempo": "2-0-1",
           "rpe": "8",
-          "why": "Schulterhypertrophie, gelenkfreundlich",
+          "why": "Schulterhypertrophie, gelenkfreundlich; Handflächen zueinander, keine Landmine (Hantelende in der Hand überstreckt das Handgelenk)",
           "log": {
             "fields": [
               "weight"
@@ -561,10 +579,10 @@
         {
           "id": "seitheben-reverse-fly",
           "name": "Seitheben/Reverse Fly",
-          "phaseProgression": "3×12–15",
+          "phaseProgression": "3×10–15",
           "tempo": "2-1-2",
           "rpe": "8",
-          "why": "Delta hinten und seitlich",
+          "why": "Delta hinten und seitlich; Kurzhanteln im Neutralgriff, Handgelenk gerade. Erst 15 Wiederholungen sauber, dann mehr Last",
           "log": {
             "fields": [
               "weight"
@@ -582,7 +600,7 @@
           },
           "tempo": "2-1-1",
           "rpe": "8",
-          "why": "Gesäß für Sprint und Lauf, ohne Knielast",
+          "why": "Gesäß für Sprint und Lauf, ohne Knielast; Hantel mit Polster, rechte Hand nur locker auflegen oder Hip-Thrust-Maschine",
           "log": {
             "fields": [
               "weight"
@@ -592,10 +610,14 @@
         {
           "id": "copenhagen-plank",
           "name": "Copenhagen Plank",
-          "phaseProgression": "3×20–30 s/Seite",
+          "phaseProgression": {
+            "phase1": "3×15–20 s/Seite, kurzer Hebel (Knie auf der Bank)",
+            "phase2": "3×20–30 s/Seite, langer Hebel (Fuß auf der Bank)",
+            "phase3": "3×30 s/Seite, langer Hebel"
+          },
           "tempo": "statisch",
           "rpe": "7",
-          "why": "Adduktoren und Rumpf für Richtungswechsel",
+          "why": "Adduktoren und Rumpf für Richtungswechsel; auf dem Unterarm, Faust in Neutralstellung – nie auf der Hand",
           "log": {
             "fields": [
               "seconds"
@@ -608,7 +630,7 @@
           "phaseProgression": "3×12",
           "tempo": "2-0-2",
           "rpe": "8",
-          "why": "Arme",
+          "why": "Arme; Seil im Neutralgriff, unten Handgelenke gerade lassen statt abzuknicken",
           "log": {
             "fields": [
               "weight"
@@ -621,7 +643,7 @@
           "phaseProgression": "3×12",
           "tempo": "2-0-2",
           "rpe": "8",
-          "why": "Arme",
+          "why": "Arme; Hammergriff ist der Neutralgriff, Handgelenk nicht einrollen",
           "log": {
             "fields": [
               "weight"
@@ -632,7 +654,28 @@
       ]
     }
   ],
-  "retiredExercises": [],
+  "retiredExercises": [
+    {
+      "id": "hang-power-clean",
+      "name": "Hang Power Clean",
+      "retired": "2026-11-22"
+    },
+    {
+      "id": "rdl",
+      "name": "Rumänisches Kreuzheben (Straps)",
+      "retired": "2026-11-22"
+    },
+    {
+      "id": "kniebeuge-box",
+      "name": "Kniebeuge zur Box (Back oder Front)",
+      "retired": "2026-11-22"
+    },
+    {
+      "id": "ringrudern",
+      "name": "Optional bei Zeitnot streichen: Ringrudern",
+      "retired": "2026-11-22"
+    }
+  ],
   "jumpAndSpeedProgression": {
     "note": "Der Einbeinstand auf festem Untergrund (3×60 s mit geschlossenen Augen, seitengleich) erfüllt das Stabilitätskriterium bereits, deshalb läuft die Propriozeption von Anfang an auf dem Balance-Pad."
   },
@@ -678,11 +721,11 @@
       "ifStalled": "zuerst Tiefe und Tempo, dann Last; Knie-Reaktion prüfen"
     },
     {
-      "metric": "Hang Power Clean 3RM",
-      "start": "in W1 messen",
+      "metric": "Trap-Bar-RDL 3×8 bei RPE 8",
+      "start": "in W3 messen",
       "week6": "+5 %",
       "week12": "+10 %",
-      "ifStalled": "Technik per Video prüfen, 1 Satz RDL/Hip Thrust zusätzlich"
+      "ifStalled": "Technik per Video prüfen, 1 Satz Hip Thrust zusätzlich"
     },
     {
       "metric": "Umfänge (Oberarm, Brust, Oberschenkel, Taille) und Körpergewicht (3-Tages-Schnitt, morgens)",
